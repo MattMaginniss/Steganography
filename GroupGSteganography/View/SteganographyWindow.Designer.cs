@@ -85,7 +85,7 @@ namespace GroupGSteganography.View
             this.hiderImageToolStripMenuItem,
             this.imageToEncryptToolStripMenuItem});
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openToolStripMenuItem.Text = "Load...";
             // 
             // hiderImageToolStripMenuItem
@@ -100,6 +100,7 @@ namespace GroupGSteganography.View
             this.imageToEncryptToolStripMenuItem.Name = "imageToEncryptToolStripMenuItem";
             this.imageToEncryptToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.imageToEncryptToolStripMenuItem.Text = "Image to Encrypt";
+            this.imageToEncryptToolStripMenuItem.Click += new System.EventHandler(this.imageToEncryptToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -203,6 +204,7 @@ namespace GroupGSteganography.View
             this.imageRadioButton.TabStop = true;
             this.imageRadioButton.Text = "Image -> Image";
             this.imageRadioButton.UseVisualStyleBackColor = true;
+            this.imageRadioButton.CheckedChanged += new System.EventHandler(this.imageRadioButton_CheckedChanged);
             // 
             // textRadioButton
             // 
@@ -255,6 +257,7 @@ namespace GroupGSteganography.View
             this.loadStuffToEncryptButton.TabIndex = 11;
             this.loadStuffToEncryptButton.Text = "Load Image to Encrypt";
             this.loadStuffToEncryptButton.UseVisualStyleBackColor = true;
+            this.loadStuffToEncryptButton.Click += new System.EventHandler(this.loadStuffToEncryptButton_Click);
             // 
             // SteganographyWindow
             // 

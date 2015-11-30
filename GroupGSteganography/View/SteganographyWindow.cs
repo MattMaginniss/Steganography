@@ -46,6 +46,13 @@ namespace GroupGSteganography.View
         private void textRadioButton_CheckedChanged(object sender, System.EventArgs e)
         {
             this.textBox.Enabled = this.textRadioButton.Checked;
+
+            if (!this.textRadioButton.Checked)
+            {
+                return;
+            }
+            this.loadStuffToEncryptButton.Text = @"Load Text to Encrypt";
+            this.saveDecryptedButton.Text = @"Save Decrypted Text";
         }
 
 
@@ -56,28 +63,66 @@ namespace GroupGSteganography.View
 
         private void loadBigImageButton_Click(object sender, System.EventArgs e)
         {
-            this.loadHidingImage();
+            this.loadImage(sender);
         }
 
         private void hiderImageToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
-            this.loadHidingImage();
+            this.loadImage(sender);
         }
 
-        private void loadHidingImage()
+        private void imageToEncryptToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.loadImage(sender);
+        }
+
+        private void loadStuffToEncryptButton_Click(object sender, EventArgs e)
+        {
+            this.loadImage(sender);
+        }
+
+        private void loadImage(object sender)
+        {
+            var image = this.loadImageDialog();
+            if (image == null)
+            {
+                return;
+            }
+            if (sender == this.loadStuffToEncryptButton || sender == this.imageToEncryptToolStripMenuItem)
+            {
+                this.smallPictureBox.Image = image;
+            }
+            else
+            {
+                this.largePictureBox.Image = image;
+            }
+        }
+
+        private Bitmap loadImageDialog()
         {
             var ofd = new OpenFileDialog
             {
                 Filter = @"PNG File (*.png)|*.png|Bitmap File (*.bmp)|*.bmp",
                 InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
                 Title = @"Please select an image file to encrypt."
-        };
+            };
+            //tertiary statement ONLY because resharper insisted
+            return ofd.ShowDialog() == DialogResult.OK ? new Bitmap(ofd.FileName) : null;
+        }
 
-            if (ofd.ShowDialog() == DialogResult.OK)
+        private void imageRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.imageRadioButton.Checked)
             {
-                var image = new Bitmap(ofd.FileName);
-                this.largePictureBox.Image = image;
+                this.loadStuffToEncryptButton.Text = @"Load Image to Encrypt";
+                this.saveDecryptedButton.Text = @"Save Decrypted Image";
+
             }
+            else
+            {
+                this.smallPictureBox.Image = null;
+            }
+
         }
     }
 }
