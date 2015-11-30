@@ -10,7 +10,7 @@ namespace GroupGSteganography
         ///     The main entry point for the application.
         /// </summary>
         [STAThread]
-        private static void main()
+        private static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
