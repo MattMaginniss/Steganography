@@ -8,3 +8,12 @@ C:\Users\shrou\Source\Repos\groupgsteganography\GroupGSteganography\bin\Debug\Gr
 C:\Users\shrou\Source\Repos\groupgsteganography\GroupGSteganography\bin\Debug\GroupGSteganography.pdb
 C:\Users\shrou\Source\Repos\groupgsteganography\GroupGSteganography\obj\Debug\GroupGSteganography.exe
 C:\Users\shrou\Source\Repos\groupgsteganography\GroupGSteganography\obj\Debug\GroupGSteganography.pdb
+C:\Users\mmaginn1\Source\Repos\groupgsteganography\GroupGSteganography\bin\Debug\GroupGSteganography.exe.config
+C:\Users\mmaginn1\Source\Repos\groupgsteganography\GroupGSteganography\obj\Debug\GroupGSteganography.exe
+C:\Users\mmaginn1\Source\Repos\groupgsteganography\GroupGSteganography\obj\Debug\GroupGSteganography.pdb
+C:\Users\mmaginn1\Source\Repos\groupgsteganography\GroupGSteganography\bin\Debug\GroupGSteganography.exe
+C:\Users\mmaginn1\Source\Repos\groupgsteganography\GroupGSteganography\bin\Debug\GroupGSteganography.pdb
+C:\Users\mmaginn1\Source\Repos\groupgsteganography\GroupGSteganography\obj\Debug\GroupGSteganography.csprojResolveAssemblyReference.cache
+C:\Users\mmaginn1\Source\Repos\groupgsteganography\GroupGSteganography\obj\Debug\GroupGSteganography.View.SteganographyWindow.resources
+C:\Users\mmaginn1\Source\Repos\groupgsteganography\GroupGSteganography\obj\Debug\GroupGSteganography.Properties.Resources.resources
+C:\Users\mmaginn1\Source\Repos\groupgsteganography\GroupGSteganography\obj\Debug\GroupGSteganography.csproj.GenerateResource.Cache

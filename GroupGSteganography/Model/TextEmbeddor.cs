@@ -2,7 +2,7 @@
 
 namespace GroupGSteganography.Model
 {
-    public class Embeddor
+    public class TextEmbeddor : IEmbeddor
     {
         #region Types and Delegates
 
@@ -10,7 +10,7 @@ namespace GroupGSteganography.Model
         {
             Hiding,
             FillingWithZeros
-        };
+        }
 
         #endregion
 
@@ -45,34 +45,22 @@ namespace GroupGSteganography.Model
         #region Constructors
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="Embeddor" /> class.
+        ///     Initializes a new instance of the <see cref="TextEmbeddor" /> class.
         /// </summary>
         /// <param name="sourceImage">The source image.</param>
-        public Embeddor(Image sourceImage)
+        /// <param name="textToEmbed">The text to embed.</param>
+        public TextEmbeddor(Image sourceImage, string textToEmbed)
         {
             this.SourceImage = sourceImage;
+            this.EmbeddedText = textToEmbed;
         }
 
         #endregion
 
-        /// <summary>
-        ///     Embeds the image.
-        /// </summary>
-        /// <param name="embedImage">The embed image.</param>
-        public void EmbedImage(Image embedImage)
-        {
-            this.EmbededImage = embedImage;
-        }
+        #region Methods
 
-        /// <summary>
-        ///     Embeds the text.
-        /// </summary>
-        /// <param name="embedText">The embed text.</param>
-        /// <returns>An image with text embedded inside of it.</returns>
-        public Image EmbedText(string embedText)
+        public Image Embed()
         {
-            this.EmbeddedText = embedText;
-
             var state = State.Hiding;
 
             var bmp = new Bitmap(this.SourceImage);
@@ -191,5 +179,7 @@ namespace GroupGSteganography.Model
 
             return bmp;
         }
+
+        #endregion
     }
 }

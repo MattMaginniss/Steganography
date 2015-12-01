@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using GroupGSteganography.Model;
 
 namespace GroupGSteganography.View
 {
@@ -220,6 +221,18 @@ namespace GroupGSteganography.View
         private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             this.saveImage(sender);
+        }
+
+        private void encryptButton_Click(object sender, EventArgs e)
+        {
+            Embeddor embeddor = new Embeddor(this.largePictureBox.Image);
+
+        }
+
+        private void decryptButton_Click(object sender, EventArgs e)
+        {
+            Extractor extractor = new Extractor();
+
         }
     }
 }
