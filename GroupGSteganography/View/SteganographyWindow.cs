@@ -165,10 +165,10 @@ namespace GroupGSteganography.View
         {
             if (this.imageIsEmpty(sender))
             {
-                MessageBox.Show(@"There is no image to save!");
+                MessageBox.Show(@"There is no image to save!", @"Error" , MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var saveDialog = new SaveFileDialog();
+            var saveDialog = new SaveFileDialog {Filter = @"PNG File (*.png)|*.png|Bitmap File (*.bmp)|*.bmp"};
             var imageFormat = ImageFormat.Png;
 
             if (saveDialog.ShowDialog() != DialogResult.OK)
@@ -193,5 +193,14 @@ namespace GroupGSteganography.View
             }
         }
 
+        private void saveDecryptedButton_Click(object sender, EventArgs e)
+        {
+            this.saveImage(sender);
+        }
+
+        private void bigPictureBoxContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
     }
 }
