@@ -206,7 +206,7 @@ namespace GroupGSteganography.View
 
         private void encryptButton_Click(object sender, EventArgs e)
         {
-            Embeddor embeddor = new Embeddor(this.largePictureBox.Image);
+           // Embeddor embeddor = new Embeddor(this.largePictureBox.Image);
 
         }
 
