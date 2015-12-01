@@ -2,7 +2,7 @@
 
 namespace GroupGSteganography.Model
 {
-    public class Extractor
+    public class Extractor : IExtractor
     {
         #region Properties
 
