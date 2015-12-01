@@ -30,11 +30,15 @@ namespace GroupGSteganography.View
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SteganographyWindow));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hiderImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageToEncryptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.encryptedImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.decryptedImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,9 +57,15 @@ namespace GroupGSteganography.View
             this.loadBigImageButton = new System.Windows.Forms.Button();
             this.loadStuffToEncryptButton = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.qualityBar = new System.Windows.Forms.TrackBar();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.helpLinkLabel = new System.Windows.Forms.LinkLabel();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.largePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.smallPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.qualityBar)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -74,6 +84,7 @@ namespace GroupGSteganography.View
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
+            this.saveToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -102,10 +113,33 @@ namespace GroupGSteganography.View
             this.imageToEncryptToolStripMenuItem.Text = "Image to Encrypt";
             this.imageToEncryptToolStripMenuItem.Click += new System.EventHandler(this.imageToEncryptToolStripMenuItem_Click);
             // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.encryptedImageToolStripMenuItem,
+            this.decryptedImageToolStripMenuItem});
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Text = "Save...";
+            // 
+            // encryptedImageToolStripMenuItem
+            // 
+            this.encryptedImageToolStripMenuItem.Name = "encryptedImageToolStripMenuItem";
+            this.encryptedImageToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.encryptedImageToolStripMenuItem.Text = "Encrypted Image";
+            this.encryptedImageToolStripMenuItem.Click += new System.EventHandler(this.encryptedImageToolStripMenuItem_Click);
+            // 
+            // decryptedImageToolStripMenuItem
+            // 
+            this.decryptedImageToolStripMenuItem.Name = "decryptedImageToolStripMenuItem";
+            this.decryptedImageToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.decryptedImageToolStripMenuItem.Text = "Decrypted Image";
+            this.decryptedImageToolStripMenuItem.Click += new System.EventHandler(this.decryptedImageToolStripMenuItem_Click);
+            // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -259,11 +293,64 @@ namespace GroupGSteganography.View
             this.loadStuffToEncryptButton.UseVisualStyleBackColor = true;
             this.loadStuffToEncryptButton.Click += new System.EventHandler(this.loadStuffToEncryptButton_Click);
             // 
+            // qualityBar
+            // 
+            this.qualityBar.Enabled = false;
+            this.qualityBar.LargeChange = 1;
+            this.qualityBar.Location = new System.Drawing.Point(420, 383);
+            this.qualityBar.Maximum = 2;
+            this.qualityBar.Name = "qualityBar";
+            this.qualityBar.Size = new System.Drawing.Size(108, 45);
+            this.qualityBar.TabIndex = 12;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(425, 412);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(27, 13);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Low";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(489, 412);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(29, 13);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "High";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(425, 364);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(87, 13);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "Image Corruption";
+            // 
+            // helpLinkLabel
+            // 
+            this.helpLinkLabel.AutoSize = true;
+            this.helpLinkLabel.Location = new System.Drawing.Point(509, 364);
+            this.helpLinkLabel.Name = "helpLinkLabel";
+            this.helpLinkLabel.Size = new System.Drawing.Size(19, 13);
+            this.helpLinkLabel.TabIndex = 16;
+            this.helpLinkLabel.TabStop = true;
+            this.helpLinkLabel.Text = "(?)";
+            this.helpLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
             // SteganographyWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(868, 445);
+            this.Controls.Add(this.helpLinkLabel);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.qualityBar);
             this.Controls.Add(this.loadStuffToEncryptButton);
             this.Controls.Add(this.loadBigImageButton);
             this.Controls.Add(this.saveDecryptedButton);
@@ -276,12 +363,14 @@ namespace GroupGSteganography.View
             this.Controls.Add(this.smallPictureBox);
             this.Controls.Add(this.largePictureBox);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SteganographyWindow";
             this.Text = "Steganography by Nathan Beam and Matt Maginniss";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.largePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.smallPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.qualityBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -312,6 +401,14 @@ namespace GroupGSteganography.View
         private System.Windows.Forms.ToolStripMenuItem hiderImageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem imageToEncryptToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.TrackBar qualityBar;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.LinkLabel helpLinkLabel;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem encryptedImageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem decryptedImageToolStripMenuItem;
     }
 
 

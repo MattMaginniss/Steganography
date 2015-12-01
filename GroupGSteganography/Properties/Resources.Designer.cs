@@ -61,6 +61,18 @@ namespace GroupGSteganography.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use this slider to adjust the level of corruption th image will experience.The greater the corruption, the longer your hidden message can be. However, the random alterations of the image will be more apparent.
+        /// </summary>
+        internal static string SteganographyWindow_linkLabel1_LinkClicked_Use_this_slider_to_adjust_the_level_of_corruption_th_image_will_experience_The_greater_the_corruption__the_longer_your_hidden_message_can_be__However__the_random_alterations_of_the_image_will_be_more_apparent {
+            get {
+                return ResourceManager.GetString("SteganographyWindow_linkLabel1_LinkClicked_Use_this_slider_to_adjust_the_level_of" +
+                        "_corruption_th_image_will_experience_The_greater_the_corruption__the_longer_your" +
+                        "_hidden_message_can_be__However__the_random_alterations_of_the_image_will_be_mor" +
+                        "e_apparent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PNG File (*.png)|*.png|Bitmap File (*.bmp)|*.bmp.
         /// </summary>
         internal static string SteganographyWindow_loadHidingImage_PNG_File____png____png_Bitmap_File____bmp____bmp {

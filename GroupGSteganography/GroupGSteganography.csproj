@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\SaveFileController.cs" />
     <Compile Include="Model\Embeddor.cs" />
     <Compile Include="Model\Extractor.cs" />
     <Compile Include="View\SteganographyWindow.cs">

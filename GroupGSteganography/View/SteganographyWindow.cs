@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
@@ -40,12 +43,13 @@ namespace GroupGSteganography.View
 
         private void saveBigImageButton_Click(object sender, System.EventArgs e)
         {
-
+            this.saveImage(sender);
         }
 
         private void textRadioButton_CheckedChanged(object sender, System.EventArgs e)
         {
             this.textBox.Enabled = this.textRadioButton.Checked;
+            this.qualityBar.Enabled = this.textRadioButton.Checked;
 
             if (!this.textRadioButton.Checked)
             {
@@ -124,5 +128,70 @@ namespace GroupGSteganography.View
             }
 
         }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            MessageBox.Show(
+                @"Use this slider to adjust the level of corruption the image will experience." +
+                    @"The greater the corruption, the longer your hidden message can be." +
+                @" However, the random alterations to the image will be more apparent", @"Image Corruption Help", MessageBoxButtons.OK, MessageBoxIcon.Question );
+        }
+
+        private void encryptedImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.saveImage(sender);
+        }
+
+       
+        private bool imageIsEmpty(object sender)
+        {
+            if (sender == this.saveDecryptedButton || sender == this.decryptedImageToolStripMenuItem)
+            {
+                return this.smallPictureBox.Image == null;
+            }
+            else
+            {
+                return this.largePictureBox.Image == null;
+            }
+
+        }
+
+        private void decryptedImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.saveImage(sender);
+        }
+
+        private void saveImage(object sender)
+        {
+            if (this.imageIsEmpty(sender))
+            {
+                MessageBox.Show(@"There is no image to save!");
+                return;
+            }
+            var saveDialog = new SaveFileDialog();
+            var imageFormat = ImageFormat.Png;
+
+            if (saveDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            var extension = Path.GetExtension(saveDialog.FileName);
+            Debug.Assert(extension != null, "extension != null");
+            if (extension.Equals(".bmp"))
+            {
+                imageFormat = ImageFormat.Bmp;
+            }
+
+            if (sender == this.saveDecryptedButton || sender == this.decryptedImageToolStripMenuItem)
+            {
+                this.smallPictureBox.Image.Save(saveDialog.FileName, imageFormat);
+            }
+            else
+            {
+                this.largePictureBox.Image.Save(saveDialog.FileName, imageFormat);
+            }
+        }
+
     }
 }
