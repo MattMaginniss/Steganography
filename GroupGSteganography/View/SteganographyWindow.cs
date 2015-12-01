@@ -57,6 +57,7 @@ namespace GroupGSteganography.View
             }
             this.loadStuffToEncryptButton.Text = @"Load Text to Encrypt";
             this.saveDecryptedButton.Text = @"Save Decrypted Text";
+            this.imageToEncryptToolStripMenuItem.Text = @"Text to Encrypt";
         }
 
 
@@ -94,10 +95,12 @@ namespace GroupGSteganography.View
             }
             if (sender == this.loadStuffToEncryptButton || sender == this.imageToEncryptToolStripMenuItem)
             {
+                this.saveDecryptedButton.Enabled = true;
                 this.smallPictureBox.Image = image;
             }
             else
             {
+                this.saveBigImageButton.Enabled = true;
                 this.largePictureBox.Image = image;
             }
         }
@@ -116,17 +119,17 @@ namespace GroupGSteganography.View
 
         private void imageRadioButton_CheckedChanged(object sender, EventArgs e)
         {
+            this.saveDecryptedButton.Enabled = (this.smallPictureBox.Image != null);
             if (this.imageRadioButton.Checked)
             {
                 this.loadStuffToEncryptButton.Text = @"Load Image to Encrypt";
                 this.saveDecryptedButton.Text = @"Save Decrypted Image";
-
+                this.imageToEncryptToolStripMenuItem.Text = @"Image to Encrypt";
             }
             else
             {
                 this.smallPictureBox.Image = null;
             }
-
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -198,9 +201,25 @@ namespace GroupGSteganography.View
             this.saveImage(sender);
         }
 
-        private void bigPictureBoxContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-        {
 
+        private void loadToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            this.loadImage(sender);
+        }
+
+        private void saveToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            this.saveImage(sender);
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.loadImage(sender);
+        }
+
+        private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            this.saveImage(sender);
         }
     }
 }
