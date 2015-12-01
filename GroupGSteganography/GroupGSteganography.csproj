@@ -47,8 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Embeddor.cs" />
     <Compile Include="Model\Extractor.cs" />
+    <Compile Include="Model\IEmbeddor.cs" />
+    <Compile Include="Model\IExtractor.cs" />
+    <Compile Include="Model\TextEmbeddor.cs" />
     <Compile Include="View\SteganographyWindow.cs">
       <SubType>Form</SubType>
     </Compile>
