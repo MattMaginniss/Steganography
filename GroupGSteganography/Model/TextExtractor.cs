@@ -40,109 +40,95 @@ namespace GroupGSteganography.Model
 
         public void Extract()
         {
-            this.ExtractedText = this.decodeMessageInImage((Bitmap) this.EncodedImage);
+            this.ExtractedText = extractText((Bitmap)this.EncodedImage);
         }
 
         #endregion
 
-        private string decodeMessageInImage(Bitmap bm)
+        public static string extractText(Bitmap bmp)
         {
-            // Initialize a random number generator.
-            var rand = new Random(1234);
+            int colorUnitIndex = 0;
+            int charValue = 0;
 
-            // Create a new HashSet.
-            var usedPositions = new HashSet<string>();
+            // holds the text that will be extracted from the image
+            string extractedText = String.Empty;
 
-            // Make a byte array big enough to hold the message length.
-            var len = 0;
-            var bytes = BitConverter.GetBytes(len);
-
-            // Decode the message length.
-            for (var i = 0; i < bytes.Length; i++)
+            // pass through the rows
+            for (int i = 0; i < bmp.Height; i++)
             {
-                bytes[i] = this.decodeByte(bm, rand, usedPositions);
-            }
-            len = BitConverter.ToInt32(bytes, 0);
+                // pass through each row
+                for (int j = 0; j < bmp.Width; j++)
+                {
+                    Color pixel = bmp.GetPixel(j, i);
 
-            // Sanity check.
-            if (len > 10000)
-            {
-                throw new InvalidDataException(
-                    "Message length " + len +
-                    " is too big to make sense. Invalid password.");
+                    // for each pixel, pass through its elements (RGB)
+                    for (int n = 0; n < 3; n++)
+                    {
+                        switch (colorUnitIndex % 3)
+                        {
+                            case 0:
+                                {
+                                    // get the LSB from the pixel element (will be pixel.R % 2)
+                                    // then add one bit to the right of the current character
+                                    // this can be done by (charValue = charValue * 2)
+                                    // replace the added bit (which value is by default 0) with
+                                    // the LSB of the pixel element, simply by addition
+                                    charValue = charValue * 2 + pixel.R % 2;
+                                }
+                                break;
+                            case 1:
+                                {
+                                    charValue = charValue * 2 + pixel.G % 2;
+                                }
+                                break;
+                            case 2:
+                                {
+                                    charValue = charValue * 2 + pixel.B % 2;
+                                }
+                                break;
+                        }
+
+                        colorUnitIndex++;
+
+                        // if 8 bits has been added,
+                        // then add the current character to the result text
+                        if (colorUnitIndex % 8 == 0)
+                        {
+                            // reverse? of course, since each time the process occurs
+                            // on the right (for simplicity)
+                            charValue = reverseBits(charValue);
+
+                            // can only be 0 if it is the stop character (the 8 zeros)
+                            if (charValue == 0)
+                            {
+                                return extractedText;
+                            }
+
+                            // convert the character value from int to char
+                            char c = (char)charValue;
+
+                            // add the current character to the result text
+                            extractedText += c.ToString();
+                        }
+                    }
+                }
             }
 
-            // Decode the message bytes.
-            var chars = new char[len];
-            for (var i = 0; i < chars.Length; i++)
-            {
-                chars[i] = (char) this.decodeByte(bm, rand, usedPositions);
-            }
-            return new string(chars);
+            return extractedText;
         }
 
-        // Decode a byte.
-        private byte decodeByte(Bitmap bm, Random rand, HashSet<string> usedPositions)
+        public static int reverseBits(int n)
         {
-            byte value = 0;
-            byte valueMask = 1;
-            for (var i = 0; i < 8; i++)
+            int result = 0;
+
+            for (int i = 0; i < 8; i++)
             {
-                // Find the position for the ith bit.
-                int row, col, pix;
-                this.pickPosition(bm, rand, usedPositions, out row, out col, out pix);
+                result = result * 2 + n % 2;
 
-                // Get the color component value.
-                byte colorValue = 0;
-                switch (pix)
-                {
-                    case 0:
-                        colorValue = bm.GetPixel(row, col).R;
-                        break;
-                    case 1:
-                        colorValue = bm.GetPixel(row, col).G;
-                        break;
-                    case 2:
-                        colorValue = bm.GetPixel(row, col).B;
-                        break;
-                }
-
-                // Set the next bit if appropriate.
-                if ((colorValue & 1) == 1)
-                {
-                    // Set the bit.
-                    value = (byte) (value | valueMask);
-                }
-
-                // Move to the next bit.
-                valueMask <<= 1;
+                n /= 2;
             }
 
-            return value;
-        }
-
-        private void pickPosition(Bitmap bm, Random rand,
-            HashSet<string> usedPositions,
-            out int row, out int col, out int pix)
-        {
-            for (;;)
-            {
-                // Pick random r, c, and pix.
-                row = rand.Next(0, bm.Width);
-                col = rand.Next(0, bm.Height);
-                pix = rand.Next(0, 3);
-
-                // See if this location is available.
-                var key =
-                    row + "/" +
-                    col + "/" +
-                    pix;
-                if (!usedPositions.Contains(key))
-                {
-                    usedPositions.Add(key);
-                    return;
-                }
-            }
+            return result;
         }
     }
 }
