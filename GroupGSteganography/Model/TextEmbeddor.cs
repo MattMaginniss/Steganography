@@ -22,15 +22,7 @@ namespace GroupGSteganography.Model
         /// <value>
         ///     The source image.
         /// </value>
-        public Image SourceImage { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the embeded image.
-        /// </summary>
-        /// <value>
-        ///     The embeded image.
-        /// </value>
-        public Image EmbededImage { get; set; }
+        public Image SourceImage { get; }
 
         /// <summary>
         ///     Gets or sets the embedded text.
@@ -38,7 +30,7 @@ namespace GroupGSteganography.Model
         /// <value>
         ///     The embedded text.
         /// </value>
-        public string EmbeddedText { get; set; }
+        public string EmbeddedText { get; }
 
         #endregion
 
