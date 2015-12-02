@@ -15,6 +15,7 @@ namespace GroupGSteganography
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new SteganographyWindow());
+           
         }
     }
 }

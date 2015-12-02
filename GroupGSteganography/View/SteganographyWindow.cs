@@ -58,6 +58,8 @@ namespace GroupGSteganography.View
             }
             this.loadStuffToEncryptButton.Text = @"Load Text to Encrypt";
             this.saveDecryptedButton.Text = @"Save Decrypted Text";
+            this.imageToEncryptToolStripMenuItem.Text = @"Text to Encrypt";
+
         }
 
 
@@ -117,6 +119,7 @@ namespace GroupGSteganography.View
 
         private void imageRadioButton_CheckedChanged(object sender, EventArgs e)
         {
+
             if (this.imageRadioButton.Checked)
             {
                 this.loadStuffToEncryptButton.Text = @"Load Image to Encrypt";
@@ -206,7 +209,7 @@ namespace GroupGSteganography.View
 
         private void encryptButton_Click(object sender, EventArgs e)
         {
-            Embeddor embeddor = new Embeddor(this.largePictureBox.Image);
+            //Embeddor embeddor = new Embeddor(this.largePictureBox.Image);
 
         }
 
@@ -214,6 +217,28 @@ namespace GroupGSteganography.View
         {
             Extractor extractor = new Extractor();
 
+        }
+
+        private void smallPictureBox_Paint(object sender, PaintEventArgs e)
+        {
+            var canLoad = this.smallPictureBox.Image != null;
+            this.saveDecryptedButton.Enabled = canLoad;
+            this.encryptedImageToolStripMenuItem.Enabled = canLoad;
+            this.smallPictureBoxSaveToolStripMenuItem.Enabled = canLoad;
+            this.checkBothImageBoxes();
+        }
+
+        private void checkBothImageBoxes()
+        {
+        }
+
+        private void largePictureBox_Paint(object sender, PaintEventArgs e)
+        {
+            var canLoad = this.largePictureBox.Image != null;
+            this.saveBigImageButton.Enabled = canLoad;
+            this.decryptedImageToolStripMenuItem.Enabled = canLoad;
+            this.bigPictureBoxSaveToolStripMenuItem.Enabled = canLoad;
+            this.checkBothImageBoxes();
         }
     }
 }
