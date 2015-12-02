@@ -47,8 +47,19 @@ namespace GroupGSteganography.View
             this.viewHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.largePictureBox = new System.Windows.Forms.PictureBox();
+            this.bigPictureBoxContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.bigPictureBoxLoadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bigPictureBoxSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.smallPictureBox = new System.Windows.Forms.PictureBox();
+            this.smallPictureBoxContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.smallPictureBoxLoadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.smallPictureBoxSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox = new System.Windows.Forms.TextBox();
+            this.textFieldContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.textFieldLoadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.textFieldSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.encryptButton = new System.Windows.Forms.Button();
             this.decryptButton = new System.Windows.Forms.Button();
             this.imageRadioButton = new System.Windows.Forms.RadioButton();
@@ -62,24 +73,13 @@ namespace GroupGSteganography.View
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.helpLinkLabel = new System.Windows.Forms.LinkLabel();
-            this.bigPictureBoxContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.smallPictureBoxContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.loadToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.textFieldContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.loadToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.largePictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.smallPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.qualityBar)).BeginInit();
             this.bigPictureBoxContextMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.smallPictureBox)).BeginInit();
             this.smallPictureBoxContextMenu.SuspendLayout();
             this.textFieldContextMenuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.qualityBar)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -183,13 +183,13 @@ namespace GroupGSteganography.View
             // viewHelpToolStripMenuItem
             // 
             this.viewHelpToolStripMenuItem.Name = "viewHelpToolStripMenuItem";
-            this.viewHelpToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.viewHelpToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.viewHelpToolStripMenuItem.Text = "&View Help";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             // 
             // largePictureBox
@@ -202,6 +202,28 @@ namespace GroupGSteganography.View
             this.largePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.largePictureBox.TabIndex = 1;
             this.largePictureBox.TabStop = false;
+            this.largePictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.largePictureBox_Paint);
+            // 
+            // bigPictureBoxContextMenu
+            // 
+            this.bigPictureBoxContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bigPictureBoxLoadToolStripMenuItem,
+            this.bigPictureBoxSaveToolStripMenuItem});
+            this.bigPictureBoxContextMenu.Name = "bigPictureBoxContextMenu";
+            this.bigPictureBoxContextMenu.Size = new System.Drawing.Size(101, 48);
+            this.bigPictureBoxContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.bigPictureBoxContextMenu_Opening);
+            // 
+            // bigPictureBoxLoadToolStripMenuItem
+            // 
+            this.bigPictureBoxLoadToolStripMenuItem.Name = "bigPictureBoxLoadToolStripMenuItem";
+            this.bigPictureBoxLoadToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.bigPictureBoxLoadToolStripMenuItem.Text = "&Load";
+            // 
+            // bigPictureBoxSaveToolStripMenuItem
+            // 
+            this.bigPictureBoxSaveToolStripMenuItem.Name = "bigPictureBoxSaveToolStripMenuItem";
+            this.bigPictureBoxSaveToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.bigPictureBoxSaveToolStripMenuItem.Text = "&Save";
             // 
             // smallPictureBox
             // 
@@ -213,6 +235,29 @@ namespace GroupGSteganography.View
             this.smallPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.smallPictureBox.TabIndex = 2;
             this.smallPictureBox.TabStop = false;
+            this.smallPictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.smallPictureBox_Paint);
+            // 
+            // smallPictureBoxContextMenu
+            // 
+            this.smallPictureBoxContextMenu.AutoClose = false;
+            this.smallPictureBoxContextMenu.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.smallPictureBoxContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.smallPictureBoxLoadToolStripMenuItem,
+            this.smallPictureBoxSaveToolStripMenuItem});
+            this.smallPictureBoxContextMenu.Name = "smallPictureBoxContextMenu";
+            this.smallPictureBoxContextMenu.Size = new System.Drawing.Size(153, 70);
+            // 
+            // smallPictureBoxLoadToolStripMenuItem
+            // 
+            this.smallPictureBoxLoadToolStripMenuItem.Name = "smallPictureBoxLoadToolStripMenuItem";
+            this.smallPictureBoxLoadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.smallPictureBoxLoadToolStripMenuItem.Text = "Load";
+            // 
+            // smallPictureBoxSaveToolStripMenuItem
+            // 
+            this.smallPictureBoxSaveToolStripMenuItem.Name = "smallPictureBoxSaveToolStripMenuItem";
+            this.smallPictureBoxSaveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.smallPictureBoxSaveToolStripMenuItem.Text = "Save";
             // 
             // textBox
             // 
@@ -223,6 +268,40 @@ namespace GroupGSteganography.View
             this.textBox.Name = "textBox";
             this.textBox.Size = new System.Drawing.Size(200, 144);
             this.textBox.TabIndex = 3;
+            // 
+            // textFieldContextMenuStrip
+            // 
+            this.textFieldContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.textFieldLoadToolStripMenuItem,
+            this.textFieldSaveToolStripMenuItem,
+            this.copyToolStripMenuItem,
+            this.pasteToolStripMenuItem});
+            this.textFieldContextMenuStrip.Name = "textFieldContextMenuStrip";
+            this.textFieldContextMenuStrip.Size = new System.Drawing.Size(103, 92);
+            // 
+            // textFieldLoadToolStripMenuItem
+            // 
+            this.textFieldLoadToolStripMenuItem.Name = "textFieldLoadToolStripMenuItem";
+            this.textFieldLoadToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.textFieldLoadToolStripMenuItem.Text = "Load";
+            // 
+            // textFieldSaveToolStripMenuItem
+            // 
+            this.textFieldSaveToolStripMenuItem.Name = "textFieldSaveToolStripMenuItem";
+            this.textFieldSaveToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.textFieldSaveToolStripMenuItem.Text = "Save";
+            // 
+            // copyToolStripMenuItem
+            // 
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.copyToolStripMenuItem.Text = "Copy";
+            // 
+            // pasteToolStripMenuItem
+            // 
+            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.pasteToolStripMenuItem.Text = "Paste";
             // 
             // encryptButton
             // 
@@ -359,81 +438,6 @@ namespace GroupGSteganography.View
             this.helpLinkLabel.Text = "(?)";
             this.helpLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
-            // bigPictureBoxContextMenu
-            // 
-            this.bigPictureBoxContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadToolStripMenuItem,
-            this.saveToolStripMenuItem1});
-            this.bigPictureBoxContextMenu.Name = "bigPictureBoxContextMenu";
-            this.bigPictureBoxContextMenu.Size = new System.Drawing.Size(101, 48);
-            this.bigPictureBoxContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.bigPictureBoxContextMenu_Opening);
-            // 
-            // loadToolStripMenuItem
-            // 
-            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.loadToolStripMenuItem.Text = "&Load";
-            // 
-            // saveToolStripMenuItem1
-            // 
-            this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(100, 22);
-            this.saveToolStripMenuItem1.Text = "&Save";
-            // 
-            // smallPictureBoxContextMenu
-            // 
-            this.smallPictureBoxContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadToolStripMenuItem1,
-            this.saveToolStripMenuItem2});
-            this.smallPictureBoxContextMenu.Name = "smallPictureBoxContextMenu";
-            this.smallPictureBoxContextMenu.Size = new System.Drawing.Size(101, 48);
-            // 
-            // loadToolStripMenuItem1
-            // 
-            this.loadToolStripMenuItem1.Name = "loadToolStripMenuItem1";
-            this.loadToolStripMenuItem1.Size = new System.Drawing.Size(100, 22);
-            this.loadToolStripMenuItem1.Text = "Load";
-            // 
-            // saveToolStripMenuItem2
-            // 
-            this.saveToolStripMenuItem2.Name = "saveToolStripMenuItem2";
-            this.saveToolStripMenuItem2.Size = new System.Drawing.Size(100, 22);
-            this.saveToolStripMenuItem2.Text = "Save";
-            // 
-            // textFieldContextMenuStrip
-            // 
-            this.textFieldContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadToolStripMenuItem2,
-            this.saveToolStripMenuItem3,
-            this.copyToolStripMenuItem,
-            this.pasteToolStripMenuItem});
-            this.textFieldContextMenuStrip.Name = "textFieldContextMenuStrip";
-            this.textFieldContextMenuStrip.Size = new System.Drawing.Size(103, 92);
-            // 
-            // loadToolStripMenuItem2
-            // 
-            this.loadToolStripMenuItem2.Name = "loadToolStripMenuItem2";
-            this.loadToolStripMenuItem2.Size = new System.Drawing.Size(102, 22);
-            this.loadToolStripMenuItem2.Text = "Load";
-            // 
-            // saveToolStripMenuItem3
-            // 
-            this.saveToolStripMenuItem3.Name = "saveToolStripMenuItem3";
-            this.saveToolStripMenuItem3.Size = new System.Drawing.Size(102, 22);
-            this.saveToolStripMenuItem3.Text = "Save";
-            // 
-            // copyToolStripMenuItem
-            // 
-            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
-            this.copyToolStripMenuItem.Text = "Copy";
-            // 
-            // pasteToolStripMenuItem
-            // 
-            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
-            this.pasteToolStripMenuItem.Text = "Paste";
-            // 
             // SteganographyWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -462,11 +466,11 @@ namespace GroupGSteganography.View
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.largePictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.smallPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.qualityBar)).EndInit();
             this.bigPictureBoxContextMenu.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.smallPictureBox)).EndInit();
             this.smallPictureBoxContextMenu.ResumeLayout(false);
             this.textFieldContextMenuStrip.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.qualityBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -505,14 +509,14 @@ namespace GroupGSteganography.View
         private System.Windows.Forms.ToolStripMenuItem encryptedImageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem decryptedImageToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip bigPictureBoxContextMenu;
-        private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem bigPictureBoxLoadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bigPictureBoxSaveToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip smallPictureBoxContextMenu;
-        private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem smallPictureBoxLoadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem smallPictureBoxSaveToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip textFieldContextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem textFieldLoadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem textFieldSaveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
     }
