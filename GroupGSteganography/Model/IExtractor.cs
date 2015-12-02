@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GroupGSteganography.Model
+﻿namespace GroupGSteganography.Model
 {
-    interface IExtractor
+    internal interface IExtractor
     {
         void Extract();
     }
