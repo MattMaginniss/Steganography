@@ -2,28 +2,42 @@
 
 namespace GroupGSteganography.Model
 {
-    public class Extractor : IExtractor
+    public class TextExtractor : IExtractor
     {
         #region Properties
 
         /// <summary>
-        ///     Gets or sets the extracted image.
+        ///     Gets or sets the encoded image.
         /// </summary>
         /// <value>
-        ///     The extracted image.
+        ///     The encoded image.
         /// </value>
-        public Image ExtractedImage { get; set; }
+        public Image EncodedImage { get; }
+
+        /// <summary>
+        ///     Gets or sets the extracted text.
+        /// </summary>
+        /// <value>
+        ///     The extracted text.
+        /// </value>
+        public string ExtractedText { get; set; }
 
         #endregion
 
-        /// <summary>
-        ///     Extracts the text.
-        /// </summary>
-        /// <param name="encodedImage">The encoded image.</param>
-        /// <returns>The extracted text</returns>
-        public string ExtractText(Image encodedImage)
+        #region Constructors
+
+        public TextExtractor(Image encodedImage)
         {
-            var bmp = new Bitmap(encodedImage);
+            this.EncodedImage = encodedImage;
+        }
+
+        #endregion
+
+        #region Methods
+
+        public void Extract()
+        {
+            var bmp = new Bitmap(this.EncodedImage);
 
             var colorUnitIndex = 0;
             var charValue = 0;
@@ -79,7 +93,8 @@ namespace GroupGSteganography.Model
                             // can only be 0 if it is the stop character (the 8 zeros)
                             if (charValue == 0)
                             {
-                                return extractedText;
+                                this.ExtractedText = extractedText;
+                                return;
                             }
 
                             // convert the character value from int to char
@@ -91,8 +106,10 @@ namespace GroupGSteganography.Model
                     }
                 }
             }
-            return extractedText;
+            this.ExtractedText = extractedText;
         }
+
+        #endregion
 
         private int reverseBits(int n)
         {

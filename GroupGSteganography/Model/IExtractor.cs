@@ -8,6 +8,6 @@ namespace GroupGSteganography.Model
 {
     interface IExtractor
     {
-        
+        void Extract();
     }
 }
