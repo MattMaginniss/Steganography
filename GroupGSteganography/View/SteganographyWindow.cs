@@ -207,22 +207,6 @@ namespace GroupGSteganography.View
 
         }
 
-        private void encryptButton_Click(object sender, EventArgs e)
-        {
-<<<<<<< HEAD
-           // Embeddor embeddor = new Embeddor(this.largePictureBox.Image);
-=======
-            //Embeddor embeddor = new Embeddor(this.largePictureBox.Image);
->>>>>>> gui-development
-
-        }
-
-        private void decryptButton_Click(object sender, EventArgs e)
-        {
-            Extractor extractor = new Extractor();
-
-        }
-
         private void smallPictureBox_Paint(object sender, PaintEventArgs e)
         {
             var canLoad = this.smallPictureBox.Image != null;
@@ -243,6 +227,25 @@ namespace GroupGSteganography.View
             this.decryptedImageToolStripMenuItem.Enabled = canLoad;
             this.bigPictureBoxSaveToolStripMenuItem.Enabled = canLoad;
             this.checkBothImageBoxes();
+        }
+
+        private void encryptButton_Click(object sender, EventArgs e)
+        {
+            if (this.textRadioButton.Checked)
+            {
+                IEmbeddor embeddor = new TextEmbeddor(this.largePictureBox.Image, this.textBox.Text);
+                this.largePictureBox.Image = embeddor.Embed();
+            }
+        }
+
+        private void decryptButton_Click(object sender, EventArgs e)
+        {
+            if (this.textRadioButton.Checked)
+            {
+                TextExtractor extractor = new TextExtractor(this.largePictureBox.Image);
+                extractor.Extract();
+                this.textBox.Text = extractor.ExtractedText;
+            }
         }
     }
 }

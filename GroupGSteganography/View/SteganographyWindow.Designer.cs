@@ -110,7 +110,7 @@ namespace GroupGSteganography.View
             this.hiderImageToolStripMenuItem,
             this.imageToEncryptToolStripMenuItem});
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
             this.openToolStripMenuItem.Text = "&Load...";
             // 
             // hiderImageToolStripMenuItem
@@ -133,7 +133,7 @@ namespace GroupGSteganography.View
             this.encryptedImageToolStripMenuItem,
             this.decryptedImageToolStripMenuItem});
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
             this.saveToolStripMenuItem.Text = "&Save...";
             // 
             // encryptedImageToolStripMenuItem
@@ -153,7 +153,7 @@ namespace GroupGSteganography.View
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -245,18 +245,18 @@ namespace GroupGSteganography.View
             this.smallPictureBoxLoadToolStripMenuItem,
             this.smallPictureBoxSaveToolStripMenuItem});
             this.smallPictureBoxContextMenu.Name = "smallPictureBoxContextMenu";
-            this.smallPictureBoxContextMenu.Size = new System.Drawing.Size(153, 70);
+            this.smallPictureBoxContextMenu.Size = new System.Drawing.Size(101, 48);
             // 
             // smallPictureBoxLoadToolStripMenuItem
             // 
             this.smallPictureBoxLoadToolStripMenuItem.Name = "smallPictureBoxLoadToolStripMenuItem";
-            this.smallPictureBoxLoadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.smallPictureBoxLoadToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.smallPictureBoxLoadToolStripMenuItem.Text = "Load";
             // 
             // smallPictureBoxSaveToolStripMenuItem
             // 
             this.smallPictureBoxSaveToolStripMenuItem.Name = "smallPictureBoxSaveToolStripMenuItem";
-            this.smallPictureBoxSaveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.smallPictureBoxSaveToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.smallPictureBoxSaveToolStripMenuItem.Text = "Save";
             // 
             // textBox
@@ -311,6 +311,7 @@ namespace GroupGSteganography.View
             this.encryptButton.TabIndex = 1;
             this.encryptButton.Text = "Encrypt";
             this.encryptButton.UseVisualStyleBackColor = true;
+            this.encryptButton.Click += new System.EventHandler(this.encryptButton_Click);
             this.encryptButton.Paint += new System.Windows.Forms.PaintEventHandler(this.encryptButton_Paint);
             // 
             // decryptButton
@@ -321,6 +322,7 @@ namespace GroupGSteganography.View
             this.decryptButton.TabIndex = 2;
             this.decryptButton.Text = "Decrypt";
             this.decryptButton.UseVisualStyleBackColor = true;
+            this.decryptButton.Click += new System.EventHandler(this.decryptButton_Click);
             // 
             // imageRadioButton
             // 
