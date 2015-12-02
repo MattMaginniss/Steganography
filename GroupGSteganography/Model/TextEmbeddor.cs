@@ -53,6 +53,10 @@ namespace GroupGSteganography.Model
 
         #region Methods
 
+        /// <summary>
+        ///     Embeds this text into the image.
+        /// </summary>
+        /// <returns>the image with embedded text.</returns>
         public Image Embed()
         {
             var encodedImage = (Bitmap) this.SourceImage.Clone();
@@ -65,7 +69,7 @@ namespace GroupGSteganography.Model
 
         #endregion
 
-        private void encodeMessageInImage(Bitmap bm, Bitmap visible_bm, string message)
+        private void encodeMessageInImage(Bitmap bm, Bitmap visibleBm, string message)
         {
             // Initialize a random number generator.
             var rand = new Random(1234);
@@ -75,16 +79,16 @@ namespace GroupGSteganography.Model
 
             // Encode the message length.
             var bytes = BitConverter.GetBytes(message.Length);
-            for (var i = 0; i < bytes.Length; i++)
+            foreach (var b in bytes)
             {
-                this.encodeByte(bm, visible_bm, rand, bytes[i], usedPositions);
+                this.encodeByte(bm, visibleBm, rand, b, usedPositions);
             }
 
             // Encode the message.
             var chars = message.ToCharArray();
-            for (var i = 0; i < chars.Length; i++)
+            foreach (var c in chars)
             {
-                this.encodeByte(bm, visible_bm, rand, (byte) chars[i], usedPositions);
+                this.encodeByte(bm, visibleBm, rand, (byte) c, usedPositions);
             }
         }
 
@@ -95,7 +99,7 @@ namespace GroupGSteganography.Model
             {
                 // Pick a position for the ith bit.
                 int row, col, pix;
-                this.PickPosition(bm, rand, usedPositions, out row, out col, out pix);
+                this.pickPosition(bm, rand, usedPositions, out row, out col, out pix);
 
                 // Get the color's pixel components.
                 var clr = bm.GetPixel(row, col);
@@ -134,7 +138,7 @@ namespace GroupGSteganography.Model
             }
         }
 
-        private void PickPosition(Bitmap bm, Random rand,
+        private void pickPosition(Bitmap bm, Random rand,
             HashSet<string> usedPositions,
             out int row, out int col, out int pix)
         {
