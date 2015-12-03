@@ -316,9 +316,7 @@ namespace GroupGSteganography.View
             var headerPixel = this.createHeaderPixel();
             if (this.textRadioButton.Checked)
             {
-                var textToEmbed = this.textBox.Text;
-
-                embeddor = new TextEmbeddor(this.largePictureBox.Image, textToEmbed, headerPixel);
+                embeddor = new TextEmbeddor(this.largePictureBox.Image, this.textBox.Text, headerPixel);
                 this.largePictureBox.Image = embeddor.Embed();
             }
             else if (this.checkImageSizes())
@@ -341,7 +339,7 @@ namespace GroupGSteganography.View
 
             return new HeaderPixel(isImage,isEncrypted,rotShift,bitsPerColorChannel);
         }
-
+        
         private bool checkImageSizes()
         {
             var hiderImage = this.largePictureBox.Image;
@@ -375,11 +373,6 @@ namespace GroupGSteganography.View
             var extractor = new TextExtractor(this.largePictureBox.Image, headerPixel);
             extractor.Extract();
             var output = extractor.ExtractedText;
-            if (headerPixel.IsEncrypted)
-            {
-                output = " Decrypted: " + output + "\r\n Encrypted: " + extractor.EncryptedText;
-            }
-
             this.textBox.Text = output;
         }
 
