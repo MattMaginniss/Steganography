@@ -30,7 +30,7 @@ namespace GroupGSteganography.Model
         /// <value>
         ///     The embedded text.
         /// </value>
-        public string EmbeddedText { get; }
+        public string MessageText { get; }
 
         #endregion
 
@@ -44,7 +44,7 @@ namespace GroupGSteganography.Model
         public TextEmbeddor(Image sourceImage, string textToEmbed)
         {
             this.SourceImage = sourceImage;
-            this.EmbeddedText = textToEmbed;
+            this.MessageText = textToEmbed;
         }
 
         #endregion
@@ -58,7 +58,7 @@ namespace GroupGSteganography.Model
         public Image Embed()
         {
             var bmp = (Bitmap) this.SourceImage;
-            var text = this.EmbeddedText;
+            var text = this.MessageText;
 
             // initially, we'll be hiding characters in the image
             var state = State.Hiding;
@@ -76,7 +76,6 @@ namespace GroupGSteganography.Model
             var zeros = 0;
 
             // hold pixel elements
-            int R = 0, G = 0, B = 0;
 
             // pass through the rows
             for (var i = 0; i < bmp.Height; i++)
@@ -88,9 +87,9 @@ namespace GroupGSteganography.Model
                     var pixel = bmp.GetPixel(j, i);
 
                     // now, clear the least significant bit (LSB) from each pixel element
-                    R = pixel.R - pixel.R%2;
-                    G = pixel.G - pixel.G%2;
-                    B = pixel.B - pixel.B%2;
+                    var red = pixel.R - pixel.R%2;
+                    var green = pixel.G - pixel.G%2;
+                    var blue = pixel.B - pixel.B%2;
 
                     // for each pixel, pass through its elements (RGB)
                     for (var n = 0; n < 3; n++)
@@ -106,7 +105,7 @@ namespace GroupGSteganography.Model
                                 // even if only a part of its elements have been affected
                                 if ((pixelElementIndex - 1)%3 < 2)
                                 {
-                                    bmp.SetPixel(j, i, Color.FromArgb(R, G, B));
+                                    bmp.SetPixel(j, i, Color.FromArgb(red, green, blue));
                                 }
 
                                 // return the bitmap with the text hidden in
@@ -138,7 +137,7 @@ namespace GroupGSteganography.Model
                                     // just add it to it
                                     // recall that the LSB of the pixel element had been cleared
                                     // before this operation
-                                    R += charValue%2;
+                                    red += charValue%2;
 
                                     // removes the added rightmost bit of the character
                                     // such that next time we can reach the next one
@@ -150,7 +149,7 @@ namespace GroupGSteganography.Model
                             {
                                 if (state == State.Hiding)
                                 {
-                                    G += charValue%2;
+                                    green += charValue%2;
 
                                     charValue /= 2;
                                 }
@@ -160,12 +159,12 @@ namespace GroupGSteganography.Model
                             {
                                 if (state == State.Hiding)
                                 {
-                                    B += charValue%2;
+                                    blue += charValue%2;
 
                                     charValue /= 2;
                                 }
 
-                                bmp.SetPixel(j, i, Color.FromArgb(R, G, B));
+                                bmp.SetPixel(j, i, Color.FromArgb(red, green, blue));
                             }
                                 break;
                         }
