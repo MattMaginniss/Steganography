@@ -38,15 +38,16 @@
         private string rotXEncryption()
         {
             var array = this.UnencryptedText.ToCharArray();
+
             for (var i = 0; i < array.Length; i++)
             {
                 int number = array[i];
 
                 if (number >= 'a' && number <= 'z')
                 {
-                    if (number > 'm')
+                    if (number + this.RotationValue > 'z')
                     {
-                        number -= this.RotationValue;
+                        number -= 26;
                     }
                     else
                     {
@@ -55,16 +56,16 @@
                 }
                 else if (number >= 'A' && number <= 'Z')
                 {
-                    if (number > 'M')
+                    if (number + this.RotationValue > 'Z')
                     {
-                        number -= this.RotationValue;
+                        number -= 26;
                     }
                     else
                     {
                         number += this.RotationValue;
                     }
                 }
-                array[i] = (char)number;
+                array[i] = (char) number;
             }
             return new string(array);
         }
