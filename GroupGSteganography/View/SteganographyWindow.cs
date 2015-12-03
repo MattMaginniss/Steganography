@@ -373,14 +373,10 @@ namespace GroupGSteganography.View
             var extractor = new TextExtractor(this.largePictureBox.Image, headerPixel);
             extractor.Extract();
             var output = extractor.ExtractedText;
-<<<<<<< HEAD
-=======
             if (headerPixel.IsEncrypted)
             {
                 output = " Decrypted: " + output + "\r\n Encrypted: " + extractor.EncryptedText;
             }
-
->>>>>>> gui-development
             this.textBox.Text = output;
         }
 
