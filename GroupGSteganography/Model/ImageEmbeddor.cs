@@ -11,20 +11,26 @@ namespace GroupGSteganography.Model
 
         #endregion
 
+        public ImageEmbeddor(Image sourceImage, Image messageImage)
+        {
+            this.SourceImage = sourceImage;
+            this.MessageImage = messageImage;
+        }
+
         #region Methods
 
         public Image Embed()
         {
-            return hideImage((Bitmap) this.SourceImage, (Bitmap) this.MessageImage);
+            return this.hideImage((Bitmap) this.SourceImage, (Bitmap) this.MessageImage);
         }
 
         #endregion
 
-        private static Bitmap hideImage(Bitmap sourceImage, Bitmap messageImage)
+        private Bitmap hideImage(Bitmap sourceImage, Bitmap messageImage)
         {
             const int hiddenBits = 1;
+            const int shift = (8 - hiddenBits);
 
-            var shift = (8 - hiddenBits);
             var sourceMask = 0xFF << hiddenBits;
             var messageMask = 0xFF >> shift;
             var combinedImage = new Bitmap(sourceImage.Width, sourceImage.Height);
@@ -34,10 +40,23 @@ namespace GroupGSteganography.Model
                 for (var y = 0; y < sourceImage.Height; y++)
                 {
                     var clrVisible = sourceImage.GetPixel(x, y);
-                    var clrHidden = messageImage.GetPixel(x, y);
-                    var r = (clrVisible.R & sourceMask) + ((clrHidden.R >> shift) & messageMask);
-                    var g = (clrVisible.G & sourceMask) + ((clrHidden.G >> shift) & messageMask);
-                    var b = (clrVisible.B & sourceMask) + ((clrHidden.B >> shift) & messageMask);
+                    int r;
+                    int g;
+                    int b;
+                    if (messageImage.Width > x && messageImage.Height > y)
+                    {
+                        var clrHidden = messageImage.GetPixel(x, y);
+                        r = (clrVisible.R & sourceMask) + ((clrHidden.R >> shift) & messageMask);
+                        g = (clrVisible.G & sourceMask) + ((clrHidden.G >> shift) & messageMask);
+                        b = (clrVisible.B & sourceMask) + ((clrHidden.B >> shift) & messageMask);
+                    }
+                    else
+                    {
+                        r = (clrVisible.R & sourceMask) + messageMask;
+                        g = (clrVisible.G & sourceMask) + messageMask;
+                        b = (clrVisible.B & sourceMask) + messageMask;
+                    }
+                   
                     combinedImage.SetPixel(x, y, Color.FromArgb(255, r, g, b));
                 }
             }
