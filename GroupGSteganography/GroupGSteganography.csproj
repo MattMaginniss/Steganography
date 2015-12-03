@@ -50,6 +50,7 @@
     <Compile Include="Model\IEmbeddor.cs" />
     <Compile Include="Model\IExtractor.cs" />
     <Compile Include="Model\ImageEmbeddor.cs" />
+    <Compile Include="Model\ImageExtractor.cs" />
     <Compile Include="Model\TextEmbeddor.cs" />
     <Compile Include="Model\TextExtractor.cs" />
     <Compile Include="View\SteganographyWindow.cs">
