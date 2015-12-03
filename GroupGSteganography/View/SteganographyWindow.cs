@@ -6,6 +6,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using GroupGSteganography.Model;
+using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.View
 {
@@ -314,7 +315,15 @@ namespace GroupGSteganography.View
             IEmbeddor embeddor;
             if (this.textRadioButton.Checked)
             {
-                embeddor = new TextEmbeddor(this.largePictureBox.Image, this.textBox.Text);
+                string textToEmbed = this.textBox.Text;
+
+                if (this.encryptionCheckBox.Checked)
+                {
+                    var encrypter = new TextEncryption(textToEmbed, (int)this.rotationUpDown.Value);
+                    textToEmbed = encrypter.EncryptText();
+                }
+
+                embeddor = new TextEmbeddor(this.largePictureBox.Image, textToEmbed);
                 this.largePictureBox.Image = embeddor.Embed();
             }
             else if (this.checkImageSizes())
@@ -345,7 +354,14 @@ namespace GroupGSteganography.View
             {
                 var extractor = new TextExtractor(this.largePictureBox.Image);
                 extractor.Extract();
-                this.textBox.Text = extractor.ExtractedText;
+                var textToDecrypt = extractor.ExtractedText;
+                if (this.encryptionCheckBox.Checked)
+                {
+                    var decrypter = new TextDecryption(textToDecrypt, (int)this.rotationUpDown.Value);
+                    textToDecrypt = decrypter.DecryptText();
+                }
+
+                this.textBox.Text = textToDecrypt;
             }
             else
             {
