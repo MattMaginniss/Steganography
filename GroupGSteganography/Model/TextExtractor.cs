@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using System.Data.Odbc;
+using System.Drawing;
+using System.Windows.Forms;
 using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.Model
@@ -21,7 +23,15 @@ namespace GroupGSteganography.Model
         /// <value>
         ///     The extracted text.
         /// </value>
-        public string ExtractedText { get; set; }
+        public string ExtractedText { get; private set; }
+
+        /// <summary>
+        ///     Gets or sets the extracted text.
+        /// </summary>
+        /// <value>
+        ///     The extracted text.
+        /// </value>
+        public string EncryptedText { get; private set; }
 
         /// <summary>
         ///     Gets or sets the HeaderPixel, which stores information about the image.
@@ -48,9 +58,11 @@ namespace GroupGSteganography.Model
         public void Extract()
         {
             this.ExtractedText = this.extractText((Bitmap) this.EncodedImage);
+            MessageBox.Show(this.ExtractedText);
             if (this.HeaderPixel.IsEncrypted)
             {
-                var decrypter = new TextDecryption(this.ExtractedText, this.HeaderPixel.RotShift);
+                this.EncryptedText = this.ExtractedText;
+                var decrypter = new TextDecryption(this.EncryptedText, this.HeaderPixel.RotShift);
                 this.ExtractedText = decrypter.DecryptText();
             }
         }
