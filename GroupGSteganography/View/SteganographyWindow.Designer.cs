@@ -280,35 +280,36 @@ namespace GroupGSteganography.View
             this.copyToolStripMenuItem,
             this.pasteToolStripMenuItem});
             this.textFieldContextMenuStrip.Name = "textFieldContextMenuStrip";
-            this.textFieldContextMenuStrip.Size = new System.Drawing.Size(153, 114);
+            this.textFieldContextMenuStrip.Size = new System.Drawing.Size(103, 92);
             // 
             // textFieldLoadToolStripMenuItem
             // 
             this.textFieldLoadToolStripMenuItem.Name = "textFieldLoadToolStripMenuItem";
-            this.textFieldLoadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.textFieldLoadToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
             this.textFieldLoadToolStripMenuItem.Text = "Load";
             this.textFieldLoadToolStripMenuItem.Click += new System.EventHandler(this.textFieldLoadToolStripMenuItem_Click);
             // 
             // textFieldSaveToolStripMenuItem
             // 
             this.textFieldSaveToolStripMenuItem.Name = "textFieldSaveToolStripMenuItem";
-            this.textFieldSaveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.textFieldSaveToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
             this.textFieldSaveToolStripMenuItem.Text = "Save";
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
             this.copyToolStripMenuItem.Text = "Copy";
             // 
             // pasteToolStripMenuItem
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
             this.pasteToolStripMenuItem.Text = "Paste";
             // 
             // encryptButton
             // 
+            this.encryptButton.Enabled = false;
             this.encryptButton.Location = new System.Drawing.Point(443, 117);
             this.encryptButton.Name = "encryptButton";
             this.encryptButton.Size = new System.Drawing.Size(75, 23);
@@ -320,6 +321,7 @@ namespace GroupGSteganography.View
             // 
             // decryptButton
             // 
+            this.decryptButton.Enabled = false;
             this.decryptButton.Location = new System.Drawing.Point(443, 204);
             this.decryptButton.Name = "decryptButton";
             this.decryptButton.Size = new System.Drawing.Size(75, 23);
