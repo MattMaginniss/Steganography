@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.Model
 {
@@ -22,13 +23,22 @@ namespace GroupGSteganography.Model
         /// </value>
         public string ExtractedText { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the HeaderPixel, which stores information about the image.
+        /// </summary>
+        /// <value>
+        ///     The Header Pixel.
+        /// </value>
+        public HeaderPixel HeaderPixel { get; }
+
         #endregion
 
         #region Constructors
 
-        public TextExtractor(Image encodedImage)
+        public TextExtractor(Image encodedImage, HeaderPixel headerPixel)
         {
             this.EncodedImage = encodedImage;
+            this.HeaderPixel = headerPixel;
         }
 
         #endregion
@@ -38,6 +48,11 @@ namespace GroupGSteganography.Model
         public void Extract()
         {
             this.ExtractedText = this.extractText((Bitmap) this.EncodedImage);
+            if (this.HeaderPixel.IsEncrypted)
+            {
+                var decrypter = new TextDecryption(this.ExtractedText, this.HeaderPixel.RotShift);
+                this.ExtractedText = decrypter.DecryptText();
+            }
         }
 
         #endregion
