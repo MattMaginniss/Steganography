@@ -406,5 +406,10 @@ namespace GroupGSteganography.View
             this.setMaxChars();
             this.truncateTextBox();
         }
+
+        private void encryptionCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            this.rotationUpDown.Enabled = (this.encryptionCheckBox.Checked && this.textRadioButton.Checked);
+        }
     }
 }

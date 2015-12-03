@@ -460,6 +460,7 @@ namespace GroupGSteganography.View
             this.encryptionCheckBox.TabIndex = 17;
             this.encryptionCheckBox.Text = "Enable Encryption";
             this.encryptionCheckBox.UseVisualStyleBackColor = true;
+            this.encryptionCheckBox.CheckedChanged += new System.EventHandler(this.encryptionCheckBox_CheckedChanged);
             // 
             // rotationUpDown
             // 
