@@ -316,11 +316,7 @@ namespace GroupGSteganography.View
             var headerPixel = this.createHeaderPixel();
             if (this.textRadioButton.Checked)
             {
-                var textToEmbed = this.textBox.Text;
-
-                textToEmbed = this.encryptText(textToEmbed);
-
-                embeddor = new TextEmbeddor(this.largePictureBox.Image, textToEmbed, headerPixel);
+                embeddor = new TextEmbeddor(this.largePictureBox.Image, this.textBox.Text, headerPixel);
                 this.largePictureBox.Image = embeddor.Embed();
             }
             else if (this.checkImageSizes())
@@ -343,18 +339,7 @@ namespace GroupGSteganography.View
 
             return new HeaderPixel(isImage,isEncrypted,rotShift,bitsPerColorChannel);
         }
-
-        private string encryptText(string textToEmbed)
-        {
-            if (!this.encryptionCheckBox.Checked)
-            {
-                return textToEmbed;
-            }
-            var encrypter = new TextEncryption(textToEmbed, (int) this.rotationUpDown.Value);
-            textToEmbed = encrypter.EncryptText();
-            return textToEmbed;
-        }
-
+        
         private bool checkImageSizes()
         {
             var hiderImage = this.largePictureBox.Image;
@@ -385,16 +370,9 @@ namespace GroupGSteganography.View
         private void extractText(HeaderPixel headerPixel)
         {
             this.textRadioButton.Checked = true;
-            var extractor = new TextExtractor(this.largePictureBox.Image);
+            var extractor = new TextExtractor(this.largePictureBox.Image, headerPixel);
             extractor.Extract();
             var output = extractor.ExtractedText;
-            if (headerPixel.IsEncrypted)
-            {
-                var decrypter = new TextDecryption(output, (int) this.rotationUpDown.Value);
-                var decryptedText = decrypter.DecryptText();
-                output = " Decrypted: " + decryptedText + "\r\n Encrypted: " + output;
-            }
-
             this.textBox.Text = output;
         }
 
