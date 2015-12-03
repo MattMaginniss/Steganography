@@ -367,26 +367,41 @@ namespace GroupGSteganography.View
 
         private void decryptButton_Click(object sender, EventArgs e)
         {
-            this.displayHeaderPixelInfo();
-            if (this.textRadioButton.Checked)
-            {
-                var extractor = new TextExtractor(this.largePictureBox.Image);
-                extractor.Extract();
-                var textToDecrypt = extractor.ExtractedText;
-                if (this.encryptionCheckBox.Checked)
-                {
-                    var decrypter = new TextDecryption(textToDecrypt, (int)this.rotationUpDown.Value);
-                    textToDecrypt = decrypter.DecryptText();
-                }
+            this.displayHeaderPixelInfo();//TODO test method call to ensure proper output
 
-                this.textBox.Text = textToDecrypt;
+            var image = (Bitmap) this.largePictureBox.Image;
+            var headerPixel = HeaderPixel.From(image.GetPixel(0,0));
+
+            if (headerPixel.IsImage)
+            {
+                this.extractImage(headerPixel);
             }
             else
             {
-                var extractor = new ImageExtractor(this.largePictureBox.Image);
-                extractor.Extract();
-                this.smallPictureBox.Image = extractor.ExtractedImage;
+                this.extractText(headerPixel);
             }
+        }
+
+        private void extractText(HeaderPixel headerPixel)
+        {
+            this.textRadioButton.Checked = true;
+            var extractor = new TextExtractor(this.largePictureBox.Image);
+            extractor.Extract();
+            var textToDecrypt = extractor.ExtractedText;
+            if (headerPixel.IsEncrypted)
+            {
+                var decrypter = new TextDecryption(textToDecrypt, (int) this.rotationUpDown.Value);
+                textToDecrypt = decrypter.DecryptText();
+            }
+
+            this.textBox.Text = textToDecrypt;
+        }
+
+        private void extractImage(HeaderPixel headerPixel)
+        {
+            var extractor = new ImageExtractor(this.largePictureBox.Image);
+            extractor.Extract();
+            this.smallPictureBox.Image = extractor.ExtractedImage;
         }
 
         private void displayHeaderPixelInfo()
