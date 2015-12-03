@@ -387,14 +387,15 @@ namespace GroupGSteganography.View
             this.textRadioButton.Checked = true;
             var extractor = new TextExtractor(this.largePictureBox.Image);
             extractor.Extract();
-            var textToDecrypt = extractor.ExtractedText;
+            var output = extractor.ExtractedText;
             if (headerPixel.IsEncrypted)
             {
-                var decrypter = new TextDecryption(textToDecrypt, (int) this.rotationUpDown.Value);
-                textToDecrypt = decrypter.DecryptText();
+                var decrypter = new TextDecryption(output, (int) this.rotationUpDown.Value);
+                var decryptedText = decrypter.DecryptText();
+                output = " Decrypted: " + decryptedText + "\r\n Encrypted: " + output;
             }
 
-            this.textBox.Text = textToDecrypt;
+            this.textBox.Text = output;
         }
 
         private void extractImage(HeaderPixel headerPixel)

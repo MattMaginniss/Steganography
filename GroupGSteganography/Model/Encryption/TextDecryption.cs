@@ -73,7 +73,7 @@
                         number -= this.RotationValue;
                     }
                 }
-                array[i] = (char) number;
+                array[i] = (char)number;
             }
             return new string(array);
         }
