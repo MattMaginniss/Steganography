@@ -318,8 +318,6 @@ namespace GroupGSteganography.View
             {
                 var textToEmbed = this.textBox.Text;
 
-                textToEmbed = this.encryptText(textToEmbed);
-
                 embeddor = new TextEmbeddor(this.largePictureBox.Image, textToEmbed, headerPixel);
                 this.largePictureBox.Image = embeddor.Embed();
             }
@@ -342,17 +340,6 @@ namespace GroupGSteganography.View
             var bitsPerColorChannel = (this.qualityBar.Value+1);
 
             return new HeaderPixel(isImage,isEncrypted,rotShift,bitsPerColorChannel);
-        }
-
-        private string encryptText(string textToEmbed)
-        {
-            if (!this.encryptionCheckBox.Checked)
-            {
-                return textToEmbed;
-            }
-            var encrypter = new TextEncryption(textToEmbed, (int) this.rotationUpDown.Value);
-            textToEmbed = encrypter.EncryptText();
-            return textToEmbed;
         }
 
         private bool checkImageSizes()
