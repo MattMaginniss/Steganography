@@ -56,6 +56,7 @@
                     if (number + this.RotationValue > 'z')
                     {
                         number -= 26;
+                        number += this.RotationValue;
                     }
                     else
                     {
@@ -67,13 +68,14 @@
                     if (number + this.RotationValue > 'Z')
                     {
                         number -= 26;
+                        number += this.RotationValue;
                     }
                     else
                     {
                         number += this.RotationValue;
                     }
                 }
-                array[i] = (char)number;
+                array[i] = (char) number;
             }
             return new string(array);
         }
