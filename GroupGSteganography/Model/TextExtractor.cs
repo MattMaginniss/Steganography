@@ -37,7 +37,7 @@ namespace GroupGSteganography.Model
 
         public void Extract()
         {
-            this.ExtractedText = extractText((Bitmap) this.EncodedImage);
+            this.ExtractedText = this.extractText((Bitmap) this.EncodedImage);
         }
 
         #endregion
