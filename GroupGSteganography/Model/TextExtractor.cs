@@ -58,7 +58,6 @@ namespace GroupGSteganography.Model
         public void Extract()
         {
             this.ExtractedText = this.extractText((Bitmap) this.EncodedImage);
-            MessageBox.Show(this.ExtractedText);
             if (this.HeaderPixel.IsEncrypted)
             {
                 this.EncryptedText = this.ExtractedText;

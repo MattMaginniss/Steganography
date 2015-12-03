@@ -293,7 +293,7 @@ namespace GroupGSteganography.View
             }
             var image = this.largePictureBox.Image;
             var maxChars = (image.Width*image.Height)/16.0;
-            var maxCharsInt = (int) Math.Truncate(maxChars);
+            var maxCharsInt = (int) Math.Truncate(maxChars)*3;
             maxCharsInt *= (this.qualityBar.Value+1);
             this.textBox.MaxLength = maxCharsInt;
             this.truncateTextBox();
@@ -318,11 +318,14 @@ namespace GroupGSteganography.View
             {
                 embeddor = new TextEmbeddor(this.largePictureBox.Image, this.textBox.Text, headerPixel);
                 this.largePictureBox.Image = embeddor.Embed();
+                this.textBox.Text = "";
+                MessageBox.Show("Successfully embedded!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
             else if (this.checkImageSizes())
             {
                 embeddor = new ImageEmbeddor(this.largePictureBox.Image, this.smallPictureBox.Image, headerPixel);
                 this.largePictureBox.Image = embeddor.Embed();
+                MessageBox.Show("Successfully embedded!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
             else
             {
@@ -344,10 +347,10 @@ namespace GroupGSteganography.View
         {
             var hiderImage = this.largePictureBox.Image;
             var hiddenImage = this.smallPictureBox.Image;
-            var hiderResolution = hiderImage.Width*hiderImage.Height;
-            var hiddenResolution = hiddenImage.Width*hiddenImage.Height;
 
-            return (hiderResolution >= hiddenResolution);
+            var isValid = hiderImage.Width > hiddenImage.Width && hiderImage.Height > hiddenImage.Height;
+
+            return isValid;
         }
 
         private void decryptButton_Click(object sender, EventArgs e)
@@ -378,6 +381,7 @@ namespace GroupGSteganography.View
 
         private void extractImage(HeaderPixel headerPixel)
         {
+            this.imageRadioButton.Checked = true;
             var extractor = new ImageExtractor(this.largePictureBox.Image);
             extractor.Extract();
             this.smallPictureBox.Image = extractor.ExtractedImage;
@@ -450,6 +454,14 @@ namespace GroupGSteganography.View
         private void encryptionCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             this.rotationUpDown.Enabled = (this.encryptionCheckBox.Checked && this.textRadioButton.Checked);
+        }
+
+        private void rotHelpLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            MessageBox.Show(
+                @"The encryption used in this program is a ceaser cipher, which shifts the letters down a given number of 'slots.'" +
+                    @"For example, with a given shift of 1, A will become B, B will become C, and so on." ,
+                @"Encryption Help", MessageBoxButtons.OK, MessageBoxIcon.Question);
         }
     }
 }
