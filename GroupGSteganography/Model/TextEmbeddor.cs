@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.Model
 {
@@ -30,7 +31,7 @@ namespace GroupGSteganography.Model
         /// <value>
         ///     The embedded text.
         /// </value>
-        public string MessageText { get; }
+        public string MessageText { get; private set; }
 
         /// <summary>
         ///     Gets or sets the HeaderPixel, which stores information about the image.
@@ -49,7 +50,7 @@ namespace GroupGSteganography.Model
         /// </summary>
         /// <param name="sourceImage">The source image.</param>
         /// <param name="textToEmbed">The text to embed.</param>
-        /// <param name="headerPixel">The header pixel</param> 
+        /// <param name="headerPixel">The header pixel</param>
         public TextEmbeddor(Image sourceImage, string textToEmbed, HeaderPixel headerPixel)
         {
             this.SourceImage = sourceImage;
@@ -67,6 +68,11 @@ namespace GroupGSteganography.Model
         /// <returns>the image with embedded text.</returns>
         public Image Embed()
         {
+            if (this.HeaderPixel.IsEncrypted)
+            {
+                var encrypter = new TextEncryption(this.MessageText, this.HeaderPixel.RotShift);
+                this.MessageText = encrypter.EncryptText();
+            }
             var bmp = (Bitmap) this.SourceImage;
             var text = this.MessageText;
 
