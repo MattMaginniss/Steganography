@@ -35,8 +35,8 @@ namespace GroupGSteganography.Model
             const int hiddenBits = 1;
             const int shift = (8 - hiddenBits);
 
-            var sourceMask = 0xFF << hiddenBits;
-            var messageMask = 0xFF >> shift;
+            const int sourceMask = 0xFF << hiddenBits;
+            const int messageMask = 0xFF >> shift;
             var combinedImage = new Bitmap(sourceImage.Width, sourceImage.Height);
 
             for (var x = 0; x < sourceImage.Width; x++)

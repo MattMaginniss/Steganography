@@ -72,7 +72,11 @@ namespace GroupGSteganography.View
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.helpLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.corruptionHelpLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.encryptionCheckBox = new System.Windows.Forms.CheckBox();
+            this.rotationUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
+            this.rotHelpLinkLabel = new System.Windows.Forms.LinkLabel();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.largePictureBox)).BeginInit();
             this.bigPictureBoxContextMenu.SuspendLayout();
@@ -80,6 +84,7 @@ namespace GroupGSteganography.View
             this.smallPictureBoxContextMenu.SuspendLayout();
             this.textFieldContextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.qualityBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rotationUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -211,19 +216,20 @@ namespace GroupGSteganography.View
             this.bigPictureBoxSaveToolStripMenuItem});
             this.bigPictureBoxContextMenu.Name = "bigPictureBoxContextMenu";
             this.bigPictureBoxContextMenu.Size = new System.Drawing.Size(101, 48);
-            this.bigPictureBoxContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.bigPictureBoxContextMenu_Opening);
             // 
             // bigPictureBoxLoadToolStripMenuItem
             // 
             this.bigPictureBoxLoadToolStripMenuItem.Name = "bigPictureBoxLoadToolStripMenuItem";
             this.bigPictureBoxLoadToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.bigPictureBoxLoadToolStripMenuItem.Text = "&Load";
+            this.bigPictureBoxLoadToolStripMenuItem.Click += new System.EventHandler(this.bigPictureBoxLoadToolStripMenuItem_Click);
             // 
             // bigPictureBoxSaveToolStripMenuItem
             // 
             this.bigPictureBoxSaveToolStripMenuItem.Name = "bigPictureBoxSaveToolStripMenuItem";
             this.bigPictureBoxSaveToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.bigPictureBoxSaveToolStripMenuItem.Text = "&Save";
+            this.bigPictureBoxSaveToolStripMenuItem.Click += new System.EventHandler(this.bigPictureBoxSaveToolStripMenuItem_Click);
             // 
             // smallPictureBox
             // 
@@ -239,8 +245,6 @@ namespace GroupGSteganography.View
             // 
             // smallPictureBoxContextMenu
             // 
-            this.smallPictureBoxContextMenu.AutoClose = false;
-            this.smallPictureBoxContextMenu.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.smallPictureBoxContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.smallPictureBoxLoadToolStripMenuItem,
             this.smallPictureBoxSaveToolStripMenuItem});
@@ -252,12 +256,14 @@ namespace GroupGSteganography.View
             this.smallPictureBoxLoadToolStripMenuItem.Name = "smallPictureBoxLoadToolStripMenuItem";
             this.smallPictureBoxLoadToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.smallPictureBoxLoadToolStripMenuItem.Text = "Load";
+            this.smallPictureBoxLoadToolStripMenuItem.Click += new System.EventHandler(this.smallPictureBoxLoadToolStripMenuItem_Click);
             // 
             // smallPictureBoxSaveToolStripMenuItem
             // 
             this.smallPictureBoxSaveToolStripMenuItem.Name = "smallPictureBoxSaveToolStripMenuItem";
             this.smallPictureBoxSaveToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.smallPictureBoxSaveToolStripMenuItem.Text = "Save";
+            this.smallPictureBoxSaveToolStripMenuItem.Click += new System.EventHandler(this.smallPictureBoxSaveToolStripMenuItem_Click);
             // 
             // textBox
             // 
@@ -284,6 +290,7 @@ namespace GroupGSteganography.View
             this.textFieldLoadToolStripMenuItem.Name = "textFieldLoadToolStripMenuItem";
             this.textFieldLoadToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
             this.textFieldLoadToolStripMenuItem.Text = "Load";
+            this.textFieldLoadToolStripMenuItem.Click += new System.EventHandler(this.textFieldLoadToolStripMenuItem_Click);
             // 
             // textFieldSaveToolStripMenuItem
             // 
@@ -305,22 +312,24 @@ namespace GroupGSteganography.View
             // 
             // encryptButton
             // 
+            this.encryptButton.Enabled = false;
             this.encryptButton.Location = new System.Drawing.Point(443, 117);
             this.encryptButton.Name = "encryptButton";
             this.encryptButton.Size = new System.Drawing.Size(75, 23);
             this.encryptButton.TabIndex = 1;
-            this.encryptButton.Text = "Encrypt";
+            this.encryptButton.Text = "Embed";
             this.encryptButton.UseVisualStyleBackColor = true;
             this.encryptButton.Click += new System.EventHandler(this.encryptButton_Click);
             this.encryptButton.Paint += new System.Windows.Forms.PaintEventHandler(this.encryptButton_Paint);
             // 
             // decryptButton
             // 
+            this.decryptButton.Enabled = false;
             this.decryptButton.Location = new System.Drawing.Point(443, 204);
             this.decryptButton.Name = "decryptButton";
             this.decryptButton.Size = new System.Drawing.Size(75, 23);
             this.decryptButton.TabIndex = 2;
-            this.decryptButton.Text = "Decrypt";
+            this.decryptButton.Text = "Extract";
             this.decryptButton.UseVisualStyleBackColor = true;
             this.decryptButton.Click += new System.EventHandler(this.decryptButton_Click);
             // 
@@ -329,7 +338,7 @@ namespace GroupGSteganography.View
             this.imageRadioButton.AutoSize = true;
             this.imageRadioButton.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.imageRadioButton.Checked = true;
-            this.imageRadioButton.Location = new System.Drawing.Point(420, 281);
+            this.imageRadioButton.Location = new System.Drawing.Point(420, 246);
             this.imageRadioButton.Name = "imageRadioButton";
             this.imageRadioButton.Size = new System.Drawing.Size(98, 17);
             this.imageRadioButton.TabIndex = 3;
@@ -342,7 +351,7 @@ namespace GroupGSteganography.View
             // 
             this.textRadioButton.AutoSize = true;
             this.textRadioButton.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.textRadioButton.Location = new System.Drawing.Point(428, 315);
+            this.textRadioButton.Location = new System.Drawing.Point(428, 269);
             this.textRadioButton.Name = "textRadioButton";
             this.textRadioButton.Size = new System.Drawing.Size(90, 17);
             this.textRadioButton.TabIndex = 4;
@@ -396,16 +405,17 @@ namespace GroupGSteganography.View
             // 
             this.qualityBar.Enabled = false;
             this.qualityBar.LargeChange = 1;
-            this.qualityBar.Location = new System.Drawing.Point(420, 383);
+            this.qualityBar.Location = new System.Drawing.Point(420, 332);
             this.qualityBar.Maximum = 2;
             this.qualityBar.Name = "qualityBar";
             this.qualityBar.Size = new System.Drawing.Size(108, 45);
             this.qualityBar.TabIndex = 9;
+            this.qualityBar.Scroll += new System.EventHandler(this.qualityBar_Scroll);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(425, 412);
+            this.label1.Location = new System.Drawing.Point(425, 364);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(27, 13);
             this.label1.TabIndex = 13;
@@ -414,7 +424,7 @@ namespace GroupGSteganography.View
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(489, 412);
+            this.label2.Location = new System.Drawing.Point(489, 364);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(29, 13);
             this.label2.TabIndex = 14;
@@ -423,29 +433,87 @@ namespace GroupGSteganography.View
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(425, 364);
+            this.label3.Location = new System.Drawing.Point(417, 316);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(87, 13);
             this.label3.TabIndex = 15;
             this.label3.Text = "Image Corruption";
             // 
-            // helpLinkLabel
+            // corruptionHelpLinkLabel
             // 
-            this.helpLinkLabel.AutoSize = true;
-            this.helpLinkLabel.Location = new System.Drawing.Point(509, 364);
-            this.helpLinkLabel.Name = "helpLinkLabel";
-            this.helpLinkLabel.Size = new System.Drawing.Size(19, 13);
-            this.helpLinkLabel.TabIndex = 16;
-            this.helpLinkLabel.TabStop = true;
-            this.helpLinkLabel.Text = "(?)";
-            this.helpLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.corruptionHelpLinkLabel.AutoSize = true;
+            this.corruptionHelpLinkLabel.Location = new System.Drawing.Point(499, 316);
+            this.corruptionHelpLinkLabel.Name = "corruptionHelpLinkLabel";
+            this.corruptionHelpLinkLabel.Size = new System.Drawing.Size(19, 13);
+            this.corruptionHelpLinkLabel.TabIndex = 16;
+            this.corruptionHelpLinkLabel.TabStop = true;
+            this.corruptionHelpLinkLabel.Text = "(?)";
+            this.corruptionHelpLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // encryptionCheckBox
+            // 
+            this.encryptionCheckBox.AutoSize = true;
+            this.encryptionCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.encryptionCheckBox.Location = new System.Drawing.Point(416, 389);
+            this.encryptionCheckBox.Name = "encryptionCheckBox";
+            this.encryptionCheckBox.Size = new System.Drawing.Size(112, 17);
+            this.encryptionCheckBox.TabIndex = 17;
+            this.encryptionCheckBox.Text = "Enable Encryption";
+            this.encryptionCheckBox.UseVisualStyleBackColor = true;
+            this.encryptionCheckBox.CheckedChanged += new System.EventHandler(this.encryptionCheckBox_CheckedChanged);
+            // 
+            // rotationUpDown
+            // 
+            this.rotationUpDown.Enabled = false;
+            this.rotationUpDown.Location = new System.Drawing.Point(484, 415);
+            this.rotationUpDown.Maximum = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
+            this.rotationUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.rotationUpDown.Name = "rotationUpDown";
+            this.rotationUpDown.Size = new System.Drawing.Size(44, 20);
+            this.rotationUpDown.TabIndex = 18;
+            this.rotationUpDown.Value = new decimal(new int[] {
+            13,
+            0,
+            0,
+            0});
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(417, 417);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(47, 13);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "Rotation";
+            // 
+            // rotHelpLinkLabel
+            // 
+            this.rotHelpLinkLabel.AutoSize = true;
+            this.rotHelpLinkLabel.Location = new System.Drawing.Point(459, 417);
+            this.rotHelpLinkLabel.Name = "rotHelpLinkLabel";
+            this.rotHelpLinkLabel.Size = new System.Drawing.Size(19, 13);
+            this.rotHelpLinkLabel.TabIndex = 20;
+            this.rotHelpLinkLabel.TabStop = true;
+            this.rotHelpLinkLabel.Text = "(?)";
             // 
             // SteganographyWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(868, 445);
-            this.Controls.Add(this.helpLinkLabel);
+            this.Controls.Add(this.rotHelpLinkLabel);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.rotationUpDown);
+            this.Controls.Add(this.encryptionCheckBox);
+            this.Controls.Add(this.corruptionHelpLinkLabel);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -473,6 +541,7 @@ namespace GroupGSteganography.View
             this.smallPictureBoxContextMenu.ResumeLayout(false);
             this.textFieldContextMenuStrip.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.qualityBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rotationUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -506,7 +575,7 @@ namespace GroupGSteganography.View
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.LinkLabel helpLinkLabel;
+        private System.Windows.Forms.LinkLabel corruptionHelpLinkLabel;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem encryptedImageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem decryptedImageToolStripMenuItem;
@@ -521,6 +590,10 @@ namespace GroupGSteganography.View
         private System.Windows.Forms.ToolStripMenuItem textFieldSaveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
+        private System.Windows.Forms.CheckBox encryptionCheckBox;
+        private System.Windows.Forms.NumericUpDown rotationUpDown;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.LinkLabel rotHelpLinkLabel;
     }
 
 
