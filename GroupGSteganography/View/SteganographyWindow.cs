@@ -253,22 +253,34 @@ namespace GroupGSteganography.View
 
         private void encryptButton_Click(object sender, EventArgs e)
         {
+            IEmbeddor embeddor;
             if (this.textRadioButton.Checked)
             {
-                IEmbeddor embeddor = new TextEmbeddor(this.largePictureBox.Image, this.textBox.Text);
+                embeddor = new TextEmbeddor(this.largePictureBox.Image, this.textBox.Text);
+                this.largePictureBox.Image = embeddor.Embed();
+            }
+            else
+            {
+                embeddor = new ImageEmbeddor(this.largePictureBox.Image, this.smallPictureBox.Image);
                 this.largePictureBox.Image = embeddor.Embed();
             }
         }
 
         private void decryptButton_Click(object sender, EventArgs e)
         {
-            if (!this.textRadioButton.Checked)
+
+            if (this.textRadioButton.Checked)
             {
-                return;
+                TextExtractor extractor = new TextExtractor(this.largePictureBox.Image);
+                extractor.Extract();
+                this.textBox.Text = extractor.ExtractedText;
             }
-            var extractor = new TextExtractor(this.largePictureBox.Image);
-            extractor.Extract();
-            this.textBox.Text = extractor.ExtractedText;
+            else
+            {
+                ImageExtractor extractor = new ImageExtractor(this.largePictureBox.Image);
+                extractor.Extract();
+                this.largePictureBox.Image = extractor.ExtractedImage;
+            }
         }
 
         private void smallPictureBoxLoadToolStripMenuItem_Click(object sender, EventArgs e)
