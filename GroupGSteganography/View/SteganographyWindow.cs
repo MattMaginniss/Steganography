@@ -234,21 +234,32 @@ namespace GroupGSteganography.View
             this.saveDecryptedButton.Enabled = canLoad;
             this.encryptedImageToolStripMenuItem.Enabled = canLoad;
             this.smallPictureBoxSaveToolStripMenuItem.Enabled = canLoad;
-            this.checkBothImageBoxes();
+            if (this.imageRadioButton.Checked)
+            {
+                this.checkBothImageBoxes();
+            }
         }
 
         private void checkBothImageBoxes()
         {
-            //TODO enable button diabling here
+            var bothImagesLoaded = (this.largePictureBox.Image != null && this.smallPictureBox.Image != null);
+
+            this.encryptButton.Enabled = bothImagesLoaded;
         }
+
 
         private void largePictureBox_Paint(object sender, PaintEventArgs e)
         {
-            var canLoad = this.largePictureBox.Image != null;
-            this.saveBigImageButton.Enabled = canLoad;
-            this.decryptedImageToolStripMenuItem.Enabled = canLoad;
-            this.bigPictureBoxSaveToolStripMenuItem.Enabled = canLoad;
-            this.checkBothImageBoxes();
+            var isLoaded = this.largePictureBox.Image != null;
+            this.saveBigImageButton.Enabled = isLoaded;
+            this.decryptedImageToolStripMenuItem.Enabled = isLoaded;
+            this.bigPictureBoxSaveToolStripMenuItem.Enabled = isLoaded;
+            this.decryptButton.Enabled = isLoaded;
+            if (this.imageRadioButton.Checked)
+            {
+                this.checkBothImageBoxes();
+
+            }
         }
 
         private void encryptButton_Click(object sender, EventArgs e)
