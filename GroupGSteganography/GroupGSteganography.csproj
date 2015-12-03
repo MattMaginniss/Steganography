@@ -51,6 +51,7 @@
     <Compile Include="Model\Encryption\ImageEncryption.cs" />
     <Compile Include="Model\Encryption\TextDecryption.cs" />
     <Compile Include="Model\Encryption\TextEncryption.cs" />
+    <Compile Include="Model\HeaderPixel.cs" />
     <Compile Include="Model\IEmbeddor.cs" />
     <Compile Include="Model\IExtractor.cs" />
     <Compile Include="Model\ImageEmbeddor.cs" />
@@ -91,9 +92,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controller\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

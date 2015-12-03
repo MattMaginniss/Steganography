@@ -313,28 +313,46 @@ namespace GroupGSteganography.View
         private void encryptButton_Click(object sender, EventArgs e)
         {
             IEmbeddor embeddor;
+            var headerPixel = this.createHeaderPixel();
             if (this.textRadioButton.Checked)
             {
-                string textToEmbed = this.textBox.Text;
+                var textToEmbed = this.textBox.Text;
 
-                if (this.encryptionCheckBox.Checked)
-                {
-                    var encrypter = new TextEncryption(textToEmbed, (int)this.rotationUpDown.Value);
-                    textToEmbed = encrypter.EncryptText();
-                }
+                textToEmbed = this.encryptText(textToEmbed);
 
                 embeddor = new TextEmbeddor(this.largePictureBox.Image, textToEmbed);
                 this.largePictureBox.Image = embeddor.Embed();
             }
             else if (this.checkImageSizes())
             {
-                embeddor = new ImageEmbeddor(this.largePictureBox.Image, this.smallPictureBox.Image);
+                embeddor = new ImageEmbeddor(this.largePictureBox.Image, this.smallPictureBox.Image, headerPixel);
                 this.largePictureBox.Image = embeddor.Embed();
             }
             else
             {
                 MessageBox.Show(@"Encrypted image is too large for hider image", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private HeaderPixel createHeaderPixel()
+        {
+            var isImage = this.imageRadioButton.Checked;
+            var isEncrypted = this.encryptionCheckBox.Checked;
+            var rotShift =(int) this.rotationUpDown.Value;
+            var bitsPerColorChannel = (this.qualityBar.Value+1);
+
+            return new HeaderPixel(isImage,isEncrypted,rotShift,bitsPerColorChannel);
+        }
+
+        private string encryptText(string textToEmbed)
+        {
+            if (!this.encryptionCheckBox.Checked)
+            {
+                return textToEmbed;
+            }
+            var encrypter = new TextEncryption(textToEmbed, (int) this.rotationUpDown.Value);
+            textToEmbed = encrypter.EncryptText();
+            return textToEmbed;
         }
 
         private bool checkImageSizes()
@@ -349,7 +367,7 @@ namespace GroupGSteganography.View
 
         private void decryptButton_Click(object sender, EventArgs e)
         {
-
+            this.displayHeaderPixelInfo();
             if (this.textRadioButton.Checked)
             {
                 var extractor = new TextExtractor(this.largePictureBox.Image);
@@ -369,6 +387,18 @@ namespace GroupGSteganography.View
                 extractor.Extract();
                 this.smallPictureBox.Image = extractor.ExtractedImage;
             }
+        }
+
+        private void displayHeaderPixelInfo()
+        {
+            var image = (Bitmap) this.largePictureBox.Image;
+            var headerPixel = HeaderPixel.From(image.GetPixel(0, 0));
+            Debug.WriteLine(headerPixel.IsImage);
+            Debug.WriteLine(headerPixel.IsEncrypted);
+            Debug.WriteLine(headerPixel.RotShift);
+            Debug.WriteLine(headerPixel.BitsPerColorChannel);
+
+
         }
 
         private void smallPictureBoxLoadToolStripMenuItem_Click(object sender, EventArgs e)

@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Security.Cryptography.X509Certificates;
 
 namespace GroupGSteganography.Model
 {
@@ -8,15 +9,18 @@ namespace GroupGSteganography.Model
 
         public Image SourceImage { get; set; }
         public Image MessageImage { get; set; }
+        public HeaderPixel HeaderPixel { get; set; }
+
 
         #endregion
 
         #region Constructors
 
-        public ImageEmbeddor(Image sourceImage, Image messageImage)
+        public ImageEmbeddor(Image sourceImage, Image messageImage, HeaderPixel headerPixel)
         {
             this.SourceImage = sourceImage;
             this.MessageImage = messageImage;
+            this.HeaderPixel = headerPixel;
         }
 
         #endregion
@@ -64,6 +68,7 @@ namespace GroupGSteganography.Model
                     combinedImage.SetPixel(x, y, Color.FromArgb(255, r, g, b));
                 }
             }
+            combinedImage.SetPixel(0,0, this.HeaderPixel.GetColor());
             return combinedImage;
         }
     }
