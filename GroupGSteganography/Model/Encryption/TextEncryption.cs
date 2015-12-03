@@ -5,11 +5,17 @@
         #region Properties
 
         private string UnencryptedText { get; }
-        private int RotationValue { get; set; }
+        private int RotationValue { get; }
 
         #endregion
 
         #region Constructors
+
+        public TextEncryption(string unencryptedText)
+        {
+            this.UnencryptedText = unencryptedText;
+            this.RotationValue = 13;
+        }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="TextEncryption" /> class.
@@ -26,6 +32,11 @@
 
         public string EncryptText()
         {
+            return this.rotXEncryption();
+        }
+
+        private string rotXEncryption()
+        {
             var array = this.UnencryptedText.ToCharArray();
             for (var i = 0; i < array.Length; i++)
             {
@@ -35,25 +46,25 @@
                 {
                     if (number > 'm')
                     {
-                        number -= 13;
+                        number -= this.RotationValue;
                     }
                     else
                     {
-                        number += 13;
+                        number += this.RotationValue;
                     }
                 }
                 else if (number >= 'A' && number <= 'Z')
                 {
                     if (number > 'M')
                     {
-                        number -= 13;
+                        number -= this.RotationValue;
                     }
                     else
                     {
-                        number += 13;
+                        number += this.RotationValue;
                     }
                 }
-                array[i] = (char) number;
+                array[i] = (char)number;
             }
             return new string(array);
         }
