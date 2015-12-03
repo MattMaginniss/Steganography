@@ -47,6 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Encryption\ImageDecryption.cs" />
+    <Compile Include="Model\Encryption\ImageEncryption.cs" />
+    <Compile Include="Model\Encryption\TextDecryption.cs" />
+    <Compile Include="Model\Encryption\TextEncryption.cs" />
     <Compile Include="Model\IEmbeddor.cs" />
     <Compile Include="Model\IExtractor.cs" />
     <Compile Include="Model\ImageEmbeddor.cs" />

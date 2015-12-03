@@ -53,7 +53,7 @@
 
                 if (number >= 'a' && number <= 'z')
                 {
-                    if (number - this.RotationValue > 'a')
+                    if (number - this.RotationValue < 'a')
                     {
                         number += 26;
                     }
@@ -64,7 +64,7 @@
                 }
                 else if (number >= 'A' && number <= 'Z')
                 {
-                    if (number - this.RotationValue > 'A')
+                    if (number - this.RotationValue < 'A')
                     {
                         number += 26;
                     }
