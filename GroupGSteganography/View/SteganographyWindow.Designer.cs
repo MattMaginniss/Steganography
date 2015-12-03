@@ -211,19 +211,20 @@ namespace GroupGSteganography.View
             this.bigPictureBoxSaveToolStripMenuItem});
             this.bigPictureBoxContextMenu.Name = "bigPictureBoxContextMenu";
             this.bigPictureBoxContextMenu.Size = new System.Drawing.Size(101, 48);
-            this.bigPictureBoxContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.bigPictureBoxContextMenu_Opening);
             // 
             // bigPictureBoxLoadToolStripMenuItem
             // 
             this.bigPictureBoxLoadToolStripMenuItem.Name = "bigPictureBoxLoadToolStripMenuItem";
             this.bigPictureBoxLoadToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.bigPictureBoxLoadToolStripMenuItem.Text = "&Load";
+            this.bigPictureBoxLoadToolStripMenuItem.Click += new System.EventHandler(this.bigPictureBoxLoadToolStripMenuItem_Click);
             // 
             // bigPictureBoxSaveToolStripMenuItem
             // 
             this.bigPictureBoxSaveToolStripMenuItem.Name = "bigPictureBoxSaveToolStripMenuItem";
             this.bigPictureBoxSaveToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.bigPictureBoxSaveToolStripMenuItem.Text = "&Save";
+            this.bigPictureBoxSaveToolStripMenuItem.Click += new System.EventHandler(this.bigPictureBoxSaveToolStripMenuItem_Click);
             // 
             // smallPictureBox
             // 
@@ -252,12 +253,14 @@ namespace GroupGSteganography.View
             this.smallPictureBoxLoadToolStripMenuItem.Name = "smallPictureBoxLoadToolStripMenuItem";
             this.smallPictureBoxLoadToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.smallPictureBoxLoadToolStripMenuItem.Text = "Load";
+            this.smallPictureBoxLoadToolStripMenuItem.Click += new System.EventHandler(this.smallPictureBoxLoadToolStripMenuItem_Click);
             // 
             // smallPictureBoxSaveToolStripMenuItem
             // 
             this.smallPictureBoxSaveToolStripMenuItem.Name = "smallPictureBoxSaveToolStripMenuItem";
             this.smallPictureBoxSaveToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.smallPictureBoxSaveToolStripMenuItem.Text = "Save";
+            this.smallPictureBoxSaveToolStripMenuItem.Click += new System.EventHandler(this.smallPictureBoxSaveToolStripMenuItem_Click);
             // 
             // textBox
             // 
@@ -277,30 +280,31 @@ namespace GroupGSteganography.View
             this.copyToolStripMenuItem,
             this.pasteToolStripMenuItem});
             this.textFieldContextMenuStrip.Name = "textFieldContextMenuStrip";
-            this.textFieldContextMenuStrip.Size = new System.Drawing.Size(103, 92);
+            this.textFieldContextMenuStrip.Size = new System.Drawing.Size(153, 114);
             // 
             // textFieldLoadToolStripMenuItem
             // 
             this.textFieldLoadToolStripMenuItem.Name = "textFieldLoadToolStripMenuItem";
-            this.textFieldLoadToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.textFieldLoadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.textFieldLoadToolStripMenuItem.Text = "Load";
+            this.textFieldLoadToolStripMenuItem.Click += new System.EventHandler(this.textFieldLoadToolStripMenuItem_Click);
             // 
             // textFieldSaveToolStripMenuItem
             // 
             this.textFieldSaveToolStripMenuItem.Name = "textFieldSaveToolStripMenuItem";
-            this.textFieldSaveToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.textFieldSaveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.textFieldSaveToolStripMenuItem.Text = "Save";
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.copyToolStripMenuItem.Text = "Copy";
             // 
             // pasteToolStripMenuItem
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.pasteToolStripMenuItem.Text = "Paste";
             // 
             // encryptButton
