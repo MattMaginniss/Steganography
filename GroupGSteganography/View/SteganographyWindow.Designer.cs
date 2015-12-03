@@ -240,8 +240,6 @@ namespace GroupGSteganography.View
             // 
             // smallPictureBoxContextMenu
             // 
-            this.smallPictureBoxContextMenu.AutoClose = false;
-            this.smallPictureBoxContextMenu.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.smallPictureBoxContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.smallPictureBoxLoadToolStripMenuItem,
             this.smallPictureBoxSaveToolStripMenuItem});
@@ -407,6 +405,7 @@ namespace GroupGSteganography.View
             this.qualityBar.Name = "qualityBar";
             this.qualityBar.Size = new System.Drawing.Size(108, 45);
             this.qualityBar.TabIndex = 9;
+            this.qualityBar.Scroll += new System.EventHandler(this.qualityBar_Scroll);
             // 
             // label1
             // 
