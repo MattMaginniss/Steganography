@@ -11,6 +11,10 @@
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="TextEncryption" /> class.
+        /// </summary>
+        /// <param name="unencryptedText">The unencrypted text.</param>
         public TextEncryption(string unencryptedText)
         {
             this.UnencryptedText = unencryptedText;
@@ -30,6 +34,10 @@
 
         #endregion
 
+        /// <summary>
+        ///     Encrypts the text.
+        /// </summary>
+        /// <returns>Encrypted text using the ROTx method. x standing for the rotValue.</returns>
         public string EncryptText()
         {
             return this.rotXEncryption();

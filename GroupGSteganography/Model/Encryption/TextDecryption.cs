@@ -11,6 +11,10 @@
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="TextDecryption" /> class.
+        /// </summary>
+        /// <param name="encryptedText">The encrypted text.</param>
         public TextDecryption(string encryptedText)
         {
             this.EncryptedText = encryptedText;
@@ -30,12 +34,16 @@
 
         #endregion
 
+        /// <summary>
+        ///     Decrypts the text.
+        /// </summary>
+        /// <returns>returns the decrypted text.</returns>
         public string DecryptText()
         {
-            return this.rotXEncryption();
+            return this.rotXDecryption();
         }
 
-        private string rotXEncryption()
+        private string rotXDecryption()
         {
             var array = this.EncryptedText.ToCharArray();
 
@@ -45,7 +53,7 @@
 
                 if (number >= 'a' && number <= 'z')
                 {
-                    if (number - this.RotationValue > 'z')
+                    if (number - this.RotationValue > 'a')
                     {
                         number += 26;
                     }
@@ -56,7 +64,7 @@
                 }
                 else if (number >= 'A' && number <= 'Z')
                 {
-                    if (number - this.RotationValue > 'Z')
+                    if (number - this.RotationValue > 'A')
                     {
                         number += 26;
                     }
