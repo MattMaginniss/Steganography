@@ -17,8 +17,6 @@ namespace GroupGSteganography.View
         {
             this.InitializeComponent();
             this.drawLines();
-
-
         }
 
         #endregion
@@ -56,12 +54,16 @@ namespace GroupGSteganography.View
             {
                 return;
             }
-            this.loadStuffToEncryptButton.Text = @"Load Text to Encrypt";
-            this.saveDecryptedButton.Text = @"Save Decrypted Text";
-            this.imageToEncryptToolStripMenuItem.Text = @"Text to Encrypt";
+            this.enableTextControls();
 
         }
 
+        private void enableTextControls()
+        {
+            this.loadStuffToEncryptButton.Text = @"Load Text to Encrypt";
+            this.saveDecryptedButton.Text = @"Save Decrypted Text";
+            this.imageToEncryptToolStripMenuItem.Text = @"Text to Encrypt";
+        }
 
         private void exitToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
@@ -80,12 +82,26 @@ namespace GroupGSteganography.View
 
         private void imageToEncryptToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.loadImage(sender);
+            if (this.textRadioButton.Checked)
+            {
+                this.loadText();
+            }
+            else
+            {
+                this.loadImage(sender);
+            }
         }
 
         private void loadStuffToEncryptButton_Click(object sender, EventArgs e)
         {
-            this.loadImage(sender);
+            if (this.textRadioButton.Checked)
+            {
+                this.loadText();
+            }
+            else
+            {
+                this.loadImage(sender);
+            }
         }
 
         private void loadImage(object sender)
@@ -95,7 +111,7 @@ namespace GroupGSteganography.View
             {
                 return;
             }
-            if (sender == this.loadStuffToEncryptButton || sender == this.imageToEncryptToolStripMenuItem)
+            if (this.isSmallImageLoad(sender))
             {
                 this.smallPictureBox.Image = image;
             }
@@ -103,6 +119,11 @@ namespace GroupGSteganography.View
             {
                 this.largePictureBox.Image = image;
             }
+        }
+
+        private bool isSmallImageLoad(object sender)
+        {
+            return sender == this.loadStuffToEncryptButton || sender == this.imageToEncryptToolStripMenuItem || sender == this.textFieldLoadToolStripMenuItem;
         }
 
         private Bitmap loadImageDialog()
@@ -187,7 +208,7 @@ namespace GroupGSteganography.View
                 imageFormat = ImageFormat.Bmp;
             }
 
-            if (sender == this.saveDecryptedButton || sender == this.decryptedImageToolStripMenuItem)
+            if (this.isSmallImageSave(sender))
             {
                 this.smallPictureBox.Image.Save(saveDialog.FileName, imageFormat);
             }
@@ -197,14 +218,14 @@ namespace GroupGSteganography.View
             }
         }
 
+        private bool isSmallImageSave(object sender)
+        {
+            return sender == this.saveDecryptedButton || sender == this.decryptedImageToolStripMenuItem || sender == this.smallPictureBoxSaveToolStripMenuItem;
+        }
+
         private void saveDecryptedButton_Click(object sender, EventArgs e)
         {
             this.saveImage(sender);
-        }
-
-        private void bigPictureBoxContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-
         }
 
         private void smallPictureBox_Paint(object sender, PaintEventArgs e)
@@ -218,6 +239,7 @@ namespace GroupGSteganography.View
 
         private void checkBothImageBoxes()
         {
+            //TODO enable button diabling here
         }
 
         private void largePictureBox_Paint(object sender, PaintEventArgs e)
@@ -231,34 +253,68 @@ namespace GroupGSteganography.View
 
         private void encryptButton_Click(object sender, EventArgs e)
         {
-            IEmbeddor embeddor;
             if (this.textRadioButton.Checked)
             {
-                embeddor = new TextEmbeddor(this.largePictureBox.Image, this.textBox.Text);
-                this.largePictureBox.Image = embeddor.Embed();
-            }
-            else
-            {
-                embeddor = new ImageEmbeddor(this.largePictureBox.Image, this.smallPictureBox.Image);
+                IEmbeddor embeddor = new TextEmbeddor(this.largePictureBox.Image, this.textBox.Text);
                 this.largePictureBox.Image = embeddor.Embed();
             }
         }
 
         private void decryptButton_Click(object sender, EventArgs e)
         {
+            if (!this.textRadioButton.Checked)
+            {
+                return;
+            }
+            var extractor = new TextExtractor(this.largePictureBox.Image);
+            extractor.Extract();
+            this.textBox.Text = extractor.ExtractedText;
+        }
 
-            if (this.textRadioButton.Checked)
+        private void smallPictureBoxLoadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.loadImage(sender);
+        }
+
+        private void smallPictureBoxSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.saveImage(sender);
+        }
+
+        private void bigPictureBoxLoadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.loadImage(sender);
+        }
+
+        private void bigPictureBoxSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.saveImage(sender);
+        }
+
+        private void textFieldLoadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.loadText();
+        }
+
+        private void loadText()
+        {
+            var ofdText = new OpenFileDialog()
             {
-                TextExtractor extractor = new TextExtractor(this.largePictureBox.Image);
-                extractor.Extract();
-                this.textBox.Text = extractor.ExtractedText;
-            }
-            else
+                Filter = @"Text File (*.txt)|*.txt",
+                InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+                
+            };
+            if (ofdText.ShowDialog() != DialogResult.OK)
             {
-                ImageExtractor extractor = new ImageExtractor(this.largePictureBox.Image);
-                extractor.Extract();
-                this.largePictureBox.Image = extractor.ExtractedImage;
+                return;
             }
+            var text = System.IO.File.ReadAllText(ofdText.FileName);
+            if (text.Length > this.textBox.MaxLength)
+            {
+                text = text.Substring(0, this.textBox.MaxLength);
+            }
+            this.textBox.Text = text;
+
         }
     }
 }
