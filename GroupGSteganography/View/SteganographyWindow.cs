@@ -320,7 +320,7 @@ namespace GroupGSteganography.View
 
                 textToEmbed = this.encryptText(textToEmbed);
 
-                embeddor = new TextEmbeddor(this.largePictureBox.Image, textToEmbed);
+                embeddor = new TextEmbeddor(this.largePictureBox.Image, textToEmbed, headerPixel);
                 this.largePictureBox.Image = embeddor.Embed();
             }
             else if (this.checkImageSizes())

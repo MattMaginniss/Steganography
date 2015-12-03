@@ -57,7 +57,10 @@ namespace GroupGSteganography.Model
                 for (var j = 0; j < bmp.Width; j++)
                 {
                     var pixel = bmp.GetPixel(j, i);
-
+                    if (j == 0 && i == 0)
+                    {
+                        break;
+                    }
                     // for each pixel, pass through its elements (RGB)
                     for (var n = 0; n < 3; n++)
                     {

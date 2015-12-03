@@ -32,6 +32,14 @@ namespace GroupGSteganography.Model
         /// </value>
         public string MessageText { get; }
 
+        /// <summary>
+        ///     Gets or sets the HeaderPixel, which stores information about the image.
+        /// </summary>
+        /// <value>
+        ///     The Header Pixel.
+        /// </value>
+        public HeaderPixel HeaderPixel { get; }
+
         #endregion
 
         #region Constructors
@@ -41,10 +49,12 @@ namespace GroupGSteganography.Model
         /// </summary>
         /// <param name="sourceImage">The source image.</param>
         /// <param name="textToEmbed">The text to embed.</param>
-        public TextEmbeddor(Image sourceImage, string textToEmbed)
+        /// <param name="headerPixel">The header pixel</param> 
+        public TextEmbeddor(Image sourceImage, string textToEmbed, HeaderPixel headerPixel)
         {
             this.SourceImage = sourceImage;
             this.MessageText = textToEmbed;
+            this.HeaderPixel = headerPixel;
         }
 
         #endregion
@@ -83,6 +93,11 @@ namespace GroupGSteganography.Model
                 // pass through each row
                 for (var j = 0; j < bmp.Width; j++)
                 {
+                    if (i == 0 && j == 0)
+                    {
+                        bmp.SetPixel(0, 0, this.HeaderPixel.GetColor());
+                        break;
+                    }
                     // holds the pixel that is currently being processed
                     var pixel = bmp.GetPixel(j, i);
 
@@ -179,7 +194,6 @@ namespace GroupGSteganography.Model
                     }
                 }
             }
-
             return bmp;
         }
 

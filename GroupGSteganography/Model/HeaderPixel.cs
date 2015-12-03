@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GroupGSteganography.Model
 {
-    class HeaderPixel
+    public class HeaderPixel
     {
         public bool IsImage { get; }
         public bool IsEncrypted { get; }
