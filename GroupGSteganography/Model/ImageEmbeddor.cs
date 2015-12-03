@@ -11,11 +11,15 @@ namespace GroupGSteganography.Model
 
         #endregion
 
+        #region Constructors
+
         public ImageEmbeddor(Image sourceImage, Image messageImage)
         {
             this.SourceImage = sourceImage;
             this.MessageImage = messageImage;
         }
+
+        #endregion
 
         #region Methods
 
@@ -56,7 +60,7 @@ namespace GroupGSteganography.Model
                         g = (clrVisible.G & sourceMask) + messageMask;
                         b = (clrVisible.B & sourceMask) + messageMask;
                     }
-                   
+
                     combinedImage.SetPixel(x, y, Color.FromArgb(255, r, g, b));
                 }
             }
