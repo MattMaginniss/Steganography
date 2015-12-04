@@ -46,6 +46,11 @@ namespace GroupGSteganography.Model
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="TextExtractor" /> class.
+        /// </summary>
+        /// <param name="encodedImage">The encoded image.</param>
+        /// <param name="headerPixel">The header pixel.</param>
         public TextExtractor(Image encodedImage, HeaderPixel headerPixel)
         {
             this.EncodedImage = encodedImage;
@@ -56,6 +61,9 @@ namespace GroupGSteganography.Model
 
         #region Methods
 
+        /// <summary>
+        ///     Extracts the text from the image.
+        /// </summary>
         public void Extract()
         {
             this.ExtractedText = extractText((Bitmap) this.EncodedImage);

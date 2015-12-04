@@ -6,16 +6,6 @@ namespace GroupGSteganography.Model
 {
     public class TextEmbeddor : IEmbeddor
     {
-        #region Types and Delegates
-
-        public enum State
-        {
-            Hiding,
-            FillingWithZeros
-        }
-
-        #endregion
-
         #region Properties
 
         /// <summary>
