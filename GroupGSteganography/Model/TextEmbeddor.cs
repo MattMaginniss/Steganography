@@ -92,6 +92,13 @@ namespace GroupGSteganography.Model
                             img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, value));
                         }
 
+                        if (this.MessageText.Length < (i*img.Width) + j &&
+                            (i*img.Width) + j <= this.MessageText.Length + 3)
+                        {
+                            var value = Convert.ToInt16('#');
+                            img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, value));
+                        }
+
                         if (i == img.Width - 1 && j == img.Height - 1)
                         {
                             img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, this.MessageText.Length));
