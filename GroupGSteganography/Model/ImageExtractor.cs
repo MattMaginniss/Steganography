@@ -29,7 +29,7 @@ namespace GroupGSteganography.Model
 
         public ImageExtractor(Image encodedImage)
         {
-            this.EncodedImage =(Bitmap) encodedImage;
+            this.EncodedImage = (Bitmap) encodedImage;
         }
 
         #endregion
@@ -38,9 +38,11 @@ namespace GroupGSteganography.Model
 
         public void Extract()
         {
-            this.ExtractedImage = this.recoverImage((Bitmap) this.EncodedImage);
+            this.ExtractedImage = this.recoverImage(this.EncodedImage);
             this.decryptImage();
         }
+
+        #endregion
 
         private void decryptImage()
         {
@@ -49,16 +51,14 @@ namespace GroupGSteganography.Model
             {
                 return;
             }
-            var decrypter = new ImageDecryption((Bitmap)this.ExtractedImage);
+            var decrypter = new ImageDecryption((Bitmap) this.ExtractedImage);
             this.ExtractedImage = decrypter.DecryptedImage;
         }
-
-        #endregion
 
         private Bitmap recoverImage(Bitmap embeddedImage)
         {
             const int hiddenBits = 1;
-            const int shift = (8 - hiddenBits);
+            const int shift = 8 - hiddenBits;
 
             var hiddenMask = 0xFF >> shift;
             var extractedImage = new Bitmap(embeddedImage.Width, embeddedImage.Height);

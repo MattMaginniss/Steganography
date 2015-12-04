@@ -1,6 +1,4 @@
-﻿using System.Data.Odbc;
-using System.Drawing;
-using System.Windows.Forms;
+﻿using System.Drawing;
 using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.Model

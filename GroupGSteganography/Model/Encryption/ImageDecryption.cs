@@ -4,14 +4,27 @@ namespace GroupGSteganography.Model.Encryption
 {
     internal class ImageDecryption
     {
-        public Bitmap DecryptedImage { get; private set; }
+        #region Data members
+
         private readonly Bitmap embeddedImage;
+
+        #endregion
+
+        #region Properties
+
+        public Bitmap DecryptedImage { get; private set; }
+
+        #endregion
+
+        #region Constructors
 
         public ImageDecryption(Bitmap embeddedImage)
         {
             this.embeddedImage = embeddedImage;
             this.decryptImage();
         }
+
+        #endregion
 
         private void decryptImage()
         {
@@ -21,10 +34,10 @@ namespace GroupGSteganography.Model.Encryption
             var width = this.embeddedImage.Width;
             var height = this.embeddedImage.Height;
 
-            var quad1 = new Rectangle(width / 2, 0, width / 2, height / 2);
-            var quad2 = new Rectangle(0, 0, width / 2, height / 2);
-            var quad3 = new Rectangle(0, height / 2, width / 2, height / 2);
-            var quad4 = new Rectangle(width / 2, height / 2, width / 2, height / 2);
+            var quad1 = new Rectangle(width/2, 0, width/2, height/2);
+            var quad2 = new Rectangle(0, 0, width/2, height/2);
+            var quad3 = new Rectangle(0, height/2, width/2, height/2);
+            var quad4 = new Rectangle(width/2, height/2, width/2, height/2);
 
             graphics.DrawImage(this.embeddedImage, quad1, quad3, GraphicsUnit.Pixel);
             graphics.DrawImage(this.embeddedImage, quad3, quad1, GraphicsUnit.Pixel);

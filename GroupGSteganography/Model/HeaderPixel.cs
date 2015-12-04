@@ -1,23 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace GroupGSteganography.Model
 {
     public class HeaderPixel
     {
-        public bool IsImage { get; }
-        public bool IsEncrypted { get; }
-        public int RotShift { get; }
-        public int BitsPerColorChannel { get; }
+        #region Data members
 
         private int red;
         private int green;
         private int blue;
 
+        #endregion
+
+        #region Properties
+
+        public bool IsImage { get; }
+        public bool IsEncrypted { get; }
+        public int RotShift { get; }
+        public int BitsPerColorChannel { get; }
+
+        #endregion
+
+        #region Constructors
 
         public HeaderPixel(bool isImage, bool isEncrypted, int rotShift, int bitsPerColorChannel)
         {
@@ -27,6 +31,8 @@ namespace GroupGSteganography.Model
             this.BitsPerColorChannel = bitsPerColorChannel;
             this.buildPixel();
         }
+
+        #endregion
 
         public Color GetColor()
         {
@@ -50,7 +56,7 @@ namespace GroupGSteganography.Model
                 rotShift = color.G - 100;
             }
             bitsPerColorChannel = color.B;
-            return new HeaderPixel(isImage,isEncrypted,rotShift,bitsPerColorChannel);
+            return new HeaderPixel(isImage, isEncrypted, rotShift, bitsPerColorChannel);
         }
 
         private void buildPixel()

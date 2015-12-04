@@ -4,9 +4,20 @@ namespace GroupGSteganography.Model.Encryption
 {
     internal class ImageEncryption
     {
-        public Bitmap EncryptedImage { get; private set; }
+        #region Data members
+
         private readonly Bitmap hiderImage;
         private readonly Bitmap embeddedImage;
+
+        #endregion
+
+        #region Properties
+
+        public Bitmap EncryptedImage { get; private set; }
+
+        #endregion
+
+        #region Constructors
 
         public ImageEncryption(Bitmap hiderImage, Bitmap embeddedImage)
         {
@@ -14,6 +25,8 @@ namespace GroupGSteganography.Model.Encryption
             this.embeddedImage = embeddedImage;
             this.encryptImage();
         }
+
+        #endregion
 
         private void encryptImage()
         {
@@ -40,7 +53,7 @@ namespace GroupGSteganography.Model.Encryption
 
             var quad1 = new Rectangle(width/2, 0, width/2, height/2);
             var quad2 = new Rectangle(0, 0, width/2, height/2);
-            var quad3 = new Rectangle(0, height / 2, width/2, height/2);
+            var quad3 = new Rectangle(0, height/2, width/2, height/2);
             var quad4 = new Rectangle(width/2, height/2, width/2, height/2);
 
             graphics.DrawImage(this.EncryptedImage, quad1, quad3, GraphicsUnit.Pixel);
