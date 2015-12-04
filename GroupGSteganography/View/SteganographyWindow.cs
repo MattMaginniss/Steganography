@@ -5,11 +5,12 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 using GroupGSteganography.Model;
+using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.View
 {
     /// <summary>
-    /// GUI code behind. Handles control events
+    ///     GUI code behind. Handles control events
     /// </summary>
     /// <seealso cref="System.Windows.Forms.Form" />
     public partial class SteganographyWindow : Form
@@ -17,7 +18,7 @@ namespace GroupGSteganography.View
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SteganographyWindow"/> class.
+        ///     Initializes a new instance of the <see cref="SteganographyWindow" /> class.
         /// </summary>
         public SteganographyWindow()
         {
@@ -27,27 +28,40 @@ namespace GroupGSteganography.View
 
         #endregion
 
-        private void drawLines()
+        #region ActionHandlers
+        private void encryptButton_Click(object sender, EventArgs e)
         {
-            var myPen = new Pen(Color.Black);
-            var graphics = CreateGraphics();
-            graphics.DrawLine(myPen, 365, 128, 610, 128);
-            graphics.DrawLine(myPen, 365, 128, 375, 118);
-            graphics.DrawLine(myPen, 365, 128, 375, 138);
-
-            graphics.DrawLine(myPen, 365, 215, 610, 215);
-            graphics.DrawLine(myPen, 600, 225, 610, 215);
-            graphics.DrawLine(myPen, 600, 205, 610, 215);
+            var headerPixel = this.createHeaderPixel();
+            if (this.textRadioButton.Checked)
+            {
+                this.embedText(headerPixel);
+            }
+            else if (this.checkImageSizes())
+            {
+                var encrypter = new ImageEncryption((Bitmap)this.largePictureBox.Image, (Bitmap) this.smallPictureBox.Image);
+                this.smallPictureBox.Image = encrypter.EncryptedImage;
+                // this.embedImage(headerPixel);
+            }
+            else
+            {
+                MessageBox.Show(@"Encrypted image is too large for hider image", @"Error", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
-        private void encryptButton_Paint(object sender, PaintEventArgs e)
+        private void decryptButton_Click(object sender, EventArgs e)
         {
-            this.drawLines();
-        }
+            var image = (Bitmap) this.largePictureBox.Image;
+            var headerPixel = HeaderPixel.From(image.GetPixel(0, 0));
 
-        private void saveBigImageButton_Click(object sender, EventArgs e)
-        {
-            this.saveImage(sender);
+            if (headerPixel.IsImage)
+            {
+                this.extractImage();
+            }
+            else
+            {
+                this.extractText(headerPixel);
+            }
         }
 
         private void textRadioButton_CheckedChanged(object sender, EventArgs e)
@@ -63,11 +77,14 @@ namespace GroupGSteganography.View
             this.enableTextControls();
         }
 
-        private void enableTextControls()
+        private void encryptButton_Paint(object sender, PaintEventArgs e)
         {
-            this.loadStuffToEncryptButton.Text = @"Load Text File to Encrypt";
-            this.saveDecryptedButton.Text = @"Save Decrypted Text";
-            this.imageToEncryptToolStripMenuItem.Text = @"Text to Encrypt";
+            this.drawLines();
+        }
+
+        private void saveBigImageButton_Click(object sender, EventArgs e)
+        {
+            this.saveImage(sender);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -107,41 +124,6 @@ namespace GroupGSteganography.View
             {
                 this.loadImage(sender);
             }
-        }
-
-        private void loadImage(object sender)
-        {
-            var image = this.loadImageDialog();
-            if (image == null)
-            {
-                return;
-            }
-            if (this.isSmallImageLoad(sender))
-            {
-                this.smallPictureBox.Image = image;
-            }
-            else
-            {
-                this.largePictureBox.Image = image;
-            }
-        }
-
-        private bool isSmallImageLoad(object sender)
-        {
-            return sender == this.loadStuffToEncryptButton || sender == this.imageToEncryptToolStripMenuItem ||
-                   sender == this.smallPictureBoxLoadToolStripMenuItem;
-        }
-
-        private Bitmap loadImageDialog()
-        {
-            var ofd = new OpenFileDialog
-            {
-                Filter = @"PNG File (*.png)|*.png|Bitmap File (*.bmp)|*.bmp",
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
-                Title = @"Please select an image file to encrypt."
-            };
-            //tertiary statement ONLY because resharper insisted
-            return ofd.ShowDialog() == DialogResult.OK ? new Bitmap(ofd.FileName) : null;
         }
 
         private void imageRadioButton_CheckedChanged(object sender, EventArgs e)
@@ -186,6 +168,146 @@ namespace GroupGSteganography.View
             this.saveImage(sender);
         }
 
+        private void saveDecryptedButton_Click(object sender, EventArgs e)
+        {
+            if (this.imageRadioButton.Checked)
+            {
+                this.saveImage(sender);
+            }
+            else
+            {
+                this.saveText();
+            }
+        }
+
+        private void smallPictureBox_Paint(object sender, PaintEventArgs e)
+        {
+            this.updateControls();
+        }
+
+        private void largePictureBox_Paint(object sender, PaintEventArgs e)
+        {
+            this.updateControls();
+        }
+
+        private void smallPictureBoxLoadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.loadImage(sender);
+        }
+
+        private void smallPictureBoxSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.saveImage(sender);
+        }
+
+        private void bigPictureBoxLoadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.loadImage(sender);
+        }
+
+        private void bigPictureBoxSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.saveImage(sender);
+        }
+
+        private void textFieldLoadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.loadText();
+        }
+
+        private void qualityBar_Scroll(object sender, EventArgs e)
+        {
+            this.setMaxChars();
+            this.truncateTextBox();
+        }
+
+        private void encryptionCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            this.rotationUpDown.Enabled = this.encryptionCheckBox.Checked && this.textRadioButton.Checked;
+        }
+
+        private void rotHelpLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            MessageBox.Show(
+                @"The encryption used in this program is a ceaser cipher, which shifts the letters down a given number of 'slots.'" +
+                @"For example, with a given shift of 1, A will become B, B will become C, and so on.",
+                @"Encryption Help", MessageBoxButtons.OK, MessageBoxIcon.Question);
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.textBox.Copy();
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.textBox.Paste();
+        }
+
+        private void textFieldSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.saveText();
+        }
+
+        #endregion
+
+        #region HelperMethods
+
+        private void drawLines()
+        {
+            var myPen = new Pen(Color.Black);
+            var graphics = CreateGraphics();
+            graphics.DrawLine(myPen, 365, 128, 610, 128);
+            graphics.DrawLine(myPen, 365, 128, 375, 118);
+            graphics.DrawLine(myPen, 365, 128, 375, 138);
+
+            graphics.DrawLine(myPen, 365, 215, 610, 215);
+            graphics.DrawLine(myPen, 600, 225, 610, 215);
+            graphics.DrawLine(myPen, 600, 205, 610, 215);
+        }
+
+        private void enableTextControls()
+        {
+            this.loadStuffToEncryptButton.Text = @"Load Text File to Encrypt";
+            this.saveDecryptedButton.Text = @"Save Decrypted Text";
+            this.imageToEncryptToolStripMenuItem.Text = @"Text to Encrypt";
+        }
+
+        private void loadImage(object sender)
+        {
+            var image = this.loadImageDialog();
+            if (image == null)
+            {
+                return;
+            }
+            if (this.isSmallImageLoad(sender))
+            {
+                this.smallPictureBox.Image = image;
+            }
+            else
+            {
+                this.largePictureBox.Image = image;
+            }
+        }
+
+        private bool isSmallImageLoad(object sender)
+        {
+            return sender == this.loadStuffToEncryptButton || sender == this.imageToEncryptToolStripMenuItem ||
+                   sender == this.smallPictureBoxLoadToolStripMenuItem;
+        }
+
+        private Bitmap loadImageDialog()
+        {
+            var ofd = new OpenFileDialog
+            {
+                Filter = @"PNG File (*.png)|*.png|Bitmap File (*.bmp)|*.bmp",
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
+                Title = @"Please select an image file to encrypt."
+            };
+            //tertiary statement ONLY because resharper insisted
+            return ofd.ShowDialog() == DialogResult.OK ? new Bitmap(ofd.FileName) : null;
+        }
+
         private void saveImage(object sender)
         {
             if (this.imageIsEmpty(sender))
@@ -224,18 +346,6 @@ namespace GroupGSteganography.View
                    sender == this.smallPictureBoxSaveToolStripMenuItem;
         }
 
-        private void saveDecryptedButton_Click(object sender, EventArgs e)
-        {
-            if (this.imageRadioButton.Checked)
-            {
-                this.saveImage(sender);
-            }
-            else
-            {
-                this.saveText();
-            }
-        }
-
         private void saveText()
         {
             var saveDialog = new SaveFileDialog {Filter = @"TXT File (*.txt)|*.txt"};
@@ -243,11 +353,6 @@ namespace GroupGSteganography.View
             {
                 File.WriteAllText(saveDialog.FileName, this.textBox.Text);
             }
-        }
-
-        private void smallPictureBox_Paint(object sender, PaintEventArgs e)
-        {
-            this.updateControls();
         }
 
         private void updateControls()
@@ -303,11 +408,6 @@ namespace GroupGSteganography.View
             this.warningPictureBox.Visible = isInvalid;
         }
 
-        private void largePictureBox_Paint(object sender, PaintEventArgs e)
-        {
-            this.updateControls();
-        }
-
         private void setMaxChars()
         {
             if (this.largePictureBox.Image == null)
@@ -332,30 +432,6 @@ namespace GroupGSteganography.View
             this.textBox.Text = text;
         }
 
-        private void encryptButton_Click(object sender, EventArgs e)
-        {
-            IEmbeddor embeddor;
-            var headerPixel = this.createHeaderPixel();
-            if (this.textRadioButton.Checked)
-            {
-                embeddor = new TextEmbeddor(this.largePictureBox.Image, this.textBox.Text, headerPixel);
-                this.largePictureBox.Image = embeddor.Embed();
-                this.textBox.Text = "";
-                MessageBox.Show(@"Successfully embedded!", @"Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-            }
-            else if (this.checkImageSizes())
-            {
-                embeddor = new ImageEmbeddor(this.largePictureBox.Image, this.smallPictureBox.Image, headerPixel);
-                this.largePictureBox.Image = embeddor.Embed();
-                MessageBox.Show(@"Successfully embedded!", @"Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-            }
-            else
-            {
-                MessageBox.Show(@"Encrypted image is too large for hider image", @"Error", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-        }
-
         private HeaderPixel createHeaderPixel()
         {
             var isImage = this.imageRadioButton.Checked;
@@ -364,6 +440,21 @@ namespace GroupGSteganography.View
             var bitsPerColorChannel = this.qualityBar.Value + 1;
 
             return new HeaderPixel(isImage, isEncrypted, rotShift, bitsPerColorChannel);
+        }
+
+        private void embedImage(HeaderPixel headerPixel)
+        {
+            IEmbeddor embeddor = new ImageEmbeddor(this.largePictureBox.Image, this.smallPictureBox.Image, headerPixel);
+            this.largePictureBox.Image = embeddor.Embed();
+            MessageBox.Show(@"Successfully embedded!", @"Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+        }
+
+        private void embedText(HeaderPixel headerPixel)
+        {
+            IEmbeddor embeddor = new TextEmbeddor(this.largePictureBox.Image, this.textBox.Text, headerPixel);
+            this.largePictureBox.Image = embeddor.Embed();
+            this.textBox.Text = "";
+            MessageBox.Show(@"Successfully embedded!", @"Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
         private bool checkImageSizes()
@@ -376,24 +467,9 @@ namespace GroupGSteganography.View
             var hiderImage = this.largePictureBox.Image;
             var hiddenImage = this.smallPictureBox.Image;
 
-            var isValid = hiderImage.Width > hiddenImage.Width && hiderImage.Height > hiddenImage.Height;
+            var isValid = hiderImage.Width >= hiddenImage.Width && hiderImage.Height >= hiddenImage.Height;
 
             return isValid;
-        }
-
-        private void decryptButton_Click(object sender, EventArgs e)
-        {
-            var image = (Bitmap) this.largePictureBox.Image;
-            var headerPixel = HeaderPixel.From(image.GetPixel(0, 0));
-
-            if (headerPixel.IsImage)
-            {
-                this.extractImage();
-            }
-            else
-            {
-                this.extractText(headerPixel);
-            }
         }
 
         private void extractText(HeaderPixel headerPixel)
@@ -424,31 +500,6 @@ namespace GroupGSteganography.View
             this.smallPictureBox.Image = extractor.ExtractedImage;
         }
 
-        private void smallPictureBoxLoadToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.loadImage(sender);
-        }
-
-        private void smallPictureBoxSaveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.saveImage(sender);
-        }
-
-        private void bigPictureBoxLoadToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.loadImage(sender);
-        }
-
-        private void bigPictureBoxSaveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.saveImage(sender);
-        }
-
-        private void textFieldLoadToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.loadText();
-        }
-
         private void loadText()
         {
             var ofdText = new OpenFileDialog
@@ -467,39 +518,6 @@ namespace GroupGSteganography.View
             }
             this.textBox.Text = text;
         }
-
-        private void qualityBar_Scroll(object sender, EventArgs e)
-        {
-            this.setMaxChars();
-            this.truncateTextBox();
-        }
-
-        private void encryptionCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            this.rotationUpDown.Enabled = this.encryptionCheckBox.Checked && this.textRadioButton.Checked;
-        }
-
-        private void rotHelpLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            MessageBox.Show(
-                @"The encryption used in this program is a ceaser cipher, which shifts the letters down a given number of 'slots.'" +
-                @"For example, with a given shift of 1, A will become B, B will become C, and so on.",
-                @"Encryption Help", MessageBoxButtons.OK, MessageBoxIcon.Question);
-        }
-
-        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.textBox.Copy();
-        }
-
-        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.textBox.Paste();
-        }
-
-        private void textFieldSaveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.saveText();
-        }
+        #endregion
     }
 }

@@ -47,7 +47,7 @@ namespace GroupGSteganography.Model
         public void Extract()
         {
             this.recoverImage();
-            this.decryptImage();
+            //this.decryptImage();
         }
 
         #endregion

@@ -1,80 +1,39 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using System.Security.Cryptography.X509Certificates;
 using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.Model
 {
     internal class ImageEmbeddor : IEmbeddor
     {
-        #region Data members
-
-        private const int HiddenBits = 1;
-        private const int Shift = 8 - HiddenBits;
-        private const int SourceMask = 0xFF << HiddenBits;
-        private const int MessageMask = 0xFF >> Shift;
-        private Bitmap combinedImage;
-
-        #endregion
-
         #region Properties
 
-        /// <summary>
-        ///     The Hider image
-        /// </summary>
-        /// <value>
-        ///     The source image.
-        /// </value>
-        public Bitmap HiderImage { get; }
+        public Image SourceImage { get; set; }
+        public Image MessageImage { get; set; }
+        public HeaderPixel HeaderPixel { get; set; }
 
-        /// <summary>
-        ///     Gets the Embedded image.
-        /// </summary>
-        /// <value>
-        ///     The message image.
-        /// </value>
-        public Bitmap EmbeddedImage { get; private set; }
-
-        /// <summary>
-        ///     Gets the header pixel.
-        /// </summary>
-        /// <value>
-        ///     The header pixel.
-        /// </value>
-        public HeaderPixel HeaderPixel { get; }
 
         #endregion
 
         #region Constructors
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="ImageEmbeddor" /> class.
-        /// </summary>
-        /// <param name="hiderImage">The hider image.</param>
-        /// <param name="embeddedImage">The embedded image.</param>
-        /// <param name="headerPixel">The header pixel.</param>
-        public ImageEmbeddor(Image hiderImage, Image embeddedImage, HeaderPixel headerPixel)
+        public ImageEmbeddor(Image sourceImage, Image messageImage, HeaderPixel headerPixel)
         {
-            this.HiderImage = (Bitmap) hiderImage;
-            this.EmbeddedImage = (Bitmap) embeddedImage;
+            this.SourceImage = sourceImage;
+            this.MessageImage = messageImage;
             this.HeaderPixel = headerPixel;
-            this.Embed();
         }
 
         #endregion
 
         #region Methods
 
-        /// <summary>
-        ///     Embeds the EmbdeddedImage into the HiderImage.
-        /// </summary>
-        /// <returns>The Hider image containing the Embedded Image</returns>
         public Image Embed()
         {
             this.checkEncryption();
-            this.hideImage();
-            return this.combinedImage;
+            return this.hideImage((Bitmap)this.SourceImage, (Bitmap)this.MessageImage);
         }
-
-        #endregion
 
         private void checkEncryption()
         {
@@ -82,50 +41,48 @@ namespace GroupGSteganography.Model
             {
                 return;
             }
-            var encrypter = new ImageEncryption(this.HiderImage, this.EmbeddedImage);
-            this.EmbeddedImage = encrypter.EncryptedImage;
+            var encrypter = new ImageEncryption((Bitmap)this.SourceImage, (Bitmap)this.MessageImage);
+            this.MessageImage = encrypter.EncryptedImage;
         }
 
-        private void hideImage()
+        #endregion
+
+        private Bitmap hideImage(Bitmap sourceImage, Bitmap messageImage)
         {
-            this.combinedImage = new Bitmap(this.HiderImage.Width, this.HiderImage.Height);
+            const int hiddenBits = 1;
+            const int shift = (8 - hiddenBits);
 
-            for (var x = 0; x < this.HiderImage.Width; x++)
-            {
-                this.maskRow(x);
-            }
-            this.combinedImage.SetPixel(0, 0, this.HeaderPixel.GetColor());
-        }
+            const int sourceMask = 0xFF << hiddenBits;
+            const int messageMask = 0xFF >> shift;
+            var combinedImage = new Bitmap(sourceImage.Width, sourceImage.Height);
 
-        private void maskRow(int x)
-        {
-            for (var y = 0; y < this.HiderImage.Height; y++)
+            for (var x = 0; x < sourceImage.Width; x++)
             {
-                this.maskPixel(x, y);
-            }
-        }
+                for (var y = 0; y < sourceImage.Height; y++)
+                {
+                    var clrVisible = sourceImage.GetPixel(x, y);
+                    int r;
+                    int g;
+                    int b;
+                    if (messageImage.Width > x && messageImage.Height > y)
+                    {
+                        var clrHidden = messageImage.GetPixel(x, y);
+                        r = (clrVisible.R & sourceMask) + ((clrHidden.R >> shift) & messageMask);
+                        g = (clrVisible.G & sourceMask) + ((clrHidden.G >> shift) & messageMask);
+                        b = (clrVisible.B & sourceMask) + ((clrHidden.B >> shift) & messageMask);
+                    }
+                    else
+                    {
+                        r = (clrVisible.R & sourceMask) + messageMask;
+                        g = (clrVisible.G & sourceMask) + messageMask;
+                        b = (clrVisible.B & sourceMask) + messageMask;
+                    }
 
-        private void maskPixel(int x, int y)
-        {
-            var clrVisible = this.HiderImage.GetPixel(x, y);
-            int r;
-            int g;
-            int b;
-            if (this.EmbeddedImage.Width > x && this.EmbeddedImage.Height > y)
-            {
-                var clrHidden = this.EmbeddedImage.GetPixel(x, y);
-                r = (clrVisible.R & SourceMask) + ((clrHidden.R >> Shift) & MessageMask);
-                g = (clrVisible.G & SourceMask) + ((clrHidden.G >> Shift) & MessageMask);
-                b = (clrVisible.B & SourceMask) + ((clrHidden.B >> Shift) & MessageMask);
+                    combinedImage.SetPixel(x, y, Color.FromArgb(255, r, g, b));
+                }
             }
-            else
-            {
-                r = (clrVisible.R & SourceMask) + MessageMask;
-                g = (clrVisible.G & SourceMask) + MessageMask;
-                b = (clrVisible.B & SourceMask) + MessageMask;
-            }
-
-            this.combinedImage.SetPixel(x, y, Color.FromArgb(255, r, g, b));
+            combinedImage.SetPixel(0, 0, this.HeaderPixel.GetColor());
+            return combinedImage;
         }
     }
 }
