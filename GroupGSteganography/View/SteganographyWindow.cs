@@ -312,6 +312,7 @@ namespace GroupGSteganography.View
 
         private void encryptButton_Click(object sender, EventArgs e)
         {
+
             IEmbeddor embeddor;
             var headerPixel = this.createHeaderPixel();
             if (this.textRadioButton.Checked)
