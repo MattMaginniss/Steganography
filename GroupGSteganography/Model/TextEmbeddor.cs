@@ -76,7 +76,7 @@ namespace GroupGSteganography.Model
 
                         if (i*img.Width + j <= this.MessageText.Length)
                         {
-                            var letter = Convert.ToChar(this.MessageText.Substring(j - 1, 1));
+                            var letter = Convert.ToChar(this.MessageText.Substring(j -1, 1));
                             var value = Convert.ToInt16(letter);
 
                             img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, value));

@@ -16,7 +16,7 @@ namespace GroupGSteganography.Model
         /// <value>
         ///     The encoded image.
         /// </value>
-        public Image EncodedImage { get; }
+        public Bitmap EncodedImage { get; }
 
         /// <summary>
         ///     Gets or sets the extracted text.
@@ -50,11 +50,10 @@ namespace GroupGSteganography.Model
         ///     Initializes a new instance of the <see cref="TextExtractor" /> class.
         /// </summary>
         /// <param name="encodedImage">The encoded image.</param>
-        /// <param name="headerPixel">The header pixel.</param>
-        public TextExtractor(Image encodedImage, HeaderPixel headerPixel)
+        public TextExtractor(Image encodedImage)
         {
-            this.EncodedImage = encodedImage;
-            this.HeaderPixel = headerPixel;
+            this.EncodedImage = (Bitmap) encodedImage;
+            this.HeaderPixel = HeaderPixel.From(this.EncodedImage.GetPixel(0,0));
         }
 
         #endregion
@@ -67,7 +66,6 @@ namespace GroupGSteganography.Model
         public void Extract()
         {
             this.ExtractedText = extractText((Bitmap) this.EncodedImage);
-            MessageBox.Show(this.ExtractedText);
             if (this.HeaderPixel.IsEncrypted)
             {
                 this.EncryptedText = this.ExtractedText;

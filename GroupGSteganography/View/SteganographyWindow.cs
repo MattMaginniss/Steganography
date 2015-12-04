@@ -58,7 +58,7 @@ namespace GroupGSteganography.View
             }
             else
             {
-                this.extractText(headerPixel);
+                this.extractText();
             }
         }
 
@@ -468,11 +468,11 @@ namespace GroupGSteganography.View
             return isValid;
         }
 
-        private void extractText(HeaderPixel headerPixel)
+        private void extractText()
         {
-            //TODO extractor should get the header pixel themselves
             this.textRadioButton.Checked = true;
-            var extractor = new TextExtractor(this.largePictureBox.Image, headerPixel);
+            this.textBox.MaxLength = int.MaxValue;
+            var extractor = new TextExtractor(this.largePictureBox.Image);
             extractor.Extract();
             this.buildExtractedText(extractor);
         }
@@ -483,7 +483,7 @@ namespace GroupGSteganography.View
             if (extractor.EncryptedText != null)
             {
                 text = "Encrypted: " + extractor.EncryptedText + Environment.NewLine + Environment.NewLine +
-                       "Decrypted: " + text;
+                       "Decrypted: " + text + Environment.NewLine + Environment.NewLine + "Shift: " + extractor.HeaderPixel.RotShift ;
             }
             this.textBox.Text = text;
         }
