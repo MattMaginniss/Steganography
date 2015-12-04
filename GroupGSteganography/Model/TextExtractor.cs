@@ -82,10 +82,7 @@ namespace GroupGSteganography.Model
             {
                 for (var j = 0; j < img.Height; j++)
                 {
-                    if (i == 0 && j == 0)
-                    {
-                    }
-                    else
+                    if (i != 0 || j != 0)
                     {
                         var pixel = img.GetPixel(i, j);
 
@@ -97,6 +94,9 @@ namespace GroupGSteganography.Model
 
                             message = message + letter;
                         }
+                    }
+                    else
+                    {
                     }
                 }
             }
