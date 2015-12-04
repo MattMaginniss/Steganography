@@ -70,29 +70,7 @@ namespace GroupGSteganography.Model
             {
                 for (var j = 0; j < img.Height; j++)
                 {
-                    if (i != 0 || j != 0)
-                    {
-                        var pixel = img.GetPixel(i, j);
-
-                        if (i*img.Width + j <= this.MessageText.Length)
-                        {
-                            var letter = Convert.ToChar(this.MessageText.Substring(j -1, 1));
-                            var value = Convert.ToInt16(letter);
-
-                            img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, value));
-                        }
-
-                        if (this.MessageText.Length < (i*img.Width) + j &&
-                            (i*img.Width) + j <= this.MessageText.Length + 3)
-                        {
-                            var value = Convert.ToInt16('#');
-                            img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, value));
-                        }
-                    }
-                    else
-                    {
-                        img.SetPixel(0, 0, this.HeaderPixel.GetColor());
-                    }
+                    this.setEmbeddedPixel(i, j, img);
                 }
             }
 
@@ -100,5 +78,46 @@ namespace GroupGSteganography.Model
         }
 
         #endregion
+
+        private void setEmbeddedPixel(int i, int j, Bitmap img)
+        {
+            if (i != 0 || j != 0)
+            {
+                var pixel = img.GetPixel(i, j);
+
+                this.embedCharacter(i, j, img, pixel);
+                this.setEndMessageCharacters(i, j, img, pixel);
+            }
+            else
+            {
+                this.embedHeaderPixel(img);
+            }
+        }
+
+        private void embedHeaderPixel(Bitmap img)
+        {
+            img.SetPixel(0, 0, this.HeaderPixel.GetColor());
+        }
+
+        private void embedCharacter(int i, int j, Bitmap img, Color pixel)
+        {
+            if (i*img.Width + j <= this.MessageText.Length)
+            {
+                var letter = Convert.ToChar(this.MessageText.Substring(j - 1, 1));
+                var value = Convert.ToInt16(letter);
+
+                img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, value));
+            }
+        }
+
+        private void setEndMessageCharacters(int i, int j, Bitmap img, Color pixel)
+        {
+            if (this.MessageText.Length < (i*img.Width) + j &&
+                (i*img.Width) + j <= this.MessageText.Length + 3)
+            {
+                var value = Convert.ToInt16('#');
+                img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, value));
+            }
+        }
     }
 }
