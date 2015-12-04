@@ -1,4 +1,6 @@
-﻿namespace GroupGSteganography.Model.Encryption
+﻿using System;
+
+namespace GroupGSteganography.Model.Encryption
 {
     internal class TextEncryption
     {
@@ -17,6 +19,10 @@
         /// <param name="unencryptedText">The unencrypted text.</param>
         public TextEncryption(string unencryptedText)
         {
+            if (unencryptedText == null)
+            {
+                throw new ArgumentNullException();
+            }
             this.UnencryptedText = unencryptedText;
             this.RotationValue = 13;
         }
@@ -28,6 +34,10 @@
         /// <param name="rotValue">The rot value.</param>
         public TextEncryption(string unencryptedText, int rotValue)
         {
+            if (unencryptedText == null)
+            {
+                throw new ArgumentNullException();
+            }
             this.UnencryptedText = unencryptedText;
             this.RotationValue = rotValue;
         }

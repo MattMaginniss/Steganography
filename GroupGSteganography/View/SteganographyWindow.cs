@@ -440,6 +440,10 @@ namespace GroupGSteganography.View
 
         private void embedImage(HeaderPixel headerPixel)
         {
+            if (headerPixel == null)
+            {
+                throw new ArgumentNullException();
+            }
             IEmbeddor embeddor = new ImageEmbeddor(this.largePictureBox.Image, this.smallPictureBox.Image, headerPixel);
             this.largePictureBox.Image = embeddor.Embed();
             MessageBox.Show(@"Successfully embedded!", @"Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
@@ -447,6 +451,10 @@ namespace GroupGSteganography.View
 
         private void embedText(HeaderPixel headerPixel)
         {
+            if (headerPixel == null)
+            {
+                throw new ArgumentNullException();
+            }
             IEmbeddor embeddor = new TextEmbeddor(this.largePictureBox.Image, this.textBox.Text, headerPixel);
             this.largePictureBox.Image = embeddor.Embed();
             this.textBox.Text = "";
@@ -479,6 +487,10 @@ namespace GroupGSteganography.View
 
         private void buildExtractedText(TextExtractor extractor)
         {
+            if (extractor == null)
+            {
+                throw new ArgumentNullException();
+            }
             var text = extractor.ExtractedText;
             if (extractor.EncryptedText != null)
             {

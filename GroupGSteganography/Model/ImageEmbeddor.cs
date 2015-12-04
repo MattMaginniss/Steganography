@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.Model
@@ -28,6 +29,18 @@ namespace GroupGSteganography.Model
 
         public ImageEmbeddor(Image hiderImage, Image embedImage, HeaderPixel headerPixel)
         {
+            if (hiderImage == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (embedImage == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (headerPixel == null)
+            {
+                throw new ArgumentNullException();
+            }
             this.HiderImage = (Bitmap) hiderImage;
             this.EmbedImage = (Bitmap) embedImage;
             this.HeaderPixel = headerPixel;

@@ -44,6 +44,18 @@ namespace GroupGSteganography.Model
         /// <param name="headerPixel">The header pixel</param>
         public TextEmbeddor(Image sourceImage, string textToEmbed, HeaderPixel headerPixel)
         {
+            if (sourceImage == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (textToEmbed == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (headerPixel == null)
+            {
+                throw new ArgumentNullException();
+            }
             this.SourceImage = sourceImage;
             this.MessageText = textToEmbed;
             this.HeaderPixel = headerPixel;
@@ -81,6 +93,10 @@ namespace GroupGSteganography.Model
 
         private void setEmbeddedPixel(int i, int j, Bitmap img)
         {
+            if (img == null)
+            {
+                throw new ArgumentNullException();
+            }
             if (i != 0 || j != 0)
             {
                 var pixel = img.GetPixel(i, j);
@@ -96,11 +112,23 @@ namespace GroupGSteganography.Model
 
         private void embedHeaderPixel(Bitmap img)
         {
+            if (img == null)
+            {
+                throw new ArgumentNullException();
+            }
             img.SetPixel(0, 0, this.HeaderPixel.GetColor());
         }
 
         private void embedCharacter(int i, int j, Bitmap img, Color pixel)
         {
+            if (img == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (pixel == null)
+            {
+                throw new ArgumentNullException();
+            }
             if (i*img.Width + j <= this.MessageText.Length)
             {
                 var letter = Convert.ToChar(this.MessageText.Substring(j - 1, 1));
@@ -112,6 +140,14 @@ namespace GroupGSteganography.Model
 
         private void setEndMessageCharacters(int i, int j, Bitmap img, Color pixel)
         {
+            if (img == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (pixel == null)
+            {
+                throw new ArgumentNullException();
+            }
             if (this.MessageText.Length < (i*img.Width) + j &&
                 (i*img.Width) + j <= this.MessageText.Length + 3)
             {

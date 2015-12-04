@@ -52,6 +52,10 @@ namespace GroupGSteganography.Model
         /// <param name="encodedImage">The encoded image.</param>
         public TextExtractor(Image encodedImage)
         {
+            if (encodedImage == null)
+            {
+                throw new ArgumentNullException();
+            }
             this.EncodedImage = (Bitmap) encodedImage;
             this.HeaderPixel = HeaderPixel.From(this.EncodedImage.GetPixel(0,0));
         }
@@ -78,6 +82,10 @@ namespace GroupGSteganography.Model
 
         private static string extractText(Bitmap bmp)
         {
+            if (bmp == null)
+            {
+                throw new ArgumentNullException();
+            }
             var img = bmp;
             var message = "";
 

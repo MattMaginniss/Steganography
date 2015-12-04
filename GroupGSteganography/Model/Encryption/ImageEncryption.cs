@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace GroupGSteganography.Model.Encryption
 {
@@ -21,6 +22,14 @@ namespace GroupGSteganography.Model.Encryption
 
         public ImageEncryption(Bitmap hiderImage, Bitmap embeddedImage)
         {
+            if (hiderImage == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (embeddedImage == null)
+            {
+                throw new ArgumentNullException();
+            }
             this.hiderImage = hiderImage;
             this.embeddedImage = embeddedImage;
             this.encryptImage();

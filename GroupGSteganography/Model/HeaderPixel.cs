@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace GroupGSteganography.Model
 {
@@ -87,6 +88,10 @@ namespace GroupGSteganography.Model
         /// <returns>New HeaderPixel with values extracted from the Color</returns>
         public static HeaderPixel From(Color color)
         {
+            if (color == null)
+            {
+                throw new ArgumentNullException();
+            }
             var isImage = false;
             var isEncrypted = false;
             var rotShift = 0;

@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.Model
@@ -37,6 +38,10 @@ namespace GroupGSteganography.Model
 
         public ImageExtractor(Image encodedImage)
         {
+            if (encodedImage == null)
+            {
+                throw new ArgumentNullException();
+            }
             this.EncodedImage = (Bitmap) encodedImage;
         }
 
