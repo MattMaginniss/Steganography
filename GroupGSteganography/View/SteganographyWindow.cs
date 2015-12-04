@@ -5,7 +5,6 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 using GroupGSteganography.Model;
-using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.View
 {
@@ -29,6 +28,7 @@ namespace GroupGSteganography.View
         #endregion
 
         #region ActionHandlers
+
         private void encryptButton_Click(object sender, EventArgs e)
         {
             var headerPixel = this.createHeaderPixel();
@@ -38,8 +38,7 @@ namespace GroupGSteganography.View
             }
             else if (this.checkImageSizes())
             {
-
-                 this.embedImage(headerPixel);
+                this.embedImage(headerPixel);
             }
             else
             {
@@ -249,8 +248,6 @@ namespace GroupGSteganography.View
         }
 
         #endregion
-
-        #region HelperMethods
 
         private void drawLines()
         {
@@ -517,6 +514,5 @@ namespace GroupGSteganography.View
             }
             this.textBox.Text = text;
         }
-        #endregion
     }
 }

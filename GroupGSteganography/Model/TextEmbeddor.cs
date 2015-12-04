@@ -4,6 +4,9 @@ using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.Model
 {
+    /// <summary>
+    ///     Class that handles the operation of embedding text inside an image.
+    /// </summary>
     public class TextEmbeddor : IEmbeddor
     {
         #region Properties
