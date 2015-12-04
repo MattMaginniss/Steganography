@@ -6,10 +6,6 @@ using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.Model
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <seealso cref="GroupGSteganography.Model.IExtractor" />
     public class TextExtractor : IExtractor
     {
         #region Properties
@@ -50,6 +46,11 @@ namespace GroupGSteganography.Model
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="TextExtractor" /> class.
+        /// </summary>
+        /// <param name="encodedImage">The encoded image.</param>
+        /// <param name="headerPixel">The header pixel.</param>
         public TextExtractor(Image encodedImage, HeaderPixel headerPixel)
         {
             this.EncodedImage = encodedImage;
@@ -60,6 +61,9 @@ namespace GroupGSteganography.Model
 
         #region Methods
 
+        /// <summary>
+        ///     Extracts the text from the image.
+        /// </summary>
         public void Extract()
         {
             this.ExtractedText = extractText((Bitmap) this.EncodedImage);
@@ -79,9 +83,6 @@ namespace GroupGSteganography.Model
             var img = bmp;
             var message = "";
 
-            var lastpixel = img.GetPixel(img.Width - 1, img.Height - 1);
-            int msgLength = lastpixel.B;
-
             for (var i = 0; i < img.Width; i++)
             {
                 for (var j = 0; j < img.Height; j++)
@@ -90,12 +91,29 @@ namespace GroupGSteganography.Model
                     {
                         var pixel = img.GetPixel(i, j);
 
-                        if (i*img.Width + j <= msgLength)
+                        int value = pixel.B;
+                        var c = Convert.ToChar(value);
+                        var letter = Encoding.ASCII.GetString(new[] {Convert.ToByte(c)});
+                        if (letter.Equals("#"))
                         {
-                            int value = pixel.B;
-                            var c = Convert.ToChar(value);
-                            var letter = Encoding.ASCII.GetString(new[] {Convert.ToByte(c)});
-
+                            for (var x = 1; x < 3; x ++)
+                            {
+                                pixel = img.GetPixel(i, j + x);
+                                value = pixel.B;
+                                c = Convert.ToChar(value);
+                                letter = Encoding.ASCII.GetString(new[] {Convert.ToByte(c)});
+                                if (!letter.Equals("#"))
+                                {
+                                    message = message + "#";
+                                }
+                                else
+                                {
+                                    return message;
+                                }
+                            }
+                        }
+                        else
+                        {
                             message = message + letter;
                         }
                     }
