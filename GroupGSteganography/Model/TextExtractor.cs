@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Text;
-using System.Windows.Forms;
 using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.Model
@@ -53,7 +52,7 @@ namespace GroupGSteganography.Model
         public TextExtractor(Image encodedImage)
         {
             this.EncodedImage = (Bitmap) encodedImage;
-            this.HeaderPixel = HeaderPixel.From(this.EncodedImage.GetPixel(0,0));
+            this.HeaderPixel = HeaderPixel.From(this.EncodedImage.GetPixel(0, 0));
         }
 
         #endregion
@@ -65,7 +64,7 @@ namespace GroupGSteganography.Model
         /// </summary>
         public void Extract()
         {
-            this.ExtractedText = extractText((Bitmap) this.EncodedImage);
+            this.ExtractedText = extractText(this.EncodedImage);
             if (this.HeaderPixel.IsEncrypted)
             {
                 this.EncryptedText = this.ExtractedText;
@@ -87,19 +86,13 @@ namespace GroupGSteganography.Model
                 {
                     if (i != 0 || j != 0)
                     {
-                        var pixel = img.GetPixel(i, j);
+                        var letter = convertPixelDataToString(img, i, j, 0);
 
-                        int value = pixel.B;
-                        var c = Convert.ToChar(value);
-                        var letter = Encoding.ASCII.GetString(new[] {Convert.ToByte(c)});
                         if (letter.Equals("#"))
                         {
                             for (var x = 1; x < 3; x ++)
                             {
-                                pixel = img.GetPixel(i, j + x);
-                                value = pixel.B;
-                                c = Convert.ToChar(value);
-                                letter = Encoding.ASCII.GetString(new[] {Convert.ToByte(c)});
+                                letter = convertPixelDataToString(img, i, j, x);
                                 if (!letter.Equals("#"))
                                 {
                                     message = message + "#";
@@ -119,6 +112,15 @@ namespace GroupGSteganography.Model
             }
 
             return message;
+        }
+
+        private static string convertPixelDataToString(Bitmap img, int i, int j, int x)
+        {
+            var pixel = img.GetPixel(i, j + x);
+            int value = pixel.B;
+            var c = Convert.ToChar(value);
+            var letter = Encoding.ASCII.GetString(new[] {Convert.ToByte(c)});
+            return letter;
         }
     }
 }
