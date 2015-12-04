@@ -53,29 +53,43 @@
 
                 if (number >= 'a' && number <= 'z')
                 {
-                    if (number - this.RotationValue < 'a')
-                    {
-                        number += 26;
-                    }
-                    else
-                    {
-                        number -= this.RotationValue;
-                    }
+                    number = this.lowerCaseDecryption(number);
                 }
                 else if (number >= 'A' && number <= 'Z')
                 {
-                    if (number - this.RotationValue < 'A')
-                    {
-                        number += 26;
-                    }
-                    else
-                    {
-                        number -= this.RotationValue;
-                    }
+                    number = this.upperCaseDecryption(number);
                 }
                 array[i] = (char) number;
             }
             return new string(array);
+        }
+
+        private int upperCaseDecryption(int number)
+        {
+            if (number - this.RotationValue < 'A')
+            {
+                number += 26;
+                number -= this.RotationValue;
+            }
+            else
+            {
+                number -= this.RotationValue;
+            }
+            return number;
+        }
+
+        private int lowerCaseDecryption(int number)
+        {
+            if (number - this.RotationValue < 'a')
+            {
+                number += 26;
+                number -= this.RotationValue;
+            }
+            else
+            {
+                number -= this.RotationValue;
+            }
+            return number;
         }
     }
 }

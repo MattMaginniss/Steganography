@@ -1,9 +1,18 @@
 ﻿using System.Drawing;
+using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.Model
 {
     internal class ImageExtractor : IExtractor
     {
+        #region Data members
+
+        private const int HiddenBits = 1;
+        private const int Shift = 8 - HiddenBits;
+        private const int HiddenMask = 0xFF >> Shift;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -12,7 +21,7 @@ namespace GroupGSteganography.Model
         /// <value>
         ///     The encoded image.
         /// </value>
-        public Image EncodedImage { get; }
+        public Bitmap EncodedImage { get; }
 
         /// <summary>
         ///     Gets or sets the extracted image.
@@ -20,7 +29,7 @@ namespace GroupGSteganography.Model
         /// <value>
         ///     The extracted image.
         /// </value>
-        public Image ExtractedImage { get; private set; }
+        public Bitmap ExtractedImage { get; private set; }
 
         #endregion
 
@@ -28,7 +37,7 @@ namespace GroupGSteganography.Model
 
         public ImageExtractor(Image encodedImage)
         {
-            this.EncodedImage = encodedImage;
+            this.EncodedImage = (Bitmap) encodedImage;
         }
 
         #endregion
@@ -37,30 +46,47 @@ namespace GroupGSteganography.Model
 
         public void Extract()
         {
-            this.ExtractedImage = this.recoverImage((Bitmap) this.EncodedImage);
+            this.recoverImage();
+            this.decryptImage();
         }
 
         #endregion
 
-        private Bitmap recoverImage(Bitmap embeddedImage)
+        private void decryptImage()
         {
-            const int hiddenBits = 1;
-            const int shift = (8 - hiddenBits);
-
-            var hiddenMask = 0xFF >> shift;
-            var extractedImage = new Bitmap(embeddedImage.Width, embeddedImage.Height);
-            for (var x = 0; x < embeddedImage.Width; x++)
+            var headerPixel = HeaderPixel.From(this.EncodedImage.GetPixel(0, 0));
+            if (!headerPixel.IsEncrypted)
             {
-                for (var y = 0; y < embeddedImage.Height; y++)
-                {
-                    var clrCombined = embeddedImage.GetPixel(x, y);
-                    var red = (clrCombined.R & hiddenMask) << shift;
-                    var green = (clrCombined.G & hiddenMask) << shift;
-                    var blue = (clrCombined.B & hiddenMask) << shift;
-                    extractedImage.SetPixel(x, y, Color.FromArgb(255, red, green, blue));
-                }
+                return;
             }
-            return extractedImage;
+            var decrypter = new ImageDecryption(this.ExtractedImage);
+            this.ExtractedImage = decrypter.DecryptedImage;
+        }
+
+        private void recoverImage()
+        {
+            this.ExtractedImage = new Bitmap(this.EncodedImage.Width, this.EncodedImage.Height);
+            for (var x = 0; x < this.EncodedImage.Width; x++)
+            {
+                this.recoverRow(x);
+            }
+        }
+
+        private void recoverRow(int x)
+        {
+            for (var y = 0; y < this.EncodedImage.Height; y++)
+            {
+                this.recoverPixel(x, y);
+            }
+        }
+
+        private void recoverPixel(int x, int y)
+        {
+            var clrCombined = this.EncodedImage.GetPixel(x, y);
+            var red = (clrCombined.R & HiddenMask) << Shift;
+            var green = (clrCombined.G & HiddenMask) << Shift;
+            var blue = (clrCombined.B & HiddenMask) << Shift;
+            this.ExtractedImage.SetPixel(x, y, Color.FromArgb(255, red, green, blue));
         }
     }
 }
