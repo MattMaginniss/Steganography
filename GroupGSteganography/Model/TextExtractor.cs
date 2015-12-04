@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Windows.Forms;
 using GroupGSteganography.Model.Encryption;
@@ -85,13 +86,31 @@ namespace GroupGSteganography.Model
                     if (i != 0 || j != 0)
                     {
                         var pixel = img.GetPixel(i, j);
-
-                        if ((i*img.Width) + j <= msgLength)
+                        
+                        int value = pixel.B;
+                        var c = Convert.ToChar(value);
+                        var letter = Encoding.ASCII.GetString(new[] {Convert.ToByte(c)});
+                        if (letter.Equals("#"))
                         {
-                            int value = pixel.B;
-                            var c = Convert.ToChar(value);
-                            var letter = Encoding.ASCII.GetString(new[] {Convert.ToByte(c)});
+                            for (int x = 1; x < 3; x ++)
+                            {
+                                pixel = img.GetPixel(i, j + x);
+                                value = pixel.B;
+                                c = Convert.ToChar(value);
+                                letter = Encoding.ASCII.GetString(new[] { Convert.ToByte(c) });
+                                if (!letter.Equals("#"))
+                                {
+                                    message = message + "#";
+                                }
+                                else
+                                {
+                                    return message;
+                                }
+                            }
 
+                        }
+                        else
+                        {
                             message = message + letter;
                         }
                     }
