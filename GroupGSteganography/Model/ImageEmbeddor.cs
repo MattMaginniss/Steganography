@@ -1,4 +1,7 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using System.Security.Cryptography.X509Certificates;
+using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.Model
 {
@@ -9,6 +12,7 @@ namespace GroupGSteganography.Model
         public Image SourceImage { get; set; }
         public Image MessageImage { get; set; }
         public HeaderPixel HeaderPixel { get; set; }
+
 
         #endregion
 
@@ -27,7 +31,18 @@ namespace GroupGSteganography.Model
 
         public Image Embed()
         {
+            this.checkEncryption();
             return this.hideImage((Bitmap) this.SourceImage, (Bitmap) this.MessageImage);
+        }
+
+        private void checkEncryption()
+        {
+            if (!this.HeaderPixel.IsEncrypted)
+            {
+                return;
+            }
+            var encrypter = new ImageEncryption((Bitmap)this.SourceImage, (Bitmap)this.MessageImage);
+            this.MessageImage = encrypter.EncryptedImage;
         }
 
         #endregion
@@ -35,7 +50,7 @@ namespace GroupGSteganography.Model
         private Bitmap hideImage(Bitmap sourceImage, Bitmap messageImage)
         {
             const int hiddenBits = 1;
-            const int shift = 8 - hiddenBits;
+            const int shift = (8 - hiddenBits);
 
             const int sourceMask = 0xFF << hiddenBits;
             const int messageMask = 0xFF >> shift;
@@ -66,7 +81,7 @@ namespace GroupGSteganography.Model
                     combinedImage.SetPixel(x, y, Color.FromArgb(255, r, g, b));
                 }
             }
-            combinedImage.SetPixel(0, 0, this.HeaderPixel.GetColor());
+            combinedImage.SetPixel(0,0, this.HeaderPixel.GetColor());
             return combinedImage;
         }
     }

@@ -86,7 +86,7 @@ namespace GroupGSteganography.Model
                     {
                         var pixel = img.GetPixel(i, j);
 
-                        if (i < 1 && j < msgLength)
+                        if ((i*img.Width) + j <= msgLength)
                         {
                             int value = pixel.B;
                             var c = Convert.ToChar(value);

@@ -77,6 +77,10 @@ namespace GroupGSteganography.View
             this.rotationUpDown = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.rotHelpLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.warningLabel1 = new System.Windows.Forms.Label();
+            this.warningLabel2 = new System.Windows.Forms.Label();
+            this.warningPictureBox = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.largePictureBox)).BeginInit();
             this.bigPictureBoxContextMenu.SuspendLayout();
@@ -85,6 +89,7 @@ namespace GroupGSteganography.View
             this.textFieldContextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.qualityBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rotationUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.warningPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -297,18 +302,21 @@ namespace GroupGSteganography.View
             this.textFieldSaveToolStripMenuItem.Name = "textFieldSaveToolStripMenuItem";
             this.textFieldSaveToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
             this.textFieldSaveToolStripMenuItem.Text = "Save";
+            this.textFieldSaveToolStripMenuItem.Click += new System.EventHandler(this.textFieldSaveToolStripMenuItem_Click);
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
             this.copyToolStripMenuItem.Text = "Copy";
+            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
             // pasteToolStripMenuItem
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             this.pasteToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
             this.pasteToolStripMenuItem.Text = "Paste";
+            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // encryptButton
             // 
@@ -488,11 +496,11 @@ namespace GroupGSteganography.View
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(417, 417);
+            this.label4.Location = new System.Drawing.Point(404, 417);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(47, 13);
+            this.label4.Size = new System.Drawing.Size(58, 13);
             this.label4.TabIndex = 19;
-            this.label4.Text = "Rotation";
+            this.label4.Text = "Shift Value";
             // 
             // rotHelpLinkLabel
             // 
@@ -503,12 +511,57 @@ namespace GroupGSteganography.View
             this.rotHelpLinkLabel.TabIndex = 20;
             this.rotHelpLinkLabel.TabStop = true;
             this.rotHelpLinkLabel.Text = "(?)";
+            this.rotHelpLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.rotHelpLinkLabel_LinkClicked);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(368, 61);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(0, 13);
+            this.label5.TabIndex = 21;
+            // 
+            // warningLabel1
+            // 
+            this.warningLabel1.AutoSize = true;
+            this.warningLabel1.Location = new System.Drawing.Point(404, 61);
+            this.warningLabel1.Name = "warningLabel1";
+            this.warningLabel1.Size = new System.Drawing.Size(166, 13);
+            this.warningLabel1.TabIndex = 22;
+            this.warningLabel1.Text = "WARNING: The image to embed ";
+            this.warningLabel1.Visible = false;
+            // 
+            // warningLabel2
+            // 
+            this.warningLabel2.AutoSize = true;
+            this.warningLabel2.Location = new System.Drawing.Point(413, 74);
+            this.warningLabel2.Name = "warningLabel2";
+            this.warningLabel2.Size = new System.Drawing.Size(145, 13);
+            this.warningLabel2.TabIndex = 23;
+            this.warningLabel2.Text = "is too large for the host image";
+            this.warningLabel2.Visible = false;
+            // 
+            // warningPictureBox
+            // 
+            this.warningPictureBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("warningPictureBox.BackgroundImage")));
+            this.warningPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.warningPictureBox.InitialImage = ((System.Drawing.Image)(resources.GetObject("warningPictureBox.InitialImage")));
+            this.warningPictureBox.Location = new System.Drawing.Point(371, 61);
+            this.warningPictureBox.Name = "warningPictureBox";
+            this.warningPictureBox.Size = new System.Drawing.Size(30, 26);
+            this.warningPictureBox.TabIndex = 24;
+            this.warningPictureBox.TabStop = false;
+            this.warningPictureBox.Visible = false;
             // 
             // SteganographyWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(868, 445);
+            this.Controls.Add(this.warningPictureBox);
+            this.Controls.Add(this.warningLabel2);
+            this.Controls.Add(this.warningLabel1);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.rotHelpLinkLabel);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.rotationUpDown);
@@ -542,6 +595,7 @@ namespace GroupGSteganography.View
             this.textFieldContextMenuStrip.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.qualityBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rotationUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.warningPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -594,6 +648,10 @@ namespace GroupGSteganography.View
         private System.Windows.Forms.NumericUpDown rotationUpDown;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.LinkLabel rotHelpLinkLabel;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label warningLabel1;
+        private System.Windows.Forms.Label warningLabel2;
+        private System.Windows.Forms.PictureBox warningPictureBox;
     }
 
 
