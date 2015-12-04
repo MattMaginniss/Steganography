@@ -2,9 +2,11 @@ D:\School\CS\3201\Steganography\GroupGSteganography\GroupGSteganography\bin\Debu
 D:\School\CS\3201\Steganography\GroupGSteganography\GroupGSteganography\obj\Debug\GroupGSteganography.exe
 D:\School\CS\3201\Steganography\GroupGSteganography\GroupGSteganography\obj\Debug\GroupGSteganography.pdb
 C:\Users\shrou\Source\Repos\groupgsteganography\GroupGSteganography\bin\Debug\GroupGSteganography.exe.config
+C:\Users\shrou\Source\Repos\groupgsteganography\GroupGSteganography\bin\Debug\GroupGSteganography.XML
 C:\Users\shrou\Source\Repos\groupgsteganography\GroupGSteganography\bin\Debug\GroupGSteganography.exe
 C:\Users\shrou\Source\Repos\groupgsteganography\GroupGSteganography\bin\Debug\GroupGSteganography.pdb
-C:\Users\shrou\Source\Repos\groupgsteganography\GroupGSteganography\obj\Debug\GroupGSteganography.csprojResolveAssemblyReference.cache
+C:\Users\shrou\Source\Repos\groupgsteganography\GroupGSteganography\bin\Debug\GroupGSteganography.exe.CodeAnalysisLog.xml
+C:\Users\shrou\Source\Repos\groupgsteganography\GroupGSteganography\bin\Debug\GroupGSteganography.exe.lastcodeanalysissucceeded
 C:\Users\shrou\Source\Repos\groupgsteganography\GroupGSteganography\obj\Debug\GroupGSteganography.View.SteganographyWindow.resources
 C:\Users\shrou\Source\Repos\groupgsteganography\GroupGSteganography\obj\Debug\GroupGSteganography.Properties.Resources.resources
 C:\Users\shrou\Source\Repos\groupgsteganography\GroupGSteganography\obj\Debug\GroupGSteganography.csproj.GenerateResource.Cache

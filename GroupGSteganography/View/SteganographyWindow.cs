@@ -8,10 +8,17 @@ using GroupGSteganography.Model;
 
 namespace GroupGSteganography.View
 {
+    /// <summary>
+    /// GUI code behind. Handles control events
+    /// </summary>
+    /// <seealso cref="System.Windows.Forms.Form" />
     public partial class SteganographyWindow : Form
     {
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SteganographyWindow"/> class.
+        /// </summary>
         public SteganographyWindow()
         {
             this.InitializeComponent();

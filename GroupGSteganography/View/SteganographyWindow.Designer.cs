@@ -2,6 +2,10 @@
 
 namespace GroupGSteganography.View
 {
+    /// <summary>
+    /// ViewModel for GUI
+    /// </summary>
+    /// <seealso cref="System.Windows.Forms.Form" />
     partial class SteganographyWindow
     {
         /// <summary>

@@ -6,6 +6,10 @@ using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.Model
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="GroupGSteganography.Model.IExtractor" />
     public class TextExtractor : IExtractor
     {
         #region Properties
