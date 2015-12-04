@@ -1,3 +1,6 @@
 D:\School\CS\3201\Steganography\GroupGSteganography\GroupGSteganography\bin\Debug\GroupGSteganography.exe.config
 D:\School\CS\3201\Steganography\GroupGSteganography\GroupGSteganography\obj\Debug\GroupGSteganography.exe
 D:\School\CS\3201\Steganography\GroupGSteganography\GroupGSteganography\obj\Debug\GroupGSteganography.pdb
+C:\Users\shrou\Source\Repos\groupgsteganography\GroupGSteganography\bin\Debug\GroupGSteganography.exe.config
+C:\Users\shrou\Source\Repos\groupgsteganography\GroupGSteganography\obj\Debug\GroupGSteganography.exe
+C:\Users\shrou\Source\Repos\groupgsteganography\GroupGSteganography\obj\Debug\GroupGSteganography.pdb
