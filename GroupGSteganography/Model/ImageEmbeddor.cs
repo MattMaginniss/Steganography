@@ -4,6 +4,9 @@ using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.Model
 {
+    /// <summary>
+    /// Handles the embedding of an image in another image
+    /// </summary>
     internal class ImageEmbeddor : IEmbeddor
     {
         #region Data members
@@ -19,14 +22,40 @@ namespace GroupGSteganography.Model
 
         #region Properties
 
+        /// <summary>
+        /// Gets the hider image.
+        /// </summary>
+        /// <value>
+        /// The hider image.
+        /// </value>
         public Bitmap HiderImage { get; private set; }
+        /// <summary>
+        /// Gets the embed image.
+        /// </summary>
+        /// <value>
+        /// The embed image.
+        /// </value>
         public Bitmap EmbedImage { get; private set; }
+        /// <summary>
+        /// Gets the header pixel.
+        /// </summary>
+        /// <value>
+        /// The header pixel.
+        /// </value>
         public HeaderPixel HeaderPixel { get; private set; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageEmbeddor"/> class.
+        /// </summary>
+        /// <param name="hiderImage">The hider image.</param>
+        /// <param name="embedImage">The embed image.</param>
+        /// <param name="headerPixel">The header pixel.</param>
+        /// <exception cref="ArgumentNullException">
+        /// </exception>
         public ImageEmbeddor(Image hiderImage, Image embedImage, HeaderPixel headerPixel)
         {
             if (hiderImage == null)
@@ -50,6 +79,12 @@ namespace GroupGSteganography.Model
 
         #region Methods
 
+        /// <summary>
+        ///     Embeds an Image into another image
+        ///     Precondition: none
+        ///     Postcontition: The embedImage is embedded in the HiderImage
+        /// </summary>
+        /// <returns></returns>
         public Image Embed()
         {
             this.checkEncryption();

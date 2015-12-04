@@ -65,6 +65,8 @@ namespace GroupGSteganography.Model
 
         /// <summary>
         ///     Extracts the text from the image.
+        ///     Precondition: none
+        ///     Postcontition: New text is extracted from the image
         /// </summary>
         public void Extract()
         {

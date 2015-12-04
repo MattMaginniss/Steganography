@@ -58,6 +58,8 @@ namespace GroupGSteganography.Model
 
         /// <summary>
         ///     Embeds this text into the image.
+        ///     Precondition: None
+        ///     Postcontition: Text is embedded in an image
         /// </summary>
         /// <returns>the image with embedded text.</returns>
         public Image Embed()

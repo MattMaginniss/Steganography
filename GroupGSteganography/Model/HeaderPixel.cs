@@ -74,6 +74,8 @@ namespace GroupGSteganography.Model
 
         /// <summary>
         ///     Gets the Color to embed as the first pixel, serving as the Header Pixel.
+        ///     Precondition: None
+        ///     Postcontition: None
         /// </summary>
         /// <returns>New Color with appropriate values embedded</returns>
         public Color GetColor()
@@ -83,6 +85,8 @@ namespace GroupGSteganography.Model
 
         /// <summary>
         ///     Static method to build a new HeaderPixel from a given Color (pixel)
+        ///     Precondition: color!= null
+        ///     Postcontition: New HeaderPixel is created from Color
         /// </summary>
         /// <param name="color">The color.</param>
         /// <returns>New HeaderPixel with values extracted from the Color</returns>

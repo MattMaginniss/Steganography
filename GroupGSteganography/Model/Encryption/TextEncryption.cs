@@ -29,6 +29,7 @@ namespace GroupGSteganography.Model.Encryption
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="TextEncryption" /> class.
+        ///     Precondition: UnencryptedText != null
         /// </summary>
         /// <param name="unencryptedText">The unencrypted text.</param>
         /// <param name="rotValue">The rot value.</param>
@@ -46,6 +47,8 @@ namespace GroupGSteganography.Model.Encryption
 
         /// <summary>
         ///     Encrypts the text.
+        ///     Precondition: none
+        ///     Postcontition: Text is encrypted
         /// </summary>
         /// <returns>Encrypted text using the ROTx method. x standing for the rotValue.</returns>
         public string EncryptText()

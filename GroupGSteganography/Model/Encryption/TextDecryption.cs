@@ -29,8 +29,9 @@ namespace GroupGSteganography.Model.Encryption
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="TextDecryption" /> class.
+        ///     Precondition: EncryptedText != null
         /// </summary>
-        /// <param name="encryptedText">The unencrypted text.</param>
+        /// <param name="encryptedText">The encrypted text.</param>
         /// <param name="rotValue">The rot value.</param>
         public TextDecryption(string encryptedText, int rotValue)
         {
@@ -46,6 +47,8 @@ namespace GroupGSteganography.Model.Encryption
 
         /// <summary>
         ///     Decrypts the text.
+        ///     Precondition: None
+        ///     Postcontition: Text is decrypted
         /// </summary>
         /// <returns>returns the decrypted text.</returns>
         public string DecryptText()

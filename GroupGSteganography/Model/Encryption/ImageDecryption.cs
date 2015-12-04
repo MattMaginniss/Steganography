@@ -3,6 +3,9 @@ using System.Drawing;
 
 namespace GroupGSteganography.Model.Encryption
 {
+    /// <summary>
+    /// Class to decrypt an encrypted image
+    /// </summary>
     internal class ImageDecryption
     {
         #region Data members
@@ -13,12 +16,23 @@ namespace GroupGSteganography.Model.Encryption
 
         #region Properties
 
+        /// <summary>
+        /// Gets the decrypted image.
+        /// </summary>
+        /// <value>
+        /// The decrypted image.
+        /// </value>
         public Bitmap DecryptedImage { get; private set; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageDecryption"/> class.
+        /// </summary>
+        /// <param name="embeddedImage">The embedded image.</param>
+        /// <exception cref="ArgumentNullException"></exception>
         public ImageDecryption(Bitmap embeddedImage)
         {
             if (embeddedImage == null)

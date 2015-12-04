@@ -4,6 +4,9 @@ using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.Model
 {
+    /// <summary>
+    /// Handles the extraction of an image from another image
+    /// </summary>
     internal class ImageExtractor : IExtractor
     {
         #region Data members
@@ -36,6 +39,11 @@ namespace GroupGSteganography.Model
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageExtractor"/> class.
+        /// </summary>
+        /// <param name="encodedImage">The encoded image.</param>
+        /// <exception cref="ArgumentNullException"></exception>
         public ImageExtractor(Image encodedImage)
         {
             if (encodedImage == null)
@@ -49,6 +57,11 @@ namespace GroupGSteganography.Model
 
         #region Methods
 
+        /// <summary>
+        ///     Extracts a hidden image from a hider image
+        ///     Precondition: none
+        ///     Postcontition: a new image is extracted
+        /// </summary>
         public void Extract()
         {
             this.recoverImage();
