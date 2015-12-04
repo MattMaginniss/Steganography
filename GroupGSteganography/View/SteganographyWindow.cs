@@ -495,7 +495,8 @@ namespace GroupGSteganography.View
             if (extractor.EncryptedText != null)
             {
                 text = "Encrypted: " + extractor.EncryptedText + Environment.NewLine + Environment.NewLine +
-                       "Decrypted: " + text + Environment.NewLine + Environment.NewLine + "Shift: " + extractor.HeaderPixel.RotShift ;
+                       "Decrypted: " + text + Environment.NewLine + Environment.NewLine + "Shift: " +
+                       extractor.HeaderPixel.RotShift;
             }
             this.textBox.Text = text;
         }

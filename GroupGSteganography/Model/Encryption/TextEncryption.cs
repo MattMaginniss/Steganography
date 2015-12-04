@@ -4,10 +4,10 @@ namespace GroupGSteganography.Model.Encryption
 {
     internal class TextEncryption
     {
-        #region Properties
+        #region Data members
 
-        private string UnencryptedText { get; }
-        private int RotationValue { get; }
+        private readonly string unencryptedText;
+        private readonly int rotationValue;
 
         #endregion
 
@@ -23,8 +23,8 @@ namespace GroupGSteganography.Model.Encryption
             {
                 throw new ArgumentNullException();
             }
-            this.UnencryptedText = unencryptedText;
-            this.RotationValue = 13;
+            this.unencryptedText = unencryptedText;
+            this.rotationValue = 13;
         }
 
         /// <summary>
@@ -38,8 +38,8 @@ namespace GroupGSteganography.Model.Encryption
             {
                 throw new ArgumentNullException();
             }
-            this.UnencryptedText = unencryptedText;
-            this.RotationValue = rotValue;
+            this.unencryptedText = unencryptedText;
+            this.rotationValue = rotValue;
         }
 
         #endregion
@@ -55,7 +55,7 @@ namespace GroupGSteganography.Model.Encryption
 
         private string rotXEncryption()
         {
-            var array = this.UnencryptedText.ToCharArray();
+            var array = this.unencryptedText.ToCharArray();
 
             for (var i = 0; i < array.Length; i++)
             {
@@ -76,28 +76,28 @@ namespace GroupGSteganography.Model.Encryption
 
         private int upperCaseEncryption(int number)
         {
-            if (number + this.RotationValue > 'Z')
+            if (number + this.rotationValue > 'Z')
             {
                 number -= 26;
-                number += this.RotationValue;
+                number += this.rotationValue;
             }
             else
             {
-                number += this.RotationValue;
+                number += this.rotationValue;
             }
             return number;
         }
 
         private int lowerCaseEncryption(int number)
         {
-            if (number + this.RotationValue > 'z')
+            if (number + this.rotationValue > 'z')
             {
                 number -= 26;
-                number += this.RotationValue;
+                number += this.rotationValue;
             }
             else
             {
-                number += this.RotationValue;
+                number += this.rotationValue;
             }
             return number;
         }

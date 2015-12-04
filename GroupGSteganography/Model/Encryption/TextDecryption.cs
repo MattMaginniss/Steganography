@@ -4,10 +4,10 @@ namespace GroupGSteganography.Model.Encryption
 {
     internal class TextDecryption
     {
-        #region Properties
+        #region Data members
 
-        private string EncryptedText { get; }
-        private int RotationValue { get; }
+        private readonly string encryptedText;
+        private readonly int rotationValue;
 
         #endregion
 
@@ -23,8 +23,8 @@ namespace GroupGSteganography.Model.Encryption
             {
                 throw new ArgumentNullException();
             }
-            this.EncryptedText = encryptedText;
-            this.RotationValue = 13;
+            this.encryptedText = encryptedText;
+            this.rotationValue = 13;
         }
 
         /// <summary>
@@ -38,8 +38,8 @@ namespace GroupGSteganography.Model.Encryption
             {
                 throw new ArgumentNullException();
             }
-            this.EncryptedText = encryptedText;
-            this.RotationValue = rotValue;
+            this.encryptedText = encryptedText;
+            this.rotationValue = rotValue;
         }
 
         #endregion
@@ -55,7 +55,7 @@ namespace GroupGSteganography.Model.Encryption
 
         private string rotXDecryption()
         {
-            var array = this.EncryptedText.ToCharArray();
+            var array = this.encryptedText.ToCharArray();
 
             for (var i = 0; i < array.Length; i++)
             {
@@ -76,28 +76,28 @@ namespace GroupGSteganography.Model.Encryption
 
         private int upperCaseDecryption(int number)
         {
-            if (number - this.RotationValue < 'A')
+            if (number - this.rotationValue < 'A')
             {
                 number += 26;
-                number -= this.RotationValue;
+                number -= this.rotationValue;
             }
             else
             {
-                number -= this.RotationValue;
+                number -= this.rotationValue;
             }
             return number;
         }
 
         private int lowerCaseDecryption(int number)
         {
-            if (number - this.RotationValue < 'a')
+            if (number - this.rotationValue < 'a')
             {
                 number += 26;
-                number -= this.RotationValue;
+                number -= this.rotationValue;
             }
             else
             {
-                number -= this.RotationValue;
+                number -= this.rotationValue;
             }
             return number;
         }

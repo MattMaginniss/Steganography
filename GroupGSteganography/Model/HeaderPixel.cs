@@ -4,7 +4,7 @@ using System.Drawing;
 namespace GroupGSteganography.Model
 {
     /// <summary>
-    /// Class to generate a headerpixel to store info about an encrypted image
+    ///     Class to generate a headerpixel to store info about an encrypted image
     /// </summary>
     public class HeaderPixel
     {
@@ -19,43 +19,43 @@ namespace GroupGSteganography.Model
         #region Properties
 
         /// <summary>
-        /// Gets a value indicating whether this instance is an image.
+        ///     Gets a value indicating whether this instance is an image.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if this instance is image; otherwise, <c>false</c> if this image is text.
+        ///     <c>true</c> if this instance is image; otherwise, <c>false</c> if this image is text.
         /// </value>
-        public bool IsImage { get; }
+        public bool IsImage { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating whether this instance is encrypted.
+        ///     Gets a value indicating whether this instance is encrypted.
         /// </summary>
         /// <value>
-        /// <c>true</c> if this instance is encrypted; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance is encrypted; otherwise, <c>false</c>.
         /// </value>
-        public bool IsEncrypted { get; }
+        public bool IsEncrypted { get; private set; }
 
         /// <summary>
-        /// Gets the rotation shift of the Ceasar Cipher.
+        ///     Gets the rotation shift of the Ceasar Cipher.
         /// </summary>
         /// <value>
-        /// The rotation shift.
+        ///     The rotation shift.
         /// </value>
-        public int RotShift { get; }
+        public int RotShift { get; private set; }
 
         /// <summary>
-        /// Gets the bits per color channel.
+        ///     Gets the bits per color channel.
         /// </summary>
         /// <value>
-        /// The bits per color channel.
+        ///     The bits per color channel.
         /// </value>
-        public int BitsPerColorChannel { get; }
+        public int BitsPerColorChannel { get; private set; }
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HeaderPixel"/> class.
+        ///     Initializes a new instance of the <see cref="HeaderPixel" /> class.
         /// </summary>
         /// <param name="isImage">if set to <c>true</c> [is image].</param>
         /// <param name="isEncrypted">if set to <c>true</c> [is encrypted].</param>
@@ -73,7 +73,7 @@ namespace GroupGSteganography.Model
         #endregion
 
         /// <summary>
-        /// Gets the Color to embed as the first pixel, serving as the Header Pixel.
+        ///     Gets the Color to embed as the first pixel, serving as the Header Pixel.
         /// </summary>
         /// <returns>New Color with appropriate values embedded</returns>
         public Color GetColor()
@@ -82,7 +82,7 @@ namespace GroupGSteganography.Model
         }
 
         /// <summary>
-        /// Static method to build a new HeaderPixel from a given Color (pixel)
+        ///     Static method to build a new HeaderPixel from a given Color (pixel)
         /// </summary>
         /// <param name="color">The color.</param>
         /// <returns>New HeaderPixel with values extracted from the Color</returns>

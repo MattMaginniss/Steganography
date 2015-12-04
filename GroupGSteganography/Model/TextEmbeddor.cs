@@ -4,6 +4,9 @@ using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.Model
 {
+    /// <summary>
+    ///     Handles Embedding of text into image
+    /// </summary>
     public class TextEmbeddor : IEmbeddor
     {
         #region Properties
@@ -14,7 +17,7 @@ namespace GroupGSteganography.Model
         /// <value>
         ///     The source image.
         /// </value>
-        public Image SourceImage { get; }
+        public Image SourceImage { get; private set; }
 
         /// <summary>
         ///     Gets or sets the embedded text.
@@ -30,7 +33,7 @@ namespace GroupGSteganography.Model
         /// <value>
         ///     The Header Pixel.
         /// </value>
-        public HeaderPixel HeaderPixel { get; }
+        public HeaderPixel HeaderPixel { get; private set; }
 
         #endregion
 
@@ -84,6 +87,8 @@ namespace GroupGSteganography.Model
             return img;
         }
 
+        #endregion
+
         private void checkForEncryption()
         {
             if (this.HeaderPixel.IsEncrypted)
@@ -107,7 +112,7 @@ namespace GroupGSteganography.Model
         {
             if (i*img.Width + j <= this.MessageText.Length)
             {
-                var letter = Convert.ToChar(this.MessageText.Substring((i*img.Width + j) - 1, 1));
+                var letter = Convert.ToChar(this.MessageText.Substring(i*img.Width + j - 1, 1));
                 var value = Convert.ToInt16(letter);
 
                 img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, value));
@@ -116,14 +121,12 @@ namespace GroupGSteganography.Model
 
         private void setEndOfMessageCharacters(int i, Bitmap img, int j, Color pixel)
         {
-            if (this.MessageText.Length < (i*img.Width) + j &&
-                (i*img.Width) + j <= this.MessageText.Length + 3)
+            if (this.MessageText.Length < i*img.Width + j &&
+                i*img.Width + j <= this.MessageText.Length + 3)
             {
                 var value = Convert.ToInt16('#');
                 img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, value));
             }
         }
-
-        #endregion
     }
 }

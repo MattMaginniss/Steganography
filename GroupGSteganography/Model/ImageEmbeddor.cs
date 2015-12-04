@@ -19,9 +19,9 @@ namespace GroupGSteganography.Model
 
         #region Properties
 
-        public Bitmap HiderImage { get; }
+        public Bitmap HiderImage { get; private set; }
         public Bitmap EmbedImage { get; private set; }
-        public HeaderPixel HeaderPixel { get; }
+        public HeaderPixel HeaderPixel { get; private set; }
 
         #endregion
 

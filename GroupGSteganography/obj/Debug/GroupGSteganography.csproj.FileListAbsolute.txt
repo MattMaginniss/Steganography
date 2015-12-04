@@ -11,3 +11,4 @@ C:\Users\shrou\Source\Repos\groupgsteganography\GroupGSteganography\obj\Debug\Gr
 C:\Users\shrou\Source\Repos\groupgsteganography\GroupGSteganography\obj\Debug\GroupGSteganography.exe
 C:\Users\shrou\Source\Repos\groupgsteganography\GroupGSteganography\obj\Debug\GroupGSteganography.pdb
 C:\Users\shrou\Source\Repos\groupgsteganography\GroupGSteganography\obj\Debug\GroupGSteganography.csprojResolveAssemblyReference.cache
+C:\Users\csuser\Source\Repos\groupgsteganography\GroupGSteganography\bin\Debug\GroupGSteganography.exe.config

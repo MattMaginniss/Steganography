@@ -22,7 +22,7 @@ namespace GroupGSteganography.Model
         /// <value>
         ///     The encoded image.
         /// </value>
-        public Bitmap EncodedImage { get; }
+        public Bitmap EncodedImage { get; private set; }
 
         /// <summary>
         ///     Gets or sets the extracted image.

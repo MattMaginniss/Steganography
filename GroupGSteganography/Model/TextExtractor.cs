@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Text;
-using System.Windows.Forms;
 using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.Model
@@ -16,7 +15,7 @@ namespace GroupGSteganography.Model
         /// <value>
         ///     The encoded image.
         /// </value>
-        public Bitmap EncodedImage { get; }
+        public Bitmap EncodedImage { get; private set; }
 
         /// <summary>
         ///     Gets or sets the extracted text.
@@ -40,7 +39,7 @@ namespace GroupGSteganography.Model
         /// <value>
         ///     The Header Pixel.
         /// </value>
-        public HeaderPixel HeaderPixel { get; }
+        public HeaderPixel HeaderPixel { get; private set; }
 
         #endregion
 
@@ -57,7 +56,7 @@ namespace GroupGSteganography.Model
                 throw new ArgumentNullException();
             }
             this.EncodedImage = (Bitmap) encodedImage;
-            this.HeaderPixel = HeaderPixel.From(this.EncodedImage.GetPixel(0,0));
+            this.HeaderPixel = HeaderPixel.From(this.EncodedImage.GetPixel(0, 0));
         }
 
         #endregion
@@ -69,7 +68,7 @@ namespace GroupGSteganography.Model
         /// </summary>
         public void Extract()
         {
-            this.ExtractedText = extractText((Bitmap) this.EncodedImage);
+            this.ExtractedText = extractText(this.EncodedImage);
             if (this.HeaderPixel.IsEncrypted)
             {
                 this.EncryptedText = this.ExtractedText;
