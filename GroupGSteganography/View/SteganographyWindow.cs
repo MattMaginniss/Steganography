@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using GroupGSteganography.Model;
 using GroupGSteganography.Model.Encryption;
 
@@ -62,7 +63,7 @@ namespace GroupGSteganography.View
 
         private void enableTextControls()
         {
-            this.loadStuffToEncryptButton.Text = @"Load Text to Encrypt";
+            this.loadStuffToEncryptButton.Text = @"Load Text File to Encrypt";
             this.saveDecryptedButton.Text = @"Save Decrypted Text";
             this.imageToEncryptToolStripMenuItem.Text = @"Text to Encrypt";
         }
@@ -227,7 +228,23 @@ namespace GroupGSteganography.View
 
         private void saveDecryptedButton_Click(object sender, EventArgs e)
         {
-            this.saveImage(sender);
+            if (this.imageRadioButton.Checked)
+            {
+                this.saveImage(sender);
+            }
+            else
+            {
+                this.saveText();
+            }
+        }
+
+        private void saveText()
+        {
+            var saveDialog = new SaveFileDialog { Filter = @"TXT File (*.txt)|*.txt" };
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                File.WriteAllText(saveDialog.FileName, this.textBox.Text);
+            }
         }
 
         private void smallPictureBox_Paint(object sender, PaintEventArgs e)
@@ -461,6 +478,21 @@ namespace GroupGSteganography.View
                 @"The encryption used in this program is a ceaser cipher, which shifts the letters down a given number of 'slots.'" +
                     @"For example, with a given shift of 1, A will become B, B will become C, and so on." ,
                 @"Encryption Help", MessageBoxButtons.OK, MessageBoxIcon.Question);
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.textBox.Copy();
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.textBox.Paste();
+        }
+
+        private void textFieldSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.saveText();
         }
     }
 }

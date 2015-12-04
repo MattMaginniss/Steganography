@@ -283,32 +283,35 @@ namespace GroupGSteganography.View
             this.copyToolStripMenuItem,
             this.pasteToolStripMenuItem});
             this.textFieldContextMenuStrip.Name = "textFieldContextMenuStrip";
-            this.textFieldContextMenuStrip.Size = new System.Drawing.Size(103, 92);
+            this.textFieldContextMenuStrip.Size = new System.Drawing.Size(153, 114);
             // 
             // textFieldLoadToolStripMenuItem
             // 
             this.textFieldLoadToolStripMenuItem.Name = "textFieldLoadToolStripMenuItem";
-            this.textFieldLoadToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.textFieldLoadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.textFieldLoadToolStripMenuItem.Text = "Load";
             this.textFieldLoadToolStripMenuItem.Click += new System.EventHandler(this.textFieldLoadToolStripMenuItem_Click);
             // 
             // textFieldSaveToolStripMenuItem
             // 
             this.textFieldSaveToolStripMenuItem.Name = "textFieldSaveToolStripMenuItem";
-            this.textFieldSaveToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.textFieldSaveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.textFieldSaveToolStripMenuItem.Text = "Save";
+            this.textFieldSaveToolStripMenuItem.Click += new System.EventHandler(this.textFieldSaveToolStripMenuItem_Click);
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.copyToolStripMenuItem.Text = "Copy";
+            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
             // pasteToolStripMenuItem
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.pasteToolStripMenuItem.Text = "Paste";
+            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // encryptButton
             // 
