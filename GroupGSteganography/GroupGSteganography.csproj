@@ -53,12 +53,12 @@
     <Compile Include="Model\Encryption\TextDecryption.cs" />
     <Compile Include="Model\Encryption\TextEncryption.cs" />
     <Compile Include="Model\HeaderPixel.cs" />
-    <Compile Include="Model\IEmbeddor.cs" />
-    <Compile Include="Model\IExtractor.cs" />
-    <Compile Include="Model\ImageEmbeddor.cs" />
-    <Compile Include="Model\ImageExtractor.cs" />
-    <Compile Include="Model\TextEmbeddor.cs" />
-    <Compile Include="Model\TextExtractor.cs" />
+    <Compile Include="Model\Embedding\IEmbeddor.cs" />
+    <Compile Include="Model\Extraction\IExtractor.cs" />
+    <Compile Include="Model\Embedding\ImageEmbeddor.cs" />
+    <Compile Include="Model\Extraction\ImageExtractor.cs" />
+    <Compile Include="Model\Embedding\TextEmbeddor.cs" />
+    <Compile Include="Model\Extraction\TextExtractor.cs" />
     <Compile Include="View\SteganographyWindow.cs">
       <SubType>Form</SubType>
     </Compile>

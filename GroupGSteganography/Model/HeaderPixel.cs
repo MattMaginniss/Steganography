@@ -24,7 +24,7 @@ namespace GroupGSteganography.Model
         /// <value>
         ///     <c>true</c> if this instance is image; otherwise, <c>false</c> if this image is text.
         /// </value>
-        public bool IsImage { get; private set; }
+        public bool IsImage { get; }
 
         /// <summary>
         ///     Gets a value indicating whether this instance is encrypted.
@@ -32,7 +32,7 @@ namespace GroupGSteganography.Model
         /// <value>
         ///     <c>true</c> if this instance is encrypted; otherwise, <c>false</c>.
         /// </value>
-        public bool IsEncrypted { get; private set; }
+        public bool IsEncrypted { get; }
 
         /// <summary>
         ///     Gets the rotation shift of the Ceasar Cipher.
@@ -40,7 +40,7 @@ namespace GroupGSteganography.Model
         /// <value>
         ///     The rotation shift.
         /// </value>
-        public int RotShift { get; private set; }
+        public int RotShift { get; }
 
         /// <summary>
         ///     Gets the bits per color channel.
@@ -48,7 +48,7 @@ namespace GroupGSteganography.Model
         /// <value>
         ///     The bits per color channel.
         /// </value>
-        public int BitsPerColorChannel { get; private set; }
+        public int BitsPerColorChannel { get; }
 
         #endregion
 

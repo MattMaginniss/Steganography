@@ -5,6 +5,8 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 using GroupGSteganography.Model;
+using GroupGSteganography.Model.Embedding;
+using GroupGSteganography.Model.Extraction;
 
 namespace GroupGSteganography.View
 {

@@ -15,10 +15,10 @@ namespace GroupGSteganography.Model.Encryption
         #region Properties
 
         /// <summary>
-        /// Gets the encrypted image.
+        ///     Gets the encrypted image.
         /// </summary>
         /// <value>
-        /// The encrypted image.
+        ///     The encrypted image.
         /// </value>
         public Bitmap EncryptedImage { get; private set; }
 
@@ -27,7 +27,7 @@ namespace GroupGSteganography.Model.Encryption
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImageEncryption"/> class.
+        ///     Initializes a new instance of the <see cref="ImageEncryption" /> class.
         /// </summary>
         /// <param name="hiderImage">The hider image.</param>
         /// <param name="embeddedImage">The embedded image.</param>
