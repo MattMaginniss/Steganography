@@ -6,10 +6,7 @@ using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.Model
 {
-    /// <summary>
-    ///     Class that handles extracting embedded date from an image.
-    /// </summary>
-    public class TextExtractor : IExtractor
+    internal class TextExtractor : IExtractor
     {
         #region Properties
 
