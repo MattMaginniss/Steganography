@@ -87,7 +87,7 @@ namespace GroupGSteganography.Model
                     else
                     {
                         var pixel = img.GetPixel(i, j);
-                    
+
                         if (i < 1 && j < this.MessageText.Length)
                         {
                             var letter = Convert.ToChar(this.MessageText.Substring(j, 1));

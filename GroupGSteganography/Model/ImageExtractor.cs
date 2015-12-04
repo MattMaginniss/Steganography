@@ -45,7 +45,7 @@ namespace GroupGSteganography.Model
         private Bitmap recoverImage(Bitmap embeddedImage)
         {
             const int hiddenBits = 1;
-            const int shift = (8 - hiddenBits);
+            const int shift = 8 - hiddenBits;
 
             var hiddenMask = 0xFF >> shift;
             var extractedImage = new Bitmap(embeddedImage.Width, embeddedImage.Height);

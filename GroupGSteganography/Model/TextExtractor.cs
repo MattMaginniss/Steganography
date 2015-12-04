@@ -95,9 +95,6 @@ namespace GroupGSteganography.Model
                             message = message + letter;
                         }
                     }
-                    else
-                    {
-                    }
                 }
             }
 

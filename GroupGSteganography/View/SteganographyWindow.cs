@@ -3,10 +3,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using GroupGSteganography.Model;
-using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.View
 {
@@ -24,10 +22,9 @@ namespace GroupGSteganography.View
 
         private void drawLines()
         {
-
-            var myPen = new Pen(System.Drawing.Color.Black);
-                var graphics = this.CreateGraphics();
-           graphics.DrawLine(myPen, 365, 128, 610, 128);
+            var myPen = new Pen(Color.Black);
+            var graphics = CreateGraphics();
+            graphics.DrawLine(myPen, 365, 128, 610, 128);
             graphics.DrawLine(myPen, 365, 128, 375, 118);
             graphics.DrawLine(myPen, 365, 128, 375, 138);
 
@@ -41,12 +38,12 @@ namespace GroupGSteganography.View
             this.drawLines();
         }
 
-        private void saveBigImageButton_Click(object sender, System.EventArgs e)
+        private void saveBigImageButton_Click(object sender, EventArgs e)
         {
             this.saveImage(sender);
         }
 
-        private void textRadioButton_CheckedChanged(object sender, System.EventArgs e)
+        private void textRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             this.textBox.Enabled = this.textRadioButton.Checked;
             this.qualityBar.Enabled = this.textRadioButton.Checked;
@@ -57,7 +54,6 @@ namespace GroupGSteganography.View
             }
             this.updateControls();
             this.enableTextControls();
-
         }
 
         private void enableTextControls()
@@ -67,17 +63,17 @@ namespace GroupGSteganography.View
             this.imageToEncryptToolStripMenuItem.Text = @"Text to Encrypt";
         }
 
-        private void exitToolStripMenuItem_Click(object sender, System.EventArgs e)
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void loadBigImageButton_Click(object sender, System.EventArgs e)
+        private void loadBigImageButton_Click(object sender, EventArgs e)
         {
             this.loadImage(sender);
         }
 
-        private void hiderImageToolStripMenuItem_Click(object sender, System.EventArgs e)
+        private void hiderImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.loadImage(sender);
         }
@@ -125,7 +121,8 @@ namespace GroupGSteganography.View
 
         private bool isSmallImageLoad(object sender)
         {
-            return sender == this.loadStuffToEncryptButton || sender == this.imageToEncryptToolStripMenuItem || sender == this.smallPictureBoxLoadToolStripMenuItem;
+            return sender == this.loadStuffToEncryptButton || sender == this.imageToEncryptToolStripMenuItem ||
+                   sender == this.smallPictureBoxLoadToolStripMenuItem;
         }
 
         private Bitmap loadImageDialog()
@@ -133,7 +130,7 @@ namespace GroupGSteganography.View
             var ofd = new OpenFileDialog
             {
                 Filter = @"PNG File (*.png)|*.png|Bitmap File (*.bmp)|*.bmp",
-                InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
                 Title = @"Please select an image file to encrypt."
             };
             //tertiary statement ONLY because resharper insisted
@@ -147,21 +144,20 @@ namespace GroupGSteganography.View
             {
                 this.loadStuffToEncryptButton.Text = @"Load Image to Encrypt";
                 this.saveDecryptedButton.Text = @"Save Decrypted Image";
-
             }
             else
             {
                 this.smallPictureBox.Image = null;
             }
-
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             MessageBox.Show(
                 @"Use this slider to adjust the level of corruption the image will experience." +
-                    @"The greater the corruption, the longer your hidden message can be." +
-                @" However, the random alterations to the image will be more apparent", @"Image Corruption Help", MessageBoxButtons.OK, MessageBoxIcon.Question );
+                @"The greater the corruption, the longer your hidden message can be." +
+                @" However, the random alterations to the image will be more apparent", @"Image Corruption Help",
+                MessageBoxButtons.OK, MessageBoxIcon.Question);
         }
 
         private void encryptedImageToolStripMenuItem_Click(object sender, EventArgs e)
@@ -169,18 +165,13 @@ namespace GroupGSteganography.View
             this.saveImage(sender);
         }
 
-       
         private bool imageIsEmpty(object sender)
         {
             if (sender == this.saveDecryptedButton || sender == this.decryptedImageToolStripMenuItem)
             {
                 return this.smallPictureBox.Image == null;
             }
-            else
-            {
-                return this.largePictureBox.Image == null;
-            }
-
+            return this.largePictureBox.Image == null;
         }
 
         private void decryptedImageToolStripMenuItem_Click(object sender, EventArgs e)
@@ -192,7 +183,7 @@ namespace GroupGSteganography.View
         {
             if (this.imageIsEmpty(sender))
             {
-                MessageBox.Show(@"There is no image to save!", @"Error" , MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"There is no image to save!", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             var saveDialog = new SaveFileDialog {Filter = @"PNG File (*.png)|*.png|Bitmap File (*.bmp)|*.bmp"};
@@ -222,7 +213,8 @@ namespace GroupGSteganography.View
 
         private bool isSmallImageSave(object sender)
         {
-            return sender == this.saveDecryptedButton || sender == this.decryptedImageToolStripMenuItem || sender == this.smallPictureBoxSaveToolStripMenuItem;
+            return sender == this.saveDecryptedButton || sender == this.decryptedImageToolStripMenuItem ||
+                   sender == this.smallPictureBoxSaveToolStripMenuItem;
         }
 
         private void saveDecryptedButton_Click(object sender, EventArgs e)
@@ -274,11 +266,10 @@ namespace GroupGSteganography.View
 
         private void checkBothImageBoxes()
         {
-            var bothImagesLoaded = (this.largePictureBox.Image != null && this.smallPictureBox.Image != null);
+            var bothImagesLoaded = this.largePictureBox.Image != null && this.smallPictureBox.Image != null;
 
             this.encryptButton.Enabled = bothImagesLoaded;
         }
-
 
         private void largePictureBox_Paint(object sender, PaintEventArgs e)
         {
@@ -292,12 +283,11 @@ namespace GroupGSteganography.View
                 return;
             }
             var image = this.largePictureBox.Image;
-            var maxChars = (image.Width*image.Height)/16.0;
+            var maxChars = image.Width*image.Height/16.0;
             var maxCharsInt = (int) Math.Truncate(maxChars);
-            maxCharsInt *= (this.qualityBar.Value+1);
+            maxCharsInt *= this.qualityBar.Value + 1;
             this.textBox.MaxLength = maxCharsInt;
             this.truncateTextBox();
-            
         }
 
         private void truncateTextBox()
@@ -326,7 +316,8 @@ namespace GroupGSteganography.View
             }
             else
             {
-                MessageBox.Show(@"Encrypted image is too large for hider image", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"Encrypted image is too large for hider image", @"Error", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 
@@ -334,12 +325,12 @@ namespace GroupGSteganography.View
         {
             var isImage = this.imageRadioButton.Checked;
             var isEncrypted = this.encryptionCheckBox.Checked;
-            var rotShift =(int) this.rotationUpDown.Value;
-            var bitsPerColorChannel = (this.qualityBar.Value+1);
+            var rotShift = (int) this.rotationUpDown.Value;
+            var bitsPerColorChannel = this.qualityBar.Value + 1;
 
-            return new HeaderPixel(isImage,isEncrypted,rotShift,bitsPerColorChannel);
+            return new HeaderPixel(isImage, isEncrypted, rotShift, bitsPerColorChannel);
         }
-        
+
         private bool checkImageSizes()
         {
             var hiderImage = this.largePictureBox.Image;
@@ -347,15 +338,15 @@ namespace GroupGSteganography.View
             var hiderResolution = hiderImage.Width*hiderImage.Height;
             var hiddenResolution = hiddenImage.Width*hiddenImage.Height;
 
-            return (hiderResolution >= hiddenResolution);
+            return hiderResolution >= hiddenResolution;
         }
 
         private void decryptButton_Click(object sender, EventArgs e)
         {
-            this.displayHeaderPixelInfo();//TODO test method call to ensure proper output
+            this.displayHeaderPixelInfo(); //TODO test method call to ensure proper output
 
             var image = (Bitmap) this.largePictureBox.Image;
-            var headerPixel = HeaderPixel.From(image.GetPixel(0,0));
+            var headerPixel = HeaderPixel.From(image.GetPixel(0, 0));
 
             if (headerPixel.IsImage)
             {
@@ -395,8 +386,6 @@ namespace GroupGSteganography.View
             Debug.WriteLine(headerPixel.IsEncrypted);
             Debug.WriteLine(headerPixel.RotShift);
             Debug.WriteLine(headerPixel.BitsPerColorChannel);
-
-
         }
 
         private void smallPictureBoxLoadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -426,23 +415,21 @@ namespace GroupGSteganography.View
 
         private void loadText()
         {
-            var ofdText = new OpenFileDialog()
+            var ofdText = new OpenFileDialog
             {
                 Filter = @"Text File (*.txt)|*.txt",
-                InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-                
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
             };
             if (ofdText.ShowDialog() != DialogResult.OK)
             {
                 return;
             }
-            var text = System.IO.File.ReadAllText(ofdText.FileName);
+            var text = File.ReadAllText(ofdText.FileName);
             if (text.Length > this.textBox.MaxLength)
             {
                 text = text.Substring(0, this.textBox.MaxLength);
             }
             this.textBox.Text = text;
-
         }
 
         private void qualityBar_Scroll(object sender, EventArgs e)
@@ -453,7 +440,7 @@ namespace GroupGSteganography.View
 
         private void encryptionCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            this.rotationUpDown.Enabled = (this.encryptionCheckBox.Checked && this.textRadioButton.Checked);
+            this.rotationUpDown.Enabled = this.encryptionCheckBox.Checked && this.textRadioButton.Checked;
         }
     }
 }
