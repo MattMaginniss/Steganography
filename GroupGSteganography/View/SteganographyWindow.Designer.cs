@@ -488,11 +488,11 @@ namespace GroupGSteganography.View
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(417, 417);
+            this.label4.Location = new System.Drawing.Point(404, 417);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(47, 13);
+            this.label4.Size = new System.Drawing.Size(58, 13);
             this.label4.TabIndex = 19;
-            this.label4.Text = "Rotation";
+            this.label4.Text = "Shift Value";
             // 
             // rotHelpLinkLabel
             // 
@@ -503,6 +503,7 @@ namespace GroupGSteganography.View
             this.rotHelpLinkLabel.TabIndex = 20;
             this.rotHelpLinkLabel.TabStop = true;
             this.rotHelpLinkLabel.Text = "(?)";
+            this.rotHelpLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.rotHelpLinkLabel_LinkClicked);
             // 
             // SteganographyWindow
             // 
