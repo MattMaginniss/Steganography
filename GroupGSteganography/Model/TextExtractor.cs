@@ -1,5 +1,6 @@
-﻿using System.Data.Odbc;
+﻿using System;
 using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
 using GroupGSteganography.Model.Encryption;
 
@@ -71,77 +72,30 @@ namespace GroupGSteganography.Model
 
         private string extractText(Bitmap bmp)
         {
-            var colorUnitIndex = 0;
-            var charValue = 0;
+            var img = bmp;
+            var message = "";
 
-            // holds the text that will be extracted from the image
-            var extractedText = string.Empty;
+            var lastpixel = img.GetPixel(img.Width - 1, img.Height - 1);
+            int msgLength = lastpixel.B;
 
-            // pass through the rows
-            for (var i = 0; i < bmp.Height; i++)
+            for (var i = 0; i < img.Width; i++)
             {
-                // pass through each row
-                for (var j = 0; j < bmp.Width; j++)
+                for (var j = 0; j < img.Height; j++)
                 {
-                    var pixel = bmp.GetPixel(j, i);
-                    if (j == 0 && i == 0)
+                    var pixel = img.GetPixel(i, j);
+
+                    if (i < 1 && j < msgLength)
                     {
-                        break;
-                    }
-                    // for each pixel, pass through its elements (RGB)
-                    for (var n = 0; n < 3; n++)
-                    {
-                        switch (colorUnitIndex%3)
-                        {
-                            case 0:
-                            {
-                                // get the LSB from the pixel element (will be pixel.R % 2)
-                                // then add one bit to the right of the current character
-                                // this can be done by (charValue = charValue * 2)
-                                // replace the added bit (which value is by default 0) with
-                                // the LSB of the pixel element, simply by addition
-                                charValue = charValue*2 + pixel.R%2;
-                            }
-                                break;
-                            case 1:
-                            {
-                                charValue = charValue*2 + pixel.G%2;
-                            }
-                                break;
-                            case 2:
-                            {
-                                charValue = charValue*2 + pixel.B%2;
-                            }
-                                break;
-                        }
+                        int value = pixel.B;
+                        var c = Convert.ToChar(value);
+                        var letter = Encoding.ASCII.GetString(new[] {Convert.ToByte(c)});
 
-                        colorUnitIndex++;
-
-                        // if 8 bits has been added,
-                        // then add the current character to the result text
-                        if (colorUnitIndex%8 == 0)
-                        {
-                            // reverse? of course, since each time the process occurs
-                            // on the right (for simplicity)
-                            charValue = reverseBits(charValue);
-
-                            // can only be 0 if it is the stop character (the 8 zeros)
-                            if (charValue == 0)
-                            {
-                                return extractedText;
-                            }
-
-                            // convert the character value from int to char
-                            var c = (char) charValue;
-
-                            // add the current character to the result text
-                            extractedText += c.ToString();
-                        }
+                        message = message + letter;
                     }
                 }
             }
 
-            return extractedText;
+            return message;
         }
 
         private static int reverseBits(int n)
