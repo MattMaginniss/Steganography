@@ -36,7 +36,7 @@ namespace GroupGSteganography.Model.Encryption
             var graphics = Graphics.FromImage(scrambledImage);
 
             var width = this.EncryptedImage.Width;
-            var height = this.embeddedImage.Height;
+            var height = this.EncryptedImage.Height;
 
             var quad1 = new Rectangle(width/2, 0, width/2, height/2);
             var quad2 = new Rectangle(0, 0, width/2, height/2);

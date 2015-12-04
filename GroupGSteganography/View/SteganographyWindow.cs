@@ -312,8 +312,12 @@ namespace GroupGSteganography.View
 
         private void encryptButton_Click(object sender, EventArgs e)
         {
+            var encryptor = new ImageEncryption((Bitmap)this.largePictureBox.Image, (Bitmap)this.smallPictureBox.Image);
+            this.largePictureBox.Image = encryptor.EncryptedImage;
+            var decryptor = new ImageDecryption((Bitmap)this.largePictureBox.Image);
+            this.smallPictureBox.Image = decryptor.DecryptedImage;
 
-            IEmbeddor embeddor;
+            /* IEmbeddor embeddor;
             var headerPixel = this.createHeaderPixel();
             if (this.textRadioButton.Checked)
             {
@@ -331,7 +335,7 @@ namespace GroupGSteganography.View
             else
             {
                 MessageBox.Show(@"Encrypted image is too large for hider image", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            }*/
         }
 
         private HeaderPixel createHeaderPixel()
