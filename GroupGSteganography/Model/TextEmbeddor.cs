@@ -84,7 +84,7 @@ namespace GroupGSteganography.Model
                     {
                         var pixel = img.GetPixel(i, j);
 
-                        if ((i*img.Width) + j <= this.MessageText.Length)
+                        if (i*img.Width + j <= this.MessageText.Length)
                         {
                             var letter = Convert.ToChar(this.MessageText.Substring(j - 1, 1));
                             var value = Convert.ToInt16(letter);

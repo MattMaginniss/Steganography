@@ -334,13 +334,13 @@ namespace GroupGSteganography.View
                 embeddor = new TextEmbeddor(this.largePictureBox.Image, this.textBox.Text, headerPixel);
                 this.largePictureBox.Image = embeddor.Embed();
                 this.textBox.Text = "";
-                MessageBox.Show("Successfully embedded!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                MessageBox.Show(@"Successfully embedded!", @"Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
             else if (this.checkImageSizes())
             {
                 embeddor = new ImageEmbeddor(this.largePictureBox.Image, this.smallPictureBox.Image, headerPixel);
                 this.largePictureBox.Image = embeddor.Embed();
-                MessageBox.Show("Successfully embedded!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                MessageBox.Show(@"Successfully embedded!", @"Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
             else
             {

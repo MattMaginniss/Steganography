@@ -44,7 +44,7 @@ namespace GroupGSteganography.Model
             var isImage = false;
             var isEncrypted = false;
             var rotShift = 0;
-            var bitsPerColorChannel = 0;
+            var bitsPerColorChannel = color.B;
 
             if (color.R == 0)
             {
@@ -55,7 +55,6 @@ namespace GroupGSteganography.Model
                 isEncrypted = true;
                 rotShift = color.G - 100;
             }
-            bitsPerColorChannel = color.B;
             return new HeaderPixel(isImage, isEncrypted, rotShift, bitsPerColorChannel);
         }
 
