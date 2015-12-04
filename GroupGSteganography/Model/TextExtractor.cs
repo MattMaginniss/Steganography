@@ -15,7 +15,7 @@ namespace GroupGSteganography.Model
         /// <value>
         ///     The encoded image.
         /// </value>
-        public Bitmap EncodedImage { get; private set; }
+        public Bitmap EncodedImage { get; }
 
         /// <summary>
         ///     Gets or sets the extracted text.
@@ -39,7 +39,7 @@ namespace GroupGSteganography.Model
         /// <value>
         ///     The Header Pixel.
         /// </value>
-        public HeaderPixel HeaderPixel { get; private set; }
+        public HeaderPixel HeaderPixel { get; }
 
         #endregion
 
@@ -96,19 +96,12 @@ namespace GroupGSteganography.Model
                 {
                     if (i != 0 || j != 0)
                     {
-                        var pixel = img.GetPixel(i, j);
-
-                        int value = pixel.B;
-                        var c = Convert.ToChar(value);
-                        var letter = Encoding.ASCII.GetString(new[] {Convert.ToByte(c)});
+                        var letter = convertPixelDataToString(img, i, j, 0);
                         if (letter.Equals("#"))
                         {
                             for (var x = 1; x < 3; x ++)
                             {
-                                pixel = img.GetPixel(i, j + x);
-                                value = pixel.B;
-                                c = Convert.ToChar(value);
-                                letter = Encoding.ASCII.GetString(new[] {Convert.ToByte(c)});
+                                letter = convertPixelDataToString(img, i, j, x);
                                 if (!letter.Equals("#"))
                                 {
                                     message = message + "#";
@@ -128,6 +121,16 @@ namespace GroupGSteganography.Model
             }
 
             return message;
+        }
+
+        private static string convertPixelDataToString(Bitmap img, int i, int j, int x)
+        {
+            var letter = "";
+            var pixel = img.GetPixel(i, j + x);
+            int value = pixel.B;
+            var c = Convert.ToChar(value);
+            letter = Encoding.ASCII.GetString(new[] {Convert.ToByte(c)});
+            return letter;
         }
     }
 }
