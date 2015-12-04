@@ -38,9 +38,8 @@ namespace GroupGSteganography.View
             }
             else if (this.checkImageSizes())
             {
-                var encrypter = new ImageEncryption((Bitmap)this.largePictureBox.Image, (Bitmap) this.smallPictureBox.Image);
-                this.smallPictureBox.Image = encrypter.EncryptedImage;
-                // this.embedImage(headerPixel);
+
+                 this.embedImage(headerPixel);
             }
             else
             {
