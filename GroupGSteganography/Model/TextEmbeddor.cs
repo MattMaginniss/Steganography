@@ -80,19 +80,26 @@ namespace GroupGSteganography.Model
             {
                 for (var j = 0; j < img.Height; j++)
                 {
-                    var pixel = img.GetPixel(i, j);
-
-                    if (i < 1 && j < this.MessageText.Length)
+                    if (i == 0 && j == 0)
                     {
-                        var letter = Convert.ToChar(this.MessageText.Substring(j, 1));
-                        var value = Convert.ToInt32(letter);
-
-                        img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, value));
+                        img.SetPixel(0, 0, this.HeaderPixel.GetColor());
                     }
-
-                    if (i == img.Width - 1 && j == img.Height - 1)
+                    else
                     {
-                        img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, this.MessageText.Length));
+                        var pixel = img.GetPixel(i, j);
+                    
+                        if (i < 1 && j < this.MessageText.Length)
+                        {
+                            var letter = Convert.ToChar(this.MessageText.Substring(j, 1));
+                            var value = Convert.ToInt32(letter);
+
+                            img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, value));
+                        }
+
+                        if (i == img.Width - 1 && j == img.Height - 1)
+                        {
+                            img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, this.MessageText.Length));
+                        }
                     }
                 }
             }

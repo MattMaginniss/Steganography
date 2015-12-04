@@ -58,7 +58,7 @@ namespace GroupGSteganography.Model
 
         public void Extract()
         {
-            this.ExtractedText = this.extractText((Bitmap) this.EncodedImage);
+            this.ExtractedText = extractText((Bitmap) this.EncodedImage);
             MessageBox.Show(this.ExtractedText);
             if (this.HeaderPixel.IsEncrypted)
             {
@@ -70,7 +70,7 @@ namespace GroupGSteganography.Model
 
         #endregion
 
-        private string extractText(Bitmap bmp)
+        private static string extractText(Bitmap bmp)
         {
             var img = bmp;
             var message = "";
@@ -82,34 +82,26 @@ namespace GroupGSteganography.Model
             {
                 for (var j = 0; j < img.Height; j++)
                 {
-                    var pixel = img.GetPixel(i, j);
-
-                    if (i < 1 && j < msgLength)
+                    if (i == 0 && j == 0)
                     {
-                        int value = pixel.B;
-                        var c = Convert.ToChar(value);
-                        var letter = Encoding.ASCII.GetString(new[] {Convert.ToByte(c)});
+                    }
+                    else
+                    {
+                        var pixel = img.GetPixel(i, j);
 
-                        message = message + letter;
+                        if (i < 1 && j < msgLength)
+                        {
+                            int value = pixel.B;
+                            var c = Convert.ToChar(value);
+                            var letter = Encoding.ASCII.GetString(new[] {Convert.ToByte(c)});
+
+                            message = message + letter;
+                        }
                     }
                 }
             }
 
             return message;
-        }
-
-        private static int reverseBits(int n)
-        {
-            var result = 0;
-
-            for (var i = 0; i < 8; i++)
-            {
-                result = result*2 + n%2;
-
-                n /= 2;
-            }
-
-            return result;
         }
     }
 }
