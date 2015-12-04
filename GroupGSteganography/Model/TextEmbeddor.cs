@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.Model
@@ -73,134 +74,37 @@ namespace GroupGSteganography.Model
                 var encrypter = new TextEncryption(this.MessageText, this.HeaderPixel.RotShift);
                 this.MessageText = encrypter.EncryptText();
             }
-            var bmp = (Bitmap) this.SourceImage;
-            var text = this.MessageText;
+            var img = new Bitmap(this.SourceImage);
 
-            // initially, we'll be hiding characters in the image
-            var state = State.Hiding;
-
-            // holds the index of the character that is being hidden
-            var charIndex = 0;
-
-            // holds the value of the character converted to integer
-            var charValue = 0;
-
-            // holds the index of the color element (R or G or B) that is currently being processed
-            long pixelElementIndex = 0;
-
-            // holds the number of trailing zeros that have been added when finishing the process
-            var zeros = 0;
-
-            // hold pixel elements
-
-            // pass through the rows
-            for (var i = 0; i < bmp.Height; i++)
+            for (var i = 0; i < img.Width; i++)
             {
-                // pass through each row
-                for (var j = 0; j < bmp.Width; j++)
+                for (var j = 0; j < img.Height; j++)
                 {
-                    if (i == 0 && j == 0)
+                    if (i != 0 || j != 0)
                     {
-                        bmp.SetPixel(0, 0, this.HeaderPixel.GetColor());
-                        break;
+                        var pixel = img.GetPixel(i, j);
+
+                        if ((i*img.Width) + j <= this.MessageText.Length)
+                        {
+                            var letter = Convert.ToChar(this.MessageText.Substring(j - 1, 1));
+                            var value = Convert.ToInt16(letter);
+
+                            img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, value));
+                        }
+
+                        if (i == img.Width - 1 && j == img.Height - 1)
+                        {
+                            img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, this.MessageText.Length));
+                        }
                     }
-                    // holds the pixel that is currently being processed
-                    var pixel = bmp.GetPixel(j, i);
-
-                    // now, clear the least significant bit (LSB) from each pixel element
-                    var red = pixel.R - pixel.R%2;
-                    var green = pixel.G - pixel.G%2;
-                    var blue = pixel.B - pixel.B%2;
-
-                    // for each pixel, pass through its elements (RGB)
-                    for (var n = 0; n < 3; n++)
+                    else
                     {
-                        // check if new 8 bits has been processed
-                        if (pixelElementIndex%8 == 0)
-                        {
-                            // check if the whole process has finished
-                            // we can say that it's finished when 8 zeros are added
-                            if (state == State.FillingWithZeros && zeros == 8)
-                            {
-                                // apply the last pixel on the image
-                                // even if only a part of its elements have been affected
-                                if ((pixelElementIndex - 1)%3 < 2)
-                                {
-                                    bmp.SetPixel(j, i, Color.FromArgb(red, green, blue));
-                                }
-
-                                // return the bitmap with the text hidden in
-                                return bmp;
-                            }
-
-                            // check if all characters has been hidden
-                            if (charIndex >= text.Length)
-                            {
-                                // start adding zeros to mark the end of the text
-                                state = State.FillingWithZeros;
-                            }
-                            else
-                            {
-                                // move to the next character and process again
-                                charValue = text[charIndex++];
-                            }
-                        }
-
-                        // check which pixel element has the turn to hide a bit in its LSB
-                        switch (pixelElementIndex%3)
-                        {
-                            case 0:
-                            {
-                                if (state == State.Hiding)
-                                {
-                                    // the rightmost bit in the character will be (charValue % 2)
-                                    // to put this value instead of the LSB of the pixel element
-                                    // just add it to it
-                                    // recall that the LSB of the pixel element had been cleared
-                                    // before this operation
-                                    red += charValue%2;
-
-                                    // removes the added rightmost bit of the character
-                                    // such that next time we can reach the next one
-                                    charValue /= 2;
-                                }
-                            }
-                                break;
-                            case 1:
-                            {
-                                if (state == State.Hiding)
-                                {
-                                    green += charValue%2;
-
-                                    charValue /= 2;
-                                }
-                            }
-                                break;
-                            case 2:
-                            {
-                                if (state == State.Hiding)
-                                {
-                                    blue += charValue%2;
-
-                                    charValue /= 2;
-                                }
-
-                                bmp.SetPixel(j, i, Color.FromArgb(red, green, blue));
-                            }
-                                break;
-                        }
-
-                        pixelElementIndex++;
-
-                        if (state == State.FillingWithZeros)
-                        {
-                            // increment the value of zeros until it is 8
-                            zeros++;
-                        }
+                        img.SetPixel(0, 0, this.HeaderPixel.GetColor());
                     }
                 }
             }
-            return bmp;
+
+            return img;
         }
 
         #endregion
