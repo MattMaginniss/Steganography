@@ -294,8 +294,17 @@ namespace GroupGSteganography.View
             var bothImagesLoaded = (this.largePictureBox.Image != null && this.smallPictureBox.Image != null);
 
             this.encryptButton.Enabled = bothImagesLoaded;
+            this.updateImageTooLargeWarning();
         }
 
+        private void updateImageTooLargeWarning()
+        {
+            var isInvalid = !this.checkImageSizes();
+            this.warningLabel1.Visible = isInvalid;
+            this.warningLabel2.Visible = isInvalid;
+            this.warningPictureBox.Visible = isInvalid;
+
+        }
 
         private void largePictureBox_Paint(object sender, PaintEventArgs e)
         {
@@ -362,6 +371,11 @@ namespace GroupGSteganography.View
         
         private bool checkImageSizes()
         {
+            if (this.largePictureBox.Image == null || this.smallPictureBox.Image == null)
+            {
+                return true;
+            }
+            
             var hiderImage = this.largePictureBox.Image;
             var hiddenImage = this.smallPictureBox.Image;
 
@@ -494,5 +508,6 @@ namespace GroupGSteganography.View
         {
             this.saveText();
         }
+
     }
 }
