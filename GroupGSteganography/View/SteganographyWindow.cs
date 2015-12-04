@@ -355,14 +355,13 @@ namespace GroupGSteganography.View
 
         private void decryptButton_Click(object sender, EventArgs e)
         {
-            this.displayHeaderPixelInfo();//TODO test method call to ensure proper output
 
             var image = (Bitmap) this.largePictureBox.Image;
             var headerPixel = HeaderPixel.From(image.GetPixel(0,0));
 
             if (headerPixel.IsImage)
             {
-                this.extractImage(headerPixel);
+                this.extractImage();
             }
             else
             {
@@ -372,14 +371,25 @@ namespace GroupGSteganography.View
 
         private void extractText(HeaderPixel headerPixel)
         {
+            //TODO extractor should get the header pixel themselves
             this.textRadioButton.Checked = true;
             var extractor = new TextExtractor(this.largePictureBox.Image, headerPixel);
             extractor.Extract();
-            var output = extractor.ExtractedText;
-            this.textBox.Text = output;
+            this.buildExtractedText(extractor);
+
         }
 
-        private void extractImage(HeaderPixel headerPixel)
+        private void buildExtractedText(TextExtractor extractor)
+        {
+            var text =  extractor.ExtractedText;
+            if (extractor.EncryptedText != null)
+            {
+                text = "Encrypted: " + extractor.EncryptedText + Environment.NewLine + Environment.NewLine + "Decrypted: " + text;
+            }
+            this.textBox.Text = text;
+        }
+
+        private void extractImage()
         {
             this.imageRadioButton.Checked = true;
             var extractor = new ImageExtractor(this.largePictureBox.Image);
@@ -387,17 +397,6 @@ namespace GroupGSteganography.View
             this.smallPictureBox.Image = extractor.ExtractedImage;
         }
 
-        private void displayHeaderPixelInfo()
-        {
-            var image = (Bitmap) this.largePictureBox.Image;
-            var headerPixel = HeaderPixel.From(image.GetPixel(0, 0));
-            Debug.WriteLine(headerPixel.IsImage);
-            Debug.WriteLine(headerPixel.IsEncrypted);
-            Debug.WriteLine(headerPixel.RotShift);
-            Debug.WriteLine(headerPixel.BitsPerColorChannel);
-
-
-        }
 
         private void smallPictureBoxLoadToolStripMenuItem_Click(object sender, EventArgs e)
         {
