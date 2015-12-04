@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.Model
 {
@@ -12,7 +13,7 @@ namespace GroupGSteganography.Model
         /// <value>
         ///     The encoded image.
         /// </value>
-        public Image EncodedImage { get; }
+        public Bitmap EncodedImage { get; }
 
         /// <summary>
         ///     Gets or sets the extracted image.
@@ -28,7 +29,7 @@ namespace GroupGSteganography.Model
 
         public ImageExtractor(Image encodedImage)
         {
-            this.EncodedImage = encodedImage;
+            this.EncodedImage =(Bitmap) encodedImage;
         }
 
         #endregion
@@ -38,6 +39,18 @@ namespace GroupGSteganography.Model
         public void Extract()
         {
             this.ExtractedImage = this.recoverImage((Bitmap) this.EncodedImage);
+            this.decryptImage();
+        }
+
+        private void decryptImage()
+        {
+            var headerPixel = HeaderPixel.From(this.EncodedImage.GetPixel(0, 0));
+            if (!headerPixel.IsEncrypted)
+            {
+                return;
+            }
+            var decrypter = new ImageDecryption((Bitmap)this.ExtractedImage);
+            this.ExtractedImage = decrypter.DecryptedImage;
         }
 
         #endregion

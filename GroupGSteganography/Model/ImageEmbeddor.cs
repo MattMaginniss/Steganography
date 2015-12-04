@@ -1,5 +1,7 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Security.Cryptography.X509Certificates;
+using GroupGSteganography.Model.Encryption;
 
 namespace GroupGSteganography.Model
 {
@@ -29,7 +31,18 @@ namespace GroupGSteganography.Model
 
         public Image Embed()
         {
+            this.checkEncryption();
             return this.hideImage((Bitmap) this.SourceImage, (Bitmap) this.MessageImage);
+        }
+
+        private void checkEncryption()
+        {
+            if (!this.HeaderPixel.IsEncrypted)
+            {
+                return;
+            }
+            var encrypter = new ImageEncryption((Bitmap)this.SourceImage, (Bitmap)this.MessageImage);
+            this.MessageImage = encrypter.EncryptedImage;
         }
 
         #endregion
