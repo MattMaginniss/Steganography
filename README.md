@@ -1,2 +1,3 @@
-# Welcome to our Steganography Repo! #
-## Click [here](https://bitbucket.org/MattMaginniss/groupgsteganography/wiki/Home) to visit our wiki! ##
+# Steganography
+
+The goal fo this project is to write a C #GUI application that is capable of hiding and encrypting images and text-based messages within image files. 
